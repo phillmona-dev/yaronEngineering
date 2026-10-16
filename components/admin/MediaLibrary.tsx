@@ -6,7 +6,16 @@ import { Copy, Trash2, Upload } from "lucide-react";
 import { admin, qs } from "@/lib/admin/client";
 import type { Media, Page } from "@/lib/blog/types";
 import { mediaUrl } from "@/lib/blog/format";
-import { AdminButton, Card, ConfirmDialog, Field, PageHeader, inputCls } from "./ui";
+import {
+  AdminButton,
+  Card,
+  ConfirmDialog,
+  CountChip,
+  Field,
+  PageHeader,
+  Pagination,
+  inputCls,
+} from "./ui";
 import { useToast } from "./Toast";
 
 export function MediaUploader({ onUploaded }: { onUploaded: (m: Media) => void }) {
@@ -113,19 +122,19 @@ export function MediaGrid({
           aria-label="Filter media"
         />
         {page && (
-          <span className="text-ink-400 text-xs">
+          <CountChip>
             {page.totalElements} file{page.totalElements === 1 ? "" : "s"}
-          </span>
+          </CountChip>
         )}
       </div>
       {page === null ? (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-6">
           {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="bg-ink-100 aspect-[4/3] animate-pulse rounded-md" />
+            <div key={i} className="dash-shimmer aspect-[4/3] rounded-xl" />
           ))}
         </div>
       ) : page.content.length === 0 ? (
-        <p className="border-ink-200 text-ink-400 rounded-md border border-dashed p-10 text-center text-sm">
+        <p className="text-ink-400 rounded-2xl border border-dashed border-white/90 bg-white/30 p-10 text-center text-sm">
           No images yet. Upload the first cover image above.
         </p>
       ) : (
@@ -133,7 +142,7 @@ export function MediaGrid({
           {page.content.map((m) => (
             <li
               key={m.id}
-              className="group border-ink-200 bg-ink-50 relative overflow-hidden rounded-md border"
+              className="group glass glass-strong ease-out-expo relative overflow-hidden rounded-xl transition-[transform,box-shadow] duration-500 hover:-translate-y-1 hover:shadow-[0_26px_50px_-24px_rgba(10,13,20,0.4)]"
             >
               <button
                 type="button"
@@ -148,7 +157,7 @@ export function MediaGrid({
                     alt={m.altText}
                     fill
                     sizes="200px"
-                    className="object-cover"
+                    className="ease-out-expo object-cover transition-transform duration-700 group-hover:scale-105"
                     unoptimized={m.url.startsWith("http")}
                   />
                 </div>
@@ -163,10 +172,10 @@ export function MediaGrid({
                 </p>
               </div>
               {!selectable && (
-                <div className="absolute top-1 right-1 hidden gap-1 group-hover:flex">
+                <div className="absolute top-1.5 right-1.5 hidden gap-1 group-hover:flex">
                   <button
                     type="button"
-                    className="text-ink-600 hover:text-ink-900 rounded bg-white/90 p-1 shadow"
+                    className="text-ink-600 hover:text-ink-900 rounded-lg bg-white/90 p-1.5 shadow backdrop-blur"
                     aria-label="Copy ID"
                     title="Copy media ID"
                     onClick={() =>
@@ -179,7 +188,7 @@ export function MediaGrid({
                   </button>
                   <button
                     type="button"
-                    className="rounded bg-white/90 p-1 text-red-600 shadow"
+                    className="rounded-lg bg-white/90 p-1.5 text-red-600 shadow backdrop-blur"
                     aria-label="Delete"
                     onClick={() => setDeleting(m)}
                   >
@@ -191,17 +200,14 @@ export function MediaGrid({
           ))}
         </ul>
       )}
-      {page && page.totalPages > 1 && (
-        <div className="text-ink-500 mt-4 flex items-center justify-between text-xs">
-          <AdminButton size="sm" disabled={page.page === 0} onClick={() => load(page.page - 1)}>
-            Previous
-          </AdminButton>
-          <span>
-            Page {page.page + 1} of {page.totalPages}
-          </span>
-          <AdminButton size="sm" disabled={page.last} onClick={() => load(page.page + 1)}>
-            Next
-          </AdminButton>
+      {page && (
+        <div className="mt-4 overflow-hidden rounded-xl">
+          <Pagination
+            page={page.page}
+            totalPages={page.totalPages}
+            last={page.last}
+            onPage={load}
+          />
         </div>
       )}
       <ConfirmDialog

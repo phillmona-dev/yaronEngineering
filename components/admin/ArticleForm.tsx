@@ -291,7 +291,7 @@ export function ArticleForm({
   return (
     <>
       {/* Top bar */}
-      <div className="border-ink-200 bg-ink-50/95 sticky top-14 z-30 -mx-4 mb-6 border-b px-4 py-3 backdrop-blur md:-mx-6 md:px-6 lg:top-0 lg:-mx-8 lg:px-8">
+      <div className="sticky top-14 z-30 -mx-4 mb-6 border-b border-white/70 bg-white/60 px-4 py-3 backdrop-blur-xl md:-mx-6 md:px-6 lg:top-0 lg:-mx-8 lg:px-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <Link href="/admin/articles" className="text-ink-500 hover:text-ink-900 text-sm">
@@ -470,7 +470,7 @@ export function ArticleForm({
                   />
                 </Field>
               </div>
-              <div className="border-ink-200 bg-ink-50 rounded-md border p-4">
+              <div className="rounded-xl border border-white/80 bg-white/40 p-4">
                 <p className="text-ink-400 font-mono text-[0.6rem] tracking-[0.12em] uppercase">
                   Search preview
                 </p>
@@ -572,7 +572,7 @@ export function ArticleForm({
           <Card title="Cover image">
             {form.coverImage ? (
               <div>
-                <div className="border-ink-200 relative aspect-[16/10] overflow-hidden rounded-md border">
+                <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/80">
                   <Image
                     src={mediaUrl(form.coverImage.url)}
                     alt={form.coverImage.altText}
@@ -699,7 +699,7 @@ export function ArticleForm({
         onClose={closePicker}
         wide
       >
-        <div className="border-ink-200 bg-ink-50 mb-5 rounded-md border p-4">
+        <div className="mb-5 rounded-xl border border-white/80 bg-white/40 p-4">
           <MediaUploader
             onUploaded={(m) => {
               setMediaRefresh((k) => k + 1);

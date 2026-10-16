@@ -130,6 +130,15 @@ export type LoginResponse = {
   user: User;
 };
 
+export type SecurityOverview = {
+  user: User;
+  passwordChangedAt: string | null;
+  sessionTtlSeconds: number;
+  passwordMinLength: number;
+  passwordPolicy: string;
+  resetEmailEnabled: boolean;
+};
+
 export type Revision = {
   id: string;
   version: number;

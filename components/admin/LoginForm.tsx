@@ -1,14 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { AdminButton, Field, inputCls } from "./ui";
+import { CheckCircle2 } from "lucide-react";
+import { AdminButton, Field, inputCls, labelCls } from "./ui";
+import { PasswordInput } from "./PasswordFields";
 
 export function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const justReset = params.get("reset") === "1";
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,6 +39,15 @@ export function LoginForm() {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      {justReset && (
+        <p
+          role="status"
+          className="flex items-start gap-2 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800"
+        >
+          <CheckCircle2 className="mt-0.5 size-4 shrink-0" aria-hidden />
+          Your password has been updated. Sign in with the new one.
+        </p>
+      )}
       <Field label="Email" htmlFor="email">
         <input
           id="email"
@@ -44,16 +58,26 @@ export function LoginForm() {
           className={inputCls}
         />
       </Field>
-      <Field label="Password" htmlFor="password">
-        <input
+      <div>
+        <div className="mb-1.5 flex items-baseline justify-between">
+          <label htmlFor="password" className={`${labelCls} mb-0`}>
+            Password
+          </label>
+          <Link
+            href="/admin/forgot-password"
+            className="text-brand-700 text-xs font-medium hover:underline"
+          >
+            Forgot password?
+          </Link>
+        </div>
+        <PasswordInput
           id="password"
           name="password"
-          type="password"
           autoComplete="current-password"
-          required
-          className={inputCls}
+          value={password}
+          onChange={setPassword}
         />
-      </Field>
+      </div>
       {error && (
         <p
           role="alert"

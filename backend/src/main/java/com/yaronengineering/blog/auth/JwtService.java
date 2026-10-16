@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Service
 public class JwtService {
-    public record Principal(UUID userId, String email, Role role) {}
+    public record Principal(UUID userId, String email, Role role, Instant issuedAt) {}
 
     private final SecretKey key;
     private final long ttlSeconds;
@@ -50,7 +50,8 @@ public class JwtService {
     public Optional<Principal> parse(String token) {
         try {
             Claims c = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
-            return Optional.of(new Principal(UUID.fromString(c.getSubject()), c.get("email", String.class), Role.valueOf(c.get("role", String.class))));
+            Instant issuedAt = c.getIssuedAt() == null ? null : c.getIssuedAt().toInstant();
+            return Optional.of(new Principal(UUID.fromString(c.getSubject()), c.get("email", String.class), Role.valueOf(c.get("role", String.class)), issuedAt));
         } catch (JwtException | IllegalArgumentException e) {
             return Optional.empty();
         }

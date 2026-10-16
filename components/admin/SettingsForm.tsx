@@ -36,7 +36,7 @@ export function SettingsForm() {
       <PageHeader title="Settings" description="Publication-wide defaults. Admin only." />
       <Card>
         {!s ? (
-          <div className="bg-ink-100 h-40 animate-pulse rounded" />
+          <div className="dash-shimmer h-40 rounded-lg" />
         ) : (
           <form onSubmit={save} className="grid max-w-2xl gap-4">
             <Field label="Site title" htmlFor="siteTitle">

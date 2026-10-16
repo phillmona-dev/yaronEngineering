@@ -17,7 +17,7 @@ import { admin, qs } from "@/lib/admin/client";
 import type { ContactMessage, ContactStatus, ContactSummary, Page, User } from "@/lib/blog/types";
 import { formatDateTime, timeAgo } from "@/lib/blog/format";
 import { cn } from "@/lib/utils/cn";
-import { AdminButton, ConfirmDialog, PageHeader, inputCls } from "./ui";
+import { AdminButton, ConfirmDialog, PageHeader, Pagination, inputCls } from "./ui";
 import { useToast } from "./Toast";
 import { useInbox } from "./InboxContext";
 
@@ -30,10 +30,10 @@ const FILTERS: { key: ContactStatus | ""; label: string }[] = [
 ];
 
 const statusCls: Record<ContactStatus, string> = {
-  NEW: "bg-brand-500 text-white",
-  READ: "bg-ink-100 text-ink-600",
-  REPLIED: "bg-emerald-100 text-emerald-800",
-  ARCHIVED: "bg-ink-100 text-ink-400",
+  NEW: "bg-orange-500/15 text-orange-800 ring-1 ring-inset ring-orange-500/25",
+  READ: "bg-ink-900/6 text-ink-600 ring-1 ring-inset ring-ink-900/10",
+  REPLIED: "bg-emerald-500/12 text-emerald-800 ring-1 ring-inset ring-emerald-500/20",
+  ARCHIVED: "bg-ink-900/6 text-ink-400 ring-1 ring-inset ring-ink-900/10",
 };
 
 function Avatar({ name, unread }: { name: string; unread?: boolean }) {
@@ -46,8 +46,10 @@ function Avatar({ name, unread }: { name: string; unread?: boolean }) {
   return (
     <span
       className={cn(
-        "flex size-9 shrink-0 items-center justify-center rounded-full font-mono text-[0.68rem] tracking-[0.08em]",
-        unread ? "bg-ink-900 text-white" : "bg-ink-100 text-ink-600",
+        "flex size-9 shrink-0 items-center justify-center rounded-full font-mono text-[0.68rem] tracking-[0.08em] text-white",
+        unread
+          ? "bg-gradient-to-br from-[#ea580c] to-[#fb923c] shadow-[0_8px_18px_-8px_rgba(234,88,12,0.8)]"
+          : "from-ink-400 to-ink-300 bg-gradient-to-br",
       )}
       aria-hidden
     >
@@ -176,25 +178,26 @@ export function Inbox({ user }: { user: User | null }) {
         description="Enquiries submitted through the website contact form."
         actions={
           counts && (
-            <div className="text-ink-400 flex gap-5 font-mono text-[0.62rem] tracking-[0.12em] uppercase">
-              <span>
-                <strong className="text-ink-900 text-base font-semibold tracking-normal">
-                  {counts.unread}
-                </strong>{" "}
-                unread
-              </span>
-              <span>
-                <strong className="text-ink-900 text-base font-semibold tracking-normal">
-                  {counts.last24h}
-                </strong>{" "}
-                last 24h
-              </span>
-              <span>
-                <strong className="text-ink-900 text-base font-semibold tracking-normal">
-                  {counts.total}
-                </strong>{" "}
-                total
-              </span>
+            <div className="flex gap-2">
+              {(
+                [
+                  ["unread", counts.unread, "text-orange-700"],
+                  ["last 24h", counts.last24h, "text-brand-700"],
+                  ["total", counts.total, "text-ink-900"],
+                ] as const
+              ).map(([label, n, tone]) => (
+                <span
+                  key={label}
+                  className="glass glass-strong flex min-w-[5.5rem] flex-col items-center rounded-2xl px-3 py-2"
+                >
+                  <strong className={cn("text-lg leading-none font-semibold tabular-nums", tone)}>
+                    {n}
+                  </strong>
+                  <span className="text-ink-400 mt-1 font-mono text-[0.58rem] tracking-[0.12em] uppercase">
+                    {label}
+                  </span>
+                </span>
+              ))}
             </div>
           )
         }
@@ -203,10 +206,10 @@ export function Inbox({ user }: { user: User | null }) {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[380px_minmax(0,1fr)] xl:grid-cols-[420px_minmax(0,1fr)]">
         {/* List */}
         <section
-          className="border-ink-200 flex min-w-0 flex-col rounded-lg border bg-white lg:max-h-[calc(100vh-11rem)]"
+          className="glass flex min-w-0 flex-col overflow-hidden lg:max-h-[calc(100vh-11rem)]"
           aria-label="Message list"
         >
-          <div className="border-ink-100 border-b p-3">
+          <div className="border-b border-white/70 bg-white/25 p-3">
             <div className="relative">
               <Search
                 className="text-ink-400 pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2"
@@ -229,10 +232,10 @@ export function Inbox({ user }: { user: User | null }) {
                   aria-selected={filter === f.key}
                   onClick={() => setFilter(f.key)}
                   className={cn(
-                    "rounded-md px-2.5 py-1 text-xs font-medium transition-colors",
+                    "rounded-full px-2.5 py-1 text-xs font-medium transition-[background,color,box-shadow] duration-300",
                     filter === f.key
-                      ? "bg-ink-900 text-white"
-                      : "text-ink-500 hover:bg-ink-100 hover:text-ink-900",
+                      ? "bg-gradient-to-r from-[#2f62c6] to-[#5b8be6] text-white shadow-[0_8px_20px_-8px_rgba(47,98,198,0.9)]"
+                      : "text-ink-500 hover:text-ink-900 hover:bg-white/80",
                   )}
                 >
                   {f.label}
@@ -240,7 +243,7 @@ export function Inbox({ user }: { user: User | null }) {
                     <span
                       className={cn(
                         "ml-1.5 rounded-full px-1.5 font-mono text-[0.6rem]",
-                        filter === "NEW" ? "bg-white/20" : "bg-brand-500 text-white",
+                        filter === "NEW" ? "bg-white/25" : "bg-orange-500 text-white",
                       )}
                     >
                       {counts.unread}
@@ -253,9 +256,9 @@ export function Inbox({ user }: { user: User | null }) {
           <ul className="max-h-[60vh] flex-1 overflow-y-auto lg:max-h-none">
             {page === null ? (
               Array.from({ length: 6 }).map((_, i) => (
-                <li key={i} className="border-ink-100 border-b p-4">
-                  <div className="bg-ink-100 h-3.5 w-1/2 animate-pulse rounded" />
-                  <div className="bg-ink-100 mt-2 h-3 w-3/4 animate-pulse rounded" />
+                <li key={i} className="border-b border-white/70 p-4">
+                  <div className="dash-shimmer h-3.5 w-1/2 rounded" />
+                  <div className="dash-shimmer mt-2 h-3 w-3/4 rounded" />
                 </li>
               ))
             ) : page.content.length === 0 ? (
@@ -274,8 +277,9 @@ export function Inbox({ user }: { user: User | null }) {
                       onClick={() => open(m)}
                       aria-current={active ? "true" : undefined}
                       className={cn(
-                        "border-ink-100 hover:bg-ink-50 flex w-full gap-3 border-b px-4 py-3 text-left transition-colors",
-                        active && "bg-brand-500/5",
+                        "flex w-full gap-3 border-b border-white/70 px-4 py-3 text-left transition-colors hover:bg-white/60",
+                        active &&
+                          "bg-gradient-to-r from-[#2f62c6]/12 to-transparent shadow-[inset_3px_0_0_#2f62c6]",
                       )}
                     >
                       <Avatar name={m.name} unread={unread} />
@@ -307,7 +311,7 @@ export function Inbox({ user }: { user: User | null }) {
                       </span>
                       {unread && (
                         <span
-                          className="bg-brand-500 mt-2 size-2 shrink-0 rounded-full"
+                          className="mt-2 size-2 shrink-0 rounded-full bg-orange-500 shadow-[0_0_0_3px_rgba(249,115,22,0.2)]"
                           aria-label="Unread"
                         />
                       )}
@@ -317,23 +321,19 @@ export function Inbox({ user }: { user: User | null }) {
               })
             )}
           </ul>
-          {page && page.totalPages > 1 && (
-            <div className="border-ink-100 text-ink-500 flex items-center justify-between border-t p-2 text-xs">
-              <AdminButton size="sm" disabled={page.page === 0} onClick={() => load(page.page - 1)}>
-                Newer
-              </AdminButton>
-              <span>
-                {page.page + 1} / {page.totalPages}
-              </span>
-              <AdminButton size="sm" disabled={page.last} onClick={() => load(page.page + 1)}>
-                Older
-              </AdminButton>
-            </div>
+          {page && (
+            <Pagination
+              page={page.page}
+              totalPages={page.totalPages}
+              last={page.last}
+              onPage={load}
+              labels={["Newer", "Older"]}
+            />
           )}
         </section>
 
         {/* Detail */}
-        <section className="border-ink-200 min-w-0 rounded-lg border bg-white" aria-label="Message">
+        <section className="glass min-w-0 overflow-hidden" aria-label="Message">
           {!selected ? (
             <div className="text-ink-400 flex h-full min-h-[420px] flex-col items-center justify-center p-10 text-center">
               <MailOpen className="size-8" aria-hidden />
@@ -341,7 +341,7 @@ export function Inbox({ user }: { user: User | null }) {
             </div>
           ) : (
             <div className="flex h-full flex-col">
-              <header className="border-ink-100 flex flex-wrap items-start justify-between gap-4 border-b p-5">
+              <header className="flex flex-wrap items-start justify-between gap-4 border-b border-white/70 bg-white/25 p-5">
                 <div className="flex items-start gap-4">
                   <Avatar name={selected.name} unread={selected.status === "NEW"} />
                   <div>
@@ -368,7 +368,7 @@ export function Inbox({ user }: { user: User | null }) {
                         <Clock className="size-3" aria-hidden />
                         {formatDateTime(selected.createdAt)}
                       </span>
-                      <span className={cn("rounded-sm px-1.5 py-0.5", statusCls[selected.status])}>
+                      <span className={cn("rounded-full px-2 py-0.5", statusCls[selected.status])}>
                         {selected.status}
                       </span>
                     </p>
@@ -380,7 +380,7 @@ export function Inbox({ user }: { user: User | null }) {
                     onClick={() => {
                       if (selected.status !== "REPLIED") act("replied");
                     }}
-                    className="bg-brand-500 hover:bg-brand-600 inline-flex h-9 items-center gap-1.5 rounded-md px-3.5 text-sm font-medium text-white"
+                    className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-br from-[#2f62c6] to-[#5b8be6] px-3.5 text-sm font-medium text-white shadow-[0_10px_24px_-10px_rgba(47,98,198,0.8)] transition-[box-shadow,transform] duration-300 hover:-translate-y-px"
                   >
                     <Reply className="size-4" aria-hidden /> Reply by email
                   </a>
@@ -423,13 +423,13 @@ export function Inbox({ user }: { user: User | null }) {
                   {selected.message}
                 </p>
                 {selected.repliedAt && (
-                  <p className="mt-6 inline-flex items-center gap-2 rounded-md bg-emerald-50 px-3 py-1.5 text-xs text-emerald-800">
+                  <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-500/12 px-3 py-1.5 text-xs text-emerald-800 ring-1 ring-emerald-500/20 ring-inset">
                     <Check className="size-3.5" aria-hidden /> Replied{" "}
                     {formatDateTime(selected.repliedAt)}
                   </p>
                 )}
               </div>
-              <div className="border-ink-100 border-t p-5">
+              <div className="border-t border-white/70 bg-white/25 p-5">
                 <label htmlFor="notes" className="text-ink-500 mb-1.5 block text-xs font-medium">
                   Internal notes{" "}
                   <span className="text-ink-400 font-normal">(not visible to the sender)</span>

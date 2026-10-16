@@ -29,7 +29,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
         String header = req.getHeader("Authorization");
         if (header != null && header.startsWith("Bearer ") && SecurityContextHolder.getContext().getAuthentication() == null) {
-            jwt.parse(header.substring(7)).ifPresent(p -> users.findById(p.userId()).filter(User::isEnabled).ifPresent(user -> {
+            jwt.parse(header.substring(7)).ifPresent(p -> users.findById(p.userId()).filter(User::isEnabled).filter(user -> issuedAfterPasswordChange(p, user)).ifPresent(user -> {
                 CurrentUser principal = new CurrentUser(user.getId(), user.getEmail(), user.getName(), user.getRole());
                 var auth = new UsernamePasswordAuthenticationToken(principal, null,
                     List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name())));
@@ -37,5 +37,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }));
         }
         chain.doFilter(req, res);
+    }
+
+    /** A password change signs out every session: tokens issued before it (second precision) are ignored. */
+    private static boolean issuedAfterPasswordChange(JwtService.Principal p, User user) {
+        if (user.getPasswordChangedAt() == null) return true;
+        if (p.issuedAt() == null) return false;
+        return !p.issuedAt().isBefore(user.getPasswordChangedAt());
     }
 }

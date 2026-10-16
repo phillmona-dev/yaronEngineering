@@ -11,6 +11,7 @@ import {
   Users,
   Image as ImageIcon,
   Settings,
+  ShieldCheck,
   LogOut,
   Menu,
   X,
@@ -35,6 +36,7 @@ const nav = [
   { href: "/admin/tags", label: "Tags", icon: Tags },
   { href: "/admin/authors", label: "Authors", icon: Users },
   { href: "/admin/media", label: "Media", icon: ImageIcon },
+  { href: "/admin/security", label: "Security", icon: ShieldCheck },
   { href: "/admin/settings", label: "Settings", icon: Settings, adminOnly: true },
 ];
 
@@ -72,7 +74,7 @@ function Shell({ children }: { children: React.ReactNode }) {
 
   const sidebar = (
     <div className="flex h-full flex-col">
-      <div className="border-ink-200 flex h-14 items-center gap-3 border-b px-4">
+      <div className="flex h-14 items-center gap-3 border-b border-white/70 px-4">
         <LogoMark size={28} />
         <div className="leading-tight">
           <p className="text-ink-900 text-sm font-semibold">Yaron CMS</p>
@@ -84,7 +86,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       <div className="p-3">
         <Link
           href="/admin/articles/new"
-          className="bg-brand-500 hover:bg-brand-600 flex h-9 items-center justify-center gap-2 rounded-md text-sm font-medium text-white"
+          className="flex h-9 items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-[#2f62c6] to-[#5b8be6] text-sm font-medium text-white shadow-[0_10px_24px_-10px_rgba(47,98,198,0.8)] transition-[box-shadow,transform] duration-300 hover:-translate-y-px hover:shadow-[0_14px_28px_-10px_rgba(47,98,198,0.9)]"
         >
           <PenSquare className="size-4" aria-hidden /> New article
         </Link>
@@ -101,8 +103,8 @@ function Shell({ children }: { children: React.ReactNode }) {
                   className={cn(
                     "flex h-9 items-center gap-3 rounded-md px-3 text-sm transition-colors",
                     active
-                      ? "bg-ink-100 text-ink-900 font-medium"
-                      : "text-ink-500 hover:bg-ink-50 hover:text-ink-900",
+                      ? "text-ink-900 bg-gradient-to-r from-[#2f62c6]/12 to-[#7c3aed]/8 font-medium shadow-[inset_0_0_0_1px_rgba(47,98,198,0.15)]"
+                      : "text-ink-500 hover:text-ink-900 hover:bg-white/70",
                   )}
                 >
                   <n.icon className="size-4" aria-hidden /> {n.label}
@@ -120,12 +122,12 @@ function Shell({ children }: { children: React.ReactNode }) {
           })}
         </ul>
       </nav>
-      <div className="border-ink-200 border-t p-3">
+      <div className="border-t border-white/70 p-3">
         <button
           type="button"
           onClick={enableDesktopAlerts}
           disabled={desktopAlerts}
-          className="text-ink-500 hover:bg-ink-50 hover:text-ink-900 disabled:text-ink-400 flex h-9 w-full items-center gap-3 rounded-md px-3 text-sm"
+          className="text-ink-500 hover:text-ink-900 disabled:text-ink-400 flex h-9 w-full items-center gap-3 rounded-md px-3 text-sm hover:bg-white/70"
           title={
             desktopAlerts
               ? "Desktop alerts are on"
@@ -142,7 +144,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         <Link
           href="/blog"
           target="_blank"
-          className="text-ink-500 hover:bg-ink-50 hover:text-ink-900 flex h-9 items-center gap-3 rounded-md px-3 text-sm"
+          className="text-ink-500 hover:text-ink-900 flex h-9 items-center gap-3 rounded-md px-3 text-sm hover:bg-white/70"
         >
           <ExternalLink className="size-4" aria-hidden /> View site
         </Link>
@@ -169,14 +171,14 @@ function Shell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div data-theme="light" className="bg-ink-50 text-ink-900 min-h-screen antialiased">
-        <aside className="border-ink-200 fixed inset-y-0 left-0 z-40 hidden w-60 border-r bg-white lg:block">
+      <div data-theme="light" className="text-ink-900 min-h-screen bg-[#eef1f7] antialiased">
+        <aside className="glass-sidebar fixed inset-y-0 left-0 z-40 hidden w-60 lg:block">
           {sidebar}
         </aside>
         {open && (
           <div className="fixed inset-0 z-50 lg:hidden">
             <div className="bg-ink-950/40 absolute inset-0" onClick={() => setOpen(false)} />
-            <aside className="absolute inset-y-0 left-0 w-64 bg-white shadow-xl">
+            <aside className="glass-sidebar absolute inset-y-0 left-0 w-64 shadow-2xl">
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -189,8 +191,9 @@ function Shell({ children }: { children: React.ReactNode }) {
             </aside>
           </div>
         )}
-        <div className="lg:pl-60">
-          <header className="border-ink-200 sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-white/90 px-4 backdrop-blur lg:hidden">
+        <div className="relative isolate min-h-screen lg:pl-60">
+          <div className="admin-grid" aria-hidden />
+          <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-white/70 bg-white/70 px-4 backdrop-blur-xl lg:hidden">
             <button
               type="button"
               onClick={() => setOpen(true)}
@@ -211,7 +214,7 @@ function Shell({ children }: { children: React.ReactNode }) {
               </Link>
             )}
           </header>
-          <main className="mx-auto max-w-[1280px] p-4 md:p-6 lg:p-8">{children}</main>
+          <main className="relative z-10 mx-auto max-w-[1800px] p-4 md:p-6 lg:p-8">{children}</main>
         </div>
       </div>
     </>

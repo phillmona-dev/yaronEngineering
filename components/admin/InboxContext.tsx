@@ -5,8 +5,18 @@ import { admin } from "@/lib/admin/client";
 import type { ContactSummary } from "@/lib/blog/types";
 import { useToast } from "./Toast";
 
-type Ctx = { summary: ContactSummary | null; refresh: () => void; desktopAlerts: boolean; enableDesktopAlerts: () => Promise<void> };
-const InboxCtx = createContext<Ctx>({ summary: null, refresh: () => undefined, desktopAlerts: false, enableDesktopAlerts: async () => undefined });
+type Ctx = {
+  summary: ContactSummary | null;
+  refresh: () => void;
+  desktopAlerts: boolean;
+  enableDesktopAlerts: () => Promise<void>;
+};
+const InboxCtx = createContext<Ctx>({
+  summary: null,
+  refresh: () => undefined,
+  desktopAlerts: false,
+  enableDesktopAlerts: async () => undefined,
+});
 
 const POLL_MS = 45000;
 
@@ -26,13 +36,26 @@ export function InboxProvider({ children }: { children: React.ReactNode }) {
       setSummary(s);
       if (lastUnread.current !== null && s.unread > lastUnread.current) {
         const delta = s.unread - lastUnread.current;
-        const text = delta === 1 ? "New message from the contact form." : `${delta} new messages from the contact form.`;
+        const text =
+          delta === 1
+            ? "New message from the contact form."
+            : `${delta} new messages from the contact form.`;
         toast("info", text);
-        if (desktopAlerts && typeof Notification !== "undefined" && Notification.permission === "granted" && document.visibilityState !== "visible") {
+        if (
+          desktopAlerts &&
+          typeof Notification !== "undefined" &&
+          Notification.permission === "granted" &&
+          document.visibilityState !== "visible"
+        ) {
           try {
             const n = new Notification("Yaron CMS", { body: text, tag: "yaron-inbox" });
-            n.onclick = () => { window.focus(); window.location.href = "/admin/messages"; };
-          } catch { /* notifications unavailable */ }
+            n.onclick = () => {
+              window.focus();
+              window.location.href = "/admin/messages";
+            };
+          } catch {
+            /* notifications unavailable */
+          }
         }
       }
       lastUnread.current = s.unread;
@@ -46,11 +69,15 @@ export function InboxProvider({ children }: { children: React.ReactNode }) {
     const t = setInterval(refresh, POLL_MS);
     const onVisible = () => document.visibilityState === "visible" && refresh();
     document.addEventListener("visibilitychange", onVisible);
-    return () => { clearInterval(t); document.removeEventListener("visibilitychange", onVisible); };
+    return () => {
+      clearInterval(t);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   }, [refresh]);
 
   useEffect(() => {
-    if (typeof Notification !== "undefined" && Notification.permission === "granted") setDesktopAlerts(true);
+    if (typeof Notification !== "undefined" && Notification.permission === "granted")
+      setDesktopAlerts(true);
   }, []);
 
   useEffect(() => {
@@ -64,7 +91,11 @@ export function InboxProvider({ children }: { children: React.ReactNode }) {
     setDesktopAlerts(p === "granted");
   }, []);
 
-  return <InboxCtx.Provider value={{ summary, refresh, desktopAlerts, enableDesktopAlerts }}>{children}</InboxCtx.Provider>;
+  return (
+    <InboxCtx.Provider value={{ summary, refresh, desktopAlerts, enableDesktopAlerts }}>
+      {children}
+    </InboxCtx.Provider>
+  );
 }
 
 export const useInbox = () => useContext(InboxCtx);

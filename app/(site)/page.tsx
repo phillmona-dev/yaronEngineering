@@ -10,6 +10,7 @@ import { PartnersSection } from "@/components/sections/PartnersSection";
 import { WhyYaron } from "@/components/sections/WhyYaron";
 import { Commitment } from "@/components/sections/Commitment";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+import { AdminLinkButton } from "@/components/ui/AdminLinkButton";
 
 export default function HomePage() {
   return (
@@ -26,6 +27,7 @@ export default function HomePage() {
       <WhyYaron />
       <Commitment />
       <FinalCTA />
+      <AdminLinkButton />
     </>
   );
 }

@@ -17,10 +17,14 @@ Static media files are served from **`/media/files/{filename}`** (public, immuta
 
 JWT bearer tokens (HS256, `JWT_SECRET`, default TTL 12 h). Passwords are BCrypt-hashed. Tokens are never logged.
 
-| Method | Path          | Body                      | Response                                                                                                     |
-| ------ | ------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| POST   | `/auth/login` | `{ "email", "password" }` | `200 { "accessToken", "tokenType": "Bearer", "expiresIn": 43200, "user": User }` · `401 INVALID_CREDENTIALS` |
-| GET    | `/auth/me`    | —                         | `200 User`                                                                                                   |
+| Method | Path                    | Body                                   | Response                                                                                                                                                                                                                                                                |
+| ------ | ----------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| POST   | `/auth/login`           | `{ "email", "password" }`              | `200 { "accessToken", "tokenType": "Bearer", "expiresIn": 43200, "user": User }` · `401 INVALID_CREDENTIALS`                                                                                                                                                            |
+| GET    | `/auth/me`              | —                                      | `200 User`                                                                                                                                                                                                                                                              |
+| GET    | `/auth/security`        | —                                      | `200 { "user": User, "passwordChangedAt": ISO \| null, "sessionTtlSeconds", "passwordMinLength", "passwordPolicy", "resetEmailEnabled" }`                                                                                                                               |
+| POST   | `/auth/change-password` | `{ "currentPassword", "newPassword" }` | `200 LoginResponse` (fresh token; tokens issued before the change are rejected) · `400 VALIDATION_ERROR` with `errors[].field` = `currentPassword` or `newPassword`                                                                                                     |
+| POST   | `/auth/forgot-password` | `{ "email" }`                          | **public** · `202 { "message" }` — identical whether or not the account exists; emails a one-time link `FRONTEND_URL/admin/reset-password?token=…` (valid `PASSWORD_RESET_TTL_MINUTES`, default 30; newest link wins). Without SMTP the link is written to the API log. |
+| POST   | `/auth/reset-password`  | `{ "token", "newPassword" }`           | **public** · `204` · `400 INVALID_TOKEN` (unknown, used or expired) · `400 VALIDATION_ERROR`                                                                                                                                                                            |
 
 `User`: `{ "id", "email", "name", "role": "ADMIN" \| "EDITOR" \| "AUTHOR", "authorSlug"?: string }`
 
@@ -34,7 +38,9 @@ JWT bearer tokens (HS256, `JWT_SECRET`, default TTL 12 h). Passwords are BCrypt-
 
 Admin bootstrap: on startup, if no users exist, an `ADMIN` is created from `ADMIN_EMAIL` / `ADMIN_PASSWORD` / `ADMIN_NAME` env vars.
 
-Rate limiting: `/auth/login` is limited to 10 attempts per IP per minute (`429 RATE_LIMITED`).
+Password policy: at least 10 characters including a letter and a number, not in a small common-password denylist, and different from the current password. Any password change (self-service or reset) stamps `users.password_changed_at`; JWTs with an `iat` before it are rejected, which signs out every other device.
+
+Rate limiting: `/auth/login`, `/auth/forgot-password` and `/auth/reset-password` are each limited to 10 attempts per IP per minute (`429 RATE_LIMITED`). The Next.js proxy forwards the visitor's IP in `X-Forwarded-For`.
 
 ---
 
@@ -60,7 +66,7 @@ Query: `?page=0&size=12` (size ≤ 50). Response:
 }
 ```
 
-Codes: `VALIDATION_ERROR` 400 · `INVALID_CREDENTIALS` 401 · `UNAUTHORIZED` 401 · `FORBIDDEN` 403 · `NOT_FOUND` 404 · `CONFLICT` 409 (duplicate slug) · `INVALID_STATE` 409 (illegal transition) · `PAYLOAD_TOO_LARGE` 413 · `UNSUPPORTED_MEDIA_TYPE` 415 · `RATE_LIMITED` 429 · `INTERNAL_ERROR` 500. Stack traces are never returned.
+Codes: `VALIDATION_ERROR` 400 · `INVALID_TOKEN` 400 (reset link) · `INVALID_CREDENTIALS` 401 · `UNAUTHORIZED` 401 · `FORBIDDEN` 403 · `NOT_FOUND` 404 · `CONFLICT` 409 (duplicate slug) · `INVALID_STATE` 409 (illegal transition) · `PAYLOAD_TOO_LARGE` 413 · `UNSUPPORTED_MEDIA_TYPE` 415 · `RATE_LIMITED` 429 · `INTERNAL_ERROR` 500. Stack traces are never returned.
 
 ### Media reference
 
@@ -268,14 +274,14 @@ Failures are logged and never block the editorial action.
 
 Submissions from the website contact form are stored and managed in the CMS inbox.
 
-| Method | Path | Auth | Body / Query | Response |
-|---|---|---|---|---|
-| POST | `/public/contact` | none (5 per IP per 10 min → `429 RATE_LIMITED`) | `{ name, email, organization?, subject, message (≥ 20 chars), source? }` | `202 { "status": "RECEIVED", "id" }` |
-| GET | `/contact-messages` | EDITOR/ADMIN | `page,size,status=NEW\|READ\|REPLIED\|ARCHIVED,q` | `Page<ContactMessage>` |
-| GET | `/contact-messages/summary` | EDITOR/ADMIN | — | `{ unread, total, last24h, replied, archived }` |
-| GET | `/contact-messages/{id}` | EDITOR/ADMIN | — | `ContactMessage` |
-| POST | `/contact-messages/{id}/read` · `/unread` · `/replied` · `/archive` | EDITOR/ADMIN | — | updated `ContactMessage` |
-| PUT | `/contact-messages/{id}/notes` | EDITOR/ADMIN | `{ notes }` | updated `ContactMessage` |
-| DELETE | `/contact-messages/{id}` | ADMIN | — | `204` |
+| Method | Path                                                                | Auth                                            | Body / Query                                                             | Response                                        |
+| ------ | ------------------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------- |
+| POST   | `/public/contact`                                                   | none (5 per IP per 10 min → `429 RATE_LIMITED`) | `{ name, email, organization?, subject, message (≥ 20 chars), source? }` | `202 { "status": "RECEIVED", "id" }`            |
+| GET    | `/contact-messages`                                                 | EDITOR/ADMIN                                    | `page,size,status=NEW\|READ\|REPLIED\|ARCHIVED,q`                        | `Page<ContactMessage>`                          |
+| GET    | `/contact-messages/summary`                                         | EDITOR/ADMIN                                    | —                                                                        | `{ unread, total, last24h, replied, archived }` |
+| GET    | `/contact-messages/{id}`                                            | EDITOR/ADMIN                                    | —                                                                        | `ContactMessage`                                |
+| POST   | `/contact-messages/{id}/read` · `/unread` · `/replied` · `/archive` | EDITOR/ADMIN                                    | —                                                                        | updated `ContactMessage`                        |
+| PUT    | `/contact-messages/{id}/notes`                                      | EDITOR/ADMIN                                    | `{ notes }`                                                              | updated `ContactMessage`                        |
+| DELETE | `/contact-messages/{id}`                                            | ADMIN                                           | —                                                                        | `204`                                           |
 
 `ContactMessage`: `{ id, name, email, organization, subject, message, status, notes, createdAt, updatedAt, readAt, repliedAt }`. The dashboard `Stats` object additionally carries `unreadMessages` and `recentMessages` (latest 5). Sender IPs are stored only as a SHA-256 hash.

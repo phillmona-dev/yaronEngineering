@@ -21,15 +21,47 @@ public class AuthController {
 
     @PostMapping("/login")
     public AuthDtos.LoginResponse login(@Valid @RequestBody AuthDtos.LoginRequest req, HttpServletRequest http) {
-        if (!limiter.allow(clientIp(http))) {
-            throw new ApiException(HttpStatus.TOO_MANY_REQUESTS, ErrorCode.RATE_LIMITED, "Too many login attempts. Try again in a minute.");
-        }
+        rateLimit("login", http, "Too many login attempts. Try again in a minute.");
         return auth.login(req);
     }
 
     @GetMapping("/me")
     public UserDto me() {
         return auth.me(CurrentUser.require());
+    }
+
+    @GetMapping("/security")
+    public AuthDtos.SecurityOverview security() {
+        return auth.security(CurrentUser.require());
+    }
+
+    /** Returns a fresh token: tokens issued before the change are rejected from now on. */
+    @PostMapping("/change-password")
+    public AuthDtos.LoginResponse changePassword(@Valid @RequestBody AuthDtos.ChangePasswordRequest req) {
+        return auth.changePassword(CurrentUser.require(), req);
+    }
+
+    /** Public. Same response whether or not the account exists. */
+    @PostMapping("/forgot-password")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public AuthDtos.Ack forgotPassword(@Valid @RequestBody AuthDtos.ForgotPasswordRequest req, HttpServletRequest http) {
+        rateLimit("forgot", http, "Too many reset requests. Try again in a minute.");
+        auth.forgotPassword(req.email());
+        return new AuthDtos.Ack("If an account exists for that email, a password reset link has been sent.");
+    }
+
+    /** Public. Consumes a one-time token from the reset email. */
+    @PostMapping("/reset-password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void resetPassword(@Valid @RequestBody AuthDtos.ResetPasswordRequest req, HttpServletRequest http) {
+        rateLimit("reset", http, "Too many attempts. Try again in a minute.");
+        auth.resetPassword(req);
+    }
+
+    private void rateLimit(String bucket, HttpServletRequest http, String message) {
+        if (!limiter.allow(bucket + ":" + clientIp(http))) {
+            throw new ApiException(HttpStatus.TOO_MANY_REQUESTS, ErrorCode.RATE_LIMITED, message);
+        }
     }
 
     private static String clientIp(HttpServletRequest req) {

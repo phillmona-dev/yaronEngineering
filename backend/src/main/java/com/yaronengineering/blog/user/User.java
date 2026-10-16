@@ -30,6 +30,10 @@ public class User {
     @Column(nullable = false)
     private boolean enabled = true;
 
+    /** Tokens issued before this instant are rejected (see JwtAuthFilter). Null until the first change. */
+    @Column(name = "password_changed_at")
+    private Instant passwordChangedAt;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private Instant createdAt;
@@ -49,6 +53,8 @@ public class User {
     public void setRole(Role role) { this.role = role; }
     public boolean isEnabled() { return enabled; }
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
+    public Instant getPasswordChangedAt() { return passwordChangedAt; }
+    public void setPasswordChangedAt(Instant passwordChangedAt) { this.passwordChangedAt = passwordChangedAt; }
     public Instant getCreatedAt() { return createdAt; }
     public Instant getUpdatedAt() { return updatedAt; }
 }

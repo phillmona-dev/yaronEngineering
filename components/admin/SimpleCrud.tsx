@@ -12,9 +12,14 @@ import {
   Modal,
   PageHeader,
   TableSkeleton,
+  CountChip,
   inputCls,
+  tableCls,
+  tbodyCls,
   td,
   th,
+  theadCls,
+  trCls,
 } from "./ui";
 import { useToast } from "./Toast";
 import { slugify } from "@/lib/blog/format";
@@ -34,6 +39,12 @@ type Row = Record<string, unknown> & {
   slug?: string;
   articleCount?: number;
 };
+
+/** "Categories" → "category", "Tags" → "tag". */
+function singular(plural: string) {
+  const w = plural.toLowerCase();
+  return w.endsWith("ies") ? `${w.slice(0, -3)}y` : w.endsWith("s") ? w.slice(0, -1) : w;
+}
 
 /** Generic list + create/edit/delete for categories, tags and authors. */
 export function SimpleCrud({
@@ -118,10 +129,14 @@ export function SimpleCrud({
           </AdminButton>
         }
       />
-      <Card padded={false}>
+      <Card
+        padded={false}
+        title={title}
+        action={rows ? <CountChip>{rows.length} total</CountChip> : undefined}
+      >
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[560px]">
-            <thead className="border-ink-100 border-b">
+          <table className={`${tableCls} min-w-[560px]`}>
+            <thead className={theadCls}>
               <tr>
                 {columns.map((c) => (
                   <th key={c.key} className={th}>
@@ -131,7 +146,7 @@ export function SimpleCrud({
                 <th className={th} />
               </tr>
             </thead>
-            <tbody className="divide-ink-100 divide-y">
+            <tbody className={tbodyCls}>
               {rows === null ? (
                 <TableSkeleton cols={columns.length + 1} />
               ) : rows.length === 0 ? (
@@ -141,7 +156,7 @@ export function SimpleCrud({
                 />
               ) : (
                 rows.map((r) => (
-                  <tr key={r.id} className="hover:bg-ink-50/60">
+                  <tr key={r.id} className={trCls}>
                     {columns.map((c) => (
                       <td key={c.key} className={td}>
                         {c.render ? c.render(r) : String(r[c.key] ?? "")}
@@ -177,11 +192,7 @@ export function SimpleCrud({
 
       <Modal
         open={editing !== null}
-        title={
-          editing === "new"
-            ? `New ${title.slice(0, -1).toLowerCase()}`
-            : `Edit ${current?.name ?? ""}`
-        }
+        title={editing === "new" ? `New ${singular(title)}` : `Edit ${current?.name ?? ""}`}
         onClose={() => setEditing(null)}
       >
         <form onSubmit={save} className="flex flex-col gap-4" key={current?.id ?? "new"}>

@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/layout/JsonLd";
 import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, organizationSchema } from "@/lib/utils/seo";
 import { SITE_URL } from "@/lib/utils/site";
 import { company } from "@/lib/data/company";
+import AiChat from "@/components/ai/AiChat";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${manrope.variable} ${geistMono.variable}`} data-theme="light">
       <body>
         <MotionProvider>{children}</MotionProvider>
+        <AiChat />
         <JsonLd data={organizationSchema()} />
         <JsonLd
           data={{

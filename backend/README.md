@@ -12,7 +12,7 @@ Spring Boot 3.5 · Java 21 · PostgreSQL 16 · Flyway · Spring Security (JWT). 
 | `search`                    | PostgreSQL full-text search with highlighted snippets                                                       |
 | `publication`               | Scheduled publishing (`@Scheduled` every 60 s), `publication_schedule` ledger, Next.js revalidation webhook |
 | `analytics`                 | De-duplicated article views (SHA-256 of IP + user agent, one per day)                                       |
-| `auth`, `user`              | JWT login, rate limiting, roles ADMIN / EDITOR / AUTHOR, admin bootstrap                                    |
+| `auth`, `user`              | JWT login, rate limiting, roles ADMIN / EDITOR / AUTHOR, admin bootstrap, change password, forgot/reset password (one-time hashed tokens, `PasswordResetMailer`) |
 | `newsletter`                | Subscriber storage with pluggable `NewsletterProvider` (no-op by default)                                   |
 | `settings`, `dashboard`     | Site settings key/value store, dashboard statistics                                                         |
 | `seed`                      | Development-only sample articles (`SEED_SAMPLE_CONTENT=true`)                                               |
@@ -37,6 +37,10 @@ mvn spring-boot:run
 Flyway creates the schema on first start, seeds the 12 categories, and the admin user is created from `ADMIN_EMAIL` / `ADMIN_PASSWORD`. With `SEED_SAMPLE_CONTENT=true` five clearly labelled sample articles are inserted (their excerpts start with `[Sample article for development]`).
 
 Health: `GET http://localhost:8080/actuator/health`
+
+### Password recovery
+
+`POST /api/v1/auth/forgot-password` creates a one-time token (SHA-256 stored, raw value emailed) that opens `FRONTEND_URL/admin/reset-password?token=…` for `PASSWORD_RESET_TTL_MINUTES` (default 30). Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `MAIL_FROM` to send real email; with `SMTP_HOST` empty the link is written to the log at WARN level (`auth: PASSWORD RESET LINK for …`), which is enough for local development. Changing or resetting a password stamps `users.password_changed_at`, and the JWT filter rejects tokens issued before it.
 
 ## Tests
 

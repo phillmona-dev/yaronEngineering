@@ -4,6 +4,7 @@ import { Reveal } from "@/components/animations/Reveal";
 import { TextReveal } from "@/components/animations/TextReveal";
 import { MagneticButton } from "@/components/animations/MagneticButton";
 import { company } from "@/lib/data/company";
+import { GlobeCanvas } from "@/components/sections/GlobeCanvas";
 
 export function FinalCTA({
   title = ["Let's engineer", "what's next."],
@@ -22,23 +23,34 @@ export function FinalCTA({
       className="bg-ink-950 text-foreground relative isolate overflow-hidden"
       aria-labelledby="cta-title"
     >
+      {/* ── Background: earth-night image — lighter overlays ── */}
       <div className="absolute inset-0 -z-10">
         <Image
           src="/images/photos/earth-night.jpg"
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-center opacity-70"
+          className="object-cover object-center opacity-90"
         />
+        {/* lighter top+bottom vignette */}
         <div
           aria-hidden
-          className="from-ink-950 via-ink-950/60 to-ink-950 absolute inset-0 bg-gradient-to-b"
+          className="from-ink-950/80 via-ink-950/20 to-ink-950/80 absolute inset-0 bg-gradient-to-b"
         />
+        {/* left text-protection gradient */}
         <div
           aria-hidden
-          className="from-ink-950/80 absolute inset-0 bg-gradient-to-r to-transparent"
+          className="from-ink-950/85 absolute inset-0 bg-gradient-to-r to-transparent via-ink-950/20"
+          style={{ backgroundSize: "60% 100%" }}
         />
       </div>
+
+      {/* ── Animated globe (right side) ── */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <GlobeCanvas />
+      </div>
+
+      {/* ── Content ── */}
       <div className="container-x relative flex min-h-[80svh] flex-col justify-center py-28 lg:py-40">
         <Reveal>
           <p className="eyebrow text-ink-300">

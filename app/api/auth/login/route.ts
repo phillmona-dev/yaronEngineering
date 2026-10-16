@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ADMIN_COOKIE, API_URL } from "@/lib/blog/server";
+import { ADMIN_COOKIE, API_URL, forwardedFor } from "@/lib/blog/server";
 import type { LoginResponse } from "@/lib/blog/types";
 
 /** Exchanges credentials for a backend JWT and stores it in an httpOnly cookie. */
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   try {
     upstream = await fetch(`${API_URL}/api/v1/auth/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...forwardedFor(req) },
       body: JSON.stringify({ email: body.email, password: body.password }),
       cache: "no-store",
     });

@@ -2,21 +2,27 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { Eye, Pencil, Plus, Search } from "lucide-react";
+import Image from "next/image";
+import { Archive, Eye, Pencil, Plus, Search, Send, Star, Undo2 } from "lucide-react";
 import { admin, qs } from "@/lib/admin/client";
 import type { ArticleSummary, ArticleStatus, Category, Page } from "@/lib/blog/types";
-import { formatDateTime, timeAgo } from "@/lib/blog/format";
+import { formatDate, formatDateTime, mediaUrl, timeAgo } from "@/lib/blog/format";
 import {
-  AdminButton,
   Card,
   ConfirmDialog,
+  CountChip,
   EmptyRow,
   PageHeader,
+  Pagination,
   StatusBadge,
   TableSkeleton,
   inputCls,
+  tableCls,
+  tbodyCls,
   td,
   th,
+  theadCls,
+  trCls,
 } from "./ui";
 import { useToast } from "./Toast";
 
@@ -83,15 +89,15 @@ export function ArticlesTable() {
         actions={
           <Link
             href="/admin/articles/new"
-            className="bg-brand-500 hover:bg-brand-600 inline-flex h-9 items-center gap-1.5 rounded-md px-3.5 text-sm font-medium text-white"
+            className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-br from-[#2f62c6] to-[#5b8be6] px-3.5 text-sm font-medium text-white shadow-[0_10px_24px_-10px_rgba(47,98,198,0.8)] transition-[box-shadow,transform] duration-300 hover:-translate-y-px hover:shadow-[0_14px_28px_-10px_rgba(47,98,198,0.9)]"
           >
             <Plus className="size-4" aria-hidden /> New article
           </Link>
         }
       />
       <Card padded={false}>
-        <div className="border-ink-100 flex flex-wrap items-center gap-2 border-b p-3">
-          <div className="relative">
+        <div className="flex flex-wrap items-center gap-2 border-b border-white/70 bg-white/25 p-3">
+          <div className="relative w-full sm:w-60">
             <Search
               className="text-ink-400 pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2"
               aria-hidden
@@ -102,88 +108,129 @@ export function ArticlesTable() {
               aria-label="Search articles"
               value={filters.q}
               onChange={(e) => setFilters((f) => ({ ...f, q: e.target.value }))}
-              className={`${inputCls} w-56 pl-8`}
+              className={`${inputCls} pl-8`}
             />
           </div>
-          <select
-            aria-label="Status"
-            value={filters.status}
-            onChange={(e) =>
-              setFilters((f) => ({ ...f, status: e.target.value as ArticleStatus | "" }))
-            }
-            className={`${inputCls} w-auto`}
-          >
-            {STATUSES.map((s) => (
-              <option key={s} value={s}>
-                {s || "All statuses"}
-              </option>
-            ))}
-          </select>
-          <select
-            aria-label="Category"
-            value={filters.category}
-            onChange={(e) => setFilters((f) => ({ ...f, category: e.target.value }))}
-            className={`${inputCls} w-auto`}
-          >
-            <option value="">All categories</option>
-            {categories.map((c) => (
-              <option key={c.id} value={c.slug}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-          <select
-            aria-label="Sort"
-            value={filters.sort}
-            onChange={(e) => setFilters((f) => ({ ...f, sort: e.target.value }))}
-            className={`${inputCls} w-auto`}
-          >
-            <option value="updated">Recently updated</option>
-            <option value="published">Recently published</option>
-            <option value="views">Most viewed</option>
-            <option value="title">Title A–Z</option>
-          </select>
+          <div className="w-full sm:w-44">
+            <select
+              aria-label="Status"
+              value={filters.status}
+              onChange={(e) =>
+                setFilters((f) => ({ ...f, status: e.target.value as ArticleStatus | "" }))
+              }
+              className={inputCls}
+            >
+              {STATUSES.map((s) => (
+                <option key={s} value={s}>
+                  {s || "All statuses"}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="w-full sm:w-48">
+            <select
+              aria-label="Category"
+              value={filters.category}
+              onChange={(e) => setFilters((f) => ({ ...f, category: e.target.value }))}
+              className={inputCls}
+            >
+              <option value="">All categories</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.slug}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="w-full sm:w-48">
+            <select
+              aria-label="Sort"
+              value={filters.sort}
+              onChange={(e) => setFilters((f) => ({ ...f, sort: e.target.value }))}
+              className={inputCls}
+            >
+              <option value="updated">Recently updated</option>
+              <option value="published">Recently published</option>
+              <option value="views">Most viewed</option>
+              <option value="title">Title A–Z</option>
+            </select>
+          </div>
           {page && (
-            <span className="text-ink-400 ml-auto text-xs">
-              {page.totalElements} article{page.totalElements === 1 ? "" : "s"}
+            <span className="ml-auto">
+              <CountChip>
+                {page.totalElements} article{page.totalElements === 1 ? "" : "s"}
+              </CountChip>
             </span>
           )}
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[900px]">
-            <thead className="border-ink-100 border-b">
+          <table className={`${tableCls} min-w-[900px] table-fixed`}>
+            <colgroup>
+              <col style={{ width: "31%" }} />
+              <col style={{ width: "10%" }} />
+              <col style={{ width: "12%" }} />
+              <col style={{ width: "13%" }} />
+              <col style={{ width: "13%" }} />
+              <col style={{ width: "7%" }} />
+              <col style={{ width: "14%" }} />
+            </colgroup>
+            <thead className={theadCls}>
               <tr>
                 <th className={th}>Title</th>
                 <th className={th}>Status</th>
                 <th className={th}>Category</th>
                 <th className={th}>Author</th>
-                <th className={th}>Published</th>
-                <th className={th}>Updated</th>
+                <th className={th}>Dates</th>
                 <th className={`${th} text-right`}>Views</th>
-                <th className={th} />
+                <th className={`${th} text-right`}>Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-ink-100 divide-y">
+            <tbody className={tbodyCls}>
               {page === null ? (
                 <TableSkeleton rows={8} cols={8} />
               ) : page.content.length === 0 ? (
                 <EmptyRow colSpan={8} text="No articles match. Start by creating a new article." />
               ) : (
                 page.content.map((a) => (
-                  <tr key={a.id} className="hover:bg-ink-50/60">
+                  <tr key={a.id} className={trCls}>
                     <td className={td}>
-                      <Link
-                        href={`/admin/articles/${a.id}/edit`}
-                        className="hover:text-brand-600 font-medium"
-                      >
-                        {a.title || "Untitled"}
-                      </Link>
-                      {a.featured && (
-                        <span className="ml-2 font-mono text-[0.58rem] tracking-[0.1em] text-amber-700 uppercase">
-                          Featured
+                      <div className="flex items-center gap-3">
+                        <span className="relative size-10 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-[#2f62c6] to-[#7c3aed] shadow-[0_6px_14px_-6px_rgba(47,98,198,0.6)]">
+                          {a.coverImage?.url ? (
+                            <Image
+                              src={mediaUrl(a.coverImage.url)}
+                              alt=""
+                              fill
+                              sizes="40px"
+                              className="object-cover"
+                              unoptimized={a.coverImage.url.startsWith("http")}
+                            />
+                          ) : (
+                            <span className="grid size-full place-items-center text-sm font-semibold text-white">
+                              {(a.title || "U")[0].toUpperCase()}
+                            </span>
+                          )}
                         </span>
-                      )}
-                      <p className="text-ink-400 font-mono text-[0.62rem]">/blog/{a.slug}</p>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={`/admin/articles/${a.id}/edit`}
+                              className="hover:text-brand-600 truncate font-medium"
+                              title={a.title || "Untitled"}
+                            >
+                              {a.title || "Untitled"}
+                            </Link>
+                            {a.featured && (
+                              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#e9b917]/15 px-1.5 py-0.5 font-mono text-[0.55rem] tracking-[0.1em] text-amber-800 uppercase ring-1 ring-[#e9b917]/30 ring-inset">
+                                <Star className="size-2.5 fill-current" aria-hidden /> Featured
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-ink-400 truncate font-mono text-[0.62rem]">
+                            /blog/{a.slug}
+                          </p>
+                        </div>
+                      </div>
                     </td>
                     <td className={td}>
                       <StatusBadge status={a.status} />
@@ -193,23 +240,41 @@ export function ArticlesTable() {
                         </p>
                       )}
                     </td>
-                    <td className={`${td} text-ink-500`}>{a.category?.name ?? "—"}</td>
-                    <td className={`${td} text-ink-500`}>{a.author?.name ?? "—"}</td>
                     <td className={`${td} text-ink-500`}>
-                      {a.publishedAt ? formatDateTime(a.publishedAt) : "—"}
+                      <span className="block truncate" title={a.category?.name ?? ""}>
+                        {a.category?.name ?? "—"}
+                      </span>
                     </td>
-                    <td className={`${td} text-ink-500`} title={formatDateTime(a.updatedAt)}>
-                      {timeAgo(a.updatedAt)}
+                    <td className={`${td} text-ink-500`}>
+                      <span className="block truncate" title={a.author?.name ?? ""}>
+                        {a.author?.name ?? "—"}
+                      </span>
                     </td>
-                    <td className={`${td} text-right tabular-nums`}>
-                      {a.viewCount.toLocaleString()}
+                    <td className={td}>
+                      <p className="text-ink-900 truncate">
+                        {a.publishedAt
+                          ? formatDate(a.publishedAt, { month: "short" })
+                          : "Not published"}
+                      </p>
+                      <p
+                        className="text-ink-400 truncate text-xs"
+                        title={formatDateTime(a.updatedAt)}
+                      >
+                        updated {timeAgo(a.updatedAt)}
+                      </p>
                     </td>
                     <td className={`${td} text-right`}>
+                      <span className="text-ink-900 inline-flex items-center gap-1.5 rounded-full bg-white/60 px-2 py-0.5 font-mono text-xs tabular-nums ring-1 ring-white/80 ring-inset">
+                        <Eye className="text-ink-400 size-3" aria-hidden />
+                        {a.viewCount.toLocaleString()}
+                      </span>
+                    </td>
+                    <td className={`${td} text-right whitespace-nowrap`}>
                       <div className="inline-flex items-center gap-1">
                         <Link
                           href={`/admin/articles/${a.id}/edit`}
                           aria-label="Edit"
-                          className="text-ink-500 hover:bg-ink-100 hover:text-ink-900 rounded-md p-1.5"
+                          className="text-ink-500 hover:text-ink-900 rounded-lg p-1.5 hover:bg-white/80"
                         >
                           <Pencil className="size-3.5" />
                         </Link>
@@ -217,36 +282,42 @@ export function ArticlesTable() {
                           href={`/admin/articles/${a.id}/preview`}
                           target="_blank"
                           aria-label="Preview"
-                          className="text-ink-500 hover:bg-ink-100 hover:text-ink-900 rounded-md p-1.5"
+                          className="text-ink-500 hover:text-ink-900 rounded-lg p-1.5 hover:bg-white/80"
                         >
                           <Eye className="size-3.5" />
                         </Link>
                         {a.status === "DRAFT" && (
-                          <AdminButton
-                            size="sm"
-                            variant="ghost"
+                          <button
+                            type="button"
                             onClick={() => setConfirm({ a, action: "publish" })}
+                            aria-label="Publish"
+                            title="Publish"
+                            className="rounded-lg p-1.5 text-emerald-600 hover:bg-emerald-500/10"
                           >
-                            Publish
-                          </AdminButton>
+                            <Send className="size-3.5" />
+                          </button>
                         )}
                         {a.status === "PUBLISHED" && (
-                          <AdminButton
-                            size="sm"
-                            variant="ghost"
+                          <button
+                            type="button"
                             onClick={() => setConfirm({ a, action: "unpublish" })}
+                            aria-label="Unpublish"
+                            title="Unpublish (back to draft)"
+                            className="text-ink-500 hover:text-ink-900 rounded-lg p-1.5 hover:bg-white/80"
                           >
-                            Unpublish
-                          </AdminButton>
+                            <Undo2 className="size-3.5" />
+                          </button>
                         )}
                         {a.status !== "ARCHIVED" && (
-                          <AdminButton
-                            size="sm"
-                            variant="ghost"
+                          <button
+                            type="button"
                             onClick={() => setConfirm({ a, action: "archive" })}
+                            aria-label="Archive"
+                            title="Archive"
+                            className="text-ink-500 rounded-lg p-1.5 hover:bg-amber-500/10 hover:text-amber-700"
                           >
-                            Archive
-                          </AdminButton>
+                            <Archive className="size-3.5" />
+                          </button>
                         )}
                       </div>
                     </td>
@@ -256,18 +327,13 @@ export function ArticlesTable() {
             </tbody>
           </table>
         </div>
-        {page && page.totalPages > 1 && (
-          <div className="border-ink-100 text-ink-500 flex items-center justify-between border-t p-3 text-xs">
-            <AdminButton size="sm" disabled={page.page === 0} onClick={() => load(page.page - 1)}>
-              Previous
-            </AdminButton>
-            <span>
-              Page {page.page + 1} of {page.totalPages}
-            </span>
-            <AdminButton size="sm" disabled={page.last} onClick={() => load(page.page + 1)}>
-              Next
-            </AdminButton>
-          </div>
+        {page && (
+          <Pagination
+            page={page.page}
+            totalPages={page.totalPages}
+            last={page.last}
+            onPage={load}
+          />
         )}
       </Card>
       <ConfirmDialog

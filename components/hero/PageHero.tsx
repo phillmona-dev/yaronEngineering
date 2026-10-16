@@ -4,6 +4,7 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/animations/Reveal";
 import { TextReveal } from "@/components/animations/TextReveal";
 import { GridLines } from "@/components/ui/Backdrop";
+import { BackButton } from "@/components/ui/BackButton";
 import { cn } from "@/lib/utils/cn";
 
 type Crumb = { label: string; href: string };
@@ -51,6 +52,11 @@ export function PageHero({ eyebrow, title, lead, image, crumbs, children, compac
       )}
       <GridLines className="text-white opacity-50" />
       <div className="container-x relative">
+        {/* ── Back button ─────────────────────────────────────────────────── */}
+        <Reveal>
+          <BackButton className="mb-8" />
+        </Reveal>
+
         {crumbs && (
           <Reveal>
             <nav aria-label="Breadcrumb" className="mb-8">

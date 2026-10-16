@@ -90,12 +90,23 @@
 
   /* Primary button animations */
   @keyframes btn-shimmer {
-    0% { transform: translateX(-120%) skewX(-12deg); }
-    100% { transform: translateX(220%) skewX(-12deg); }
+    0% {
+      transform: translateX(-120%) skewX(-12deg);
+    }
+    100% {
+      transform: translateX(220%) skewX(-12deg);
+    }
   }
   @keyframes btn-glow-pulse {
-    0%, 100% { opacity: 0.55; transform: scale(1); }
-    50% { opacity: 0; transform: scale(1.6); }
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0;
+      transform: scale(1.6);
+    }
   }
 }
 
@@ -263,6 +274,25 @@ html[data-cursor="custom"] body,
 html[data-cursor="custom"] a,
 html[data-cursor="custom"] button {
   cursor: none;
+}
+
+/* AI chat widget always uses native cursor — custom cursor doesn't track fixed overlays */
+html[data-cursor="custom"] .ai-panel,
+html[data-cursor="custom"] .ai-panel *,
+html[data-cursor="custom"] .ai-fab,
+html[data-cursor="custom"] .ai-fab * {
+  cursor: auto !important;
+}
+html[data-cursor="custom"] .ai-fab,
+html[data-cursor="custom"] .ai-header-close,
+html[data-cursor="custom"] .ai-send-btn,
+html[data-cursor="custom"] .ai-suggestion-chip {
+  cursor: pointer !important;
+}
+html[data-cursor="custom"] .ai-input,
+html[data-cursor="custom"] .ai-msg-bubble,
+html[data-cursor="custom"] .ai-msg-bubble p {
+  cursor: text !important;
 }
 
 /* Partner marquee: translate by exactly one track width (two identical tracks). */
@@ -542,4 +572,101 @@ html[data-cursor="custom"] button {
 .editor-prose img.ProseMirror-selectednode {
   outline: 2px solid var(--brand);
   outline-offset: 2px;
+}
+
+/* ---------- Admin: glass panels ---------- */
+/* In the components layer so Tailwind utilities (absolute, rounded-xl, border-*) still win. */
+@layer components {
+  .glass {
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 0 0 1px rgba(10, 13, 20, 0.04),
+      0 24px 60px -28px rgba(10, 13, 20, 0.28);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    backdrop-filter: blur(20px) saturate(170%);
+  }
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.72);
+  }
+  .glass-dark {
+    background: linear-gradient(135deg, rgba(10, 13, 20, 0.92), rgba(28, 34, 48, 0.86));
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 30px 70px -30px rgba(10, 13, 20, 0.7);
+  }
+  /* Square grid behind the admin pages (no colour wash) */
+  .admin-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(10, 13, 20, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10, 13, 20, 0.055) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: radial-gradient(ellipse at 40% 0%, #000 30%, rgba(0, 0, 0, 0.35) 100%);
+    -webkit-mask-image: radial-gradient(ellipse at 40% 0%, #000 30%, rgba(0, 0, 0, 0.35) 100%);
+  }
+  @media (min-width: 1024px) {
+    .admin-grid {
+      left: 15rem;
+    }
+  }
+  .glass-sidebar {
+    background: rgba(255, 255, 255, 0.72);
+    border-right: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 0 1px rgba(10, 13, 20, 0.04);
+    -webkit-backdrop-filter: blur(24px) saturate(170%);
+    backdrop-filter: blur(24px) saturate(170%);
+  }
+  .glass-pop {
+    animation: dash-pop 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes dash-pop {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  .glass-fade {
+    animation: dash-fade 0.25s ease-out both;
+  }
+  @keyframes dash-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .dash-shimmer {
+    background: linear-gradient(
+      100deg,
+      rgba(10, 13, 20, 0.05) 30%,
+      rgba(255, 255, 255, 0.7) 50%,
+      rgba(10, 13, 20, 0.05) 70%
+    );
+    background-size: 200% 100%;
+    animation: dash-shimmer 1.6s linear infinite;
+  }
+  @keyframes dash-shimmer {
+    to {
+      background-position: -200% 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dash-shimmer,
+    .glass-pop,
+    .glass-fade {
+      animation: none;
+    }
+  }
 }

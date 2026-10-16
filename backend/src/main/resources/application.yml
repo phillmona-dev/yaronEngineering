@@ -59,6 +59,16 @@ app:
     secret: ${REVALIDATE_SECRET:}
   seed:
     sample-content: ${SEED_SAMPLE_CONTENT:false}
+  password-reset:
+    frontend-url: ${FRONTEND_URL:http://localhost:3000}
+    ttl-minutes: ${PASSWORD_RESET_TTL_MINUTES:30}
+  mail:
+    host: ${SMTP_HOST:}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    from: ${MAIL_FROM:no-reply@yaronengineering.com}
+    starttls: ${SMTP_STARTTLS:true}
 
 logging:
   pattern:

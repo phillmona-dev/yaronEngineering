@@ -48,7 +48,7 @@ public class SecurityConfig {
             .headers(h -> h.frameOptions(f -> f.deny()))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers("/api/v1/public/**", "/media/files/**", "/api/v1/auth/login", "/actuator/health", "/actuator/health/**").permitAll()
+                .requestMatchers("/api/v1/public/**", "/media/files/**", "/api/v1/auth/login", "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password", "/actuator/health", "/actuator/health/**").permitAll()
                 .anyRequest().authenticated())
             .exceptionHandling(ex -> ex
                 .authenticationEntryPoint((req, res, e) -> write(res, HttpServletResponse.SC_UNAUTHORIZED, ErrorCode.UNAUTHORIZED, "Authentication required"))

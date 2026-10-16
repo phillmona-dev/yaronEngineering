@@ -36,6 +36,12 @@ services:
       REVALIDATE_URL: http://frontend:3000/api/revalidate
       REVALIDATE_SECRET: ${REVALIDATE_SECRET:-dev-revalidate-secret}
       SEED_SAMPLE_CONTENT: ${SEED_SAMPLE_CONTENT:-true}
+      FRONTEND_URL: http://localhost:3000
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      MAIL_FROM: ${MAIL_FROM:-no-reply@yaronengineering.com}
     ports:
       - "8080:8080"
     volumes:

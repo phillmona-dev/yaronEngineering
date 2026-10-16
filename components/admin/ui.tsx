@@ -2,14 +2,14 @@
 
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Loader2, X } from "lucide-react";
+import { Inbox, Loader2, X } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import type { ArticleStatus } from "@/lib/blog/types";
 
 /* ---------- Primitives for the admin (dense, neutral, no imagery) ---------- */
 
 export const inputCls =
-  "w-full rounded-md border border-ink-200 bg-white px-3 py-2 text-sm text-ink-900 placeholder:text-ink-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 disabled:bg-ink-50 aria-[invalid=true]:border-red-500";
+  "w-full rounded-lg border border-white/80 bg-white/70 px-3 py-2 text-sm text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(10,13,20,0.04)] backdrop-blur placeholder:text-ink-400 transition-[background,border-color,box-shadow] focus:border-brand-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-500/15 disabled:bg-ink-50/60 aria-[invalid=true]:border-red-500";
 export const labelCls = "mb-1.5 block text-xs font-medium text-ink-500";
 
 export function Field({
@@ -58,16 +58,18 @@ export function AdminButton({
   ...rest
 }: BtnProps) {
   const v = {
-    primary: "bg-brand-500 text-white hover:bg-brand-600 border-transparent",
-    secondary: "bg-white text-ink-900 border-ink-200 hover:bg-ink-50",
-    ghost: "bg-transparent text-ink-500 border-transparent hover:bg-ink-50 hover:text-ink-900",
-    danger: "bg-white text-red-600 border-red-200 hover:bg-red-50",
+    primary:
+      "border-transparent bg-gradient-to-br from-[#2f62c6] to-[#5b8be6] text-white shadow-[0_10px_24px_-10px_rgba(47,98,198,0.8)] hover:from-[#2650a6] hover:to-[#2f62c6] hover:shadow-[0_14px_28px_-10px_rgba(47,98,198,0.9)]",
+    secondary:
+      "border-white/80 bg-white/70 text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(10,13,20,0.05)] backdrop-blur hover:bg-white",
+    ghost: "border-transparent bg-transparent text-ink-500 hover:bg-white/70 hover:text-ink-900",
+    danger: "border-red-200/80 bg-white/70 text-red-600 backdrop-blur hover:bg-red-50",
   }[variant];
   const s = size === "sm" ? "h-8 px-2.5 text-xs" : "h-9 px-3.5 text-sm";
   return (
     <button
       className={cn(
-        "focus-visible:ring-brand-500/40 inline-flex items-center justify-center gap-1.5 rounded-md border font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:opacity-50",
+        "focus-visible:ring-brand-500/40 ease-out-expo inline-flex items-center justify-center gap-1.5 rounded-lg border font-medium transition-[background,box-shadow,transform,color] duration-300 focus-visible:ring-2 focus-visible:outline-none active:scale-[0.98] disabled:opacity-50",
         v,
         s,
         className,
@@ -95,9 +97,9 @@ export function Card({
   padded?: boolean;
 }) {
   return (
-    <section className={cn("border-ink-200 rounded-lg border bg-white", className)}>
+    <section className={cn("glass overflow-hidden", className)}>
       {(title || action) && (
-        <header className="border-ink-100 flex items-center justify-between border-b px-5 py-3">
+        <header className="flex items-center justify-between gap-3 border-b border-white/70 bg-white/30 px-5 py-3.5">
           {title && <h2 className="text-ink-900 text-sm font-semibold">{title}</h2>}
           {action}
         </header>
@@ -107,21 +109,26 @@ export function Card({
   );
 }
 
-const statusStyles: Record<ArticleStatus, string> = {
-  DRAFT: "bg-ink-100 text-ink-600",
-  SCHEDULED: "bg-amber-100 text-amber-800",
-  PUBLISHED: "bg-emerald-100 text-emerald-800",
-  ARCHIVED: "bg-ink-100 text-ink-400 line-through",
+const statusStyles: Record<ArticleStatus, { pill: string; dot: string }> = {
+  DRAFT: { pill: "bg-amber-500/12 text-amber-800 ring-amber-500/20", dot: "bg-amber-500" },
+  SCHEDULED: { pill: "bg-violet-500/12 text-violet-800 ring-violet-500/20", dot: "bg-violet-500" },
+  PUBLISHED: {
+    pill: "bg-emerald-500/12 text-emerald-800 ring-emerald-500/20",
+    dot: "bg-emerald-500",
+  },
+  ARCHIVED: { pill: "bg-ink-900/6 text-ink-500 ring-ink-900/10", dot: "bg-ink-400" },
 };
 
 export function StatusBadge({ status }: { status: ArticleStatus }) {
+  const s = statusStyles[status];
   return (
     <span
       className={cn(
-        "inline-flex rounded-sm px-2 py-0.5 font-mono text-[0.62rem] tracking-[0.1em] uppercase",
-        statusStyles[status],
+        "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 font-mono text-[0.6rem] tracking-[0.1em] uppercase ring-1 ring-inset",
+        s.pill,
       )}
     >
+      <span className={cn("size-1.5 rounded-full", s.dot)} aria-hidden />
       {status}
     </span>
   );
@@ -139,8 +146,12 @@ export function PageHeader({
   return (
     <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
-        <h1 className="text-ink-900 text-xl font-semibold tracking-[-0.01em]">{title}</h1>
-        {description && <p className="text-ink-500 mt-1 text-sm">{description}</p>}
+        <h1 className="text-ink-900 text-2xl font-semibold tracking-[-0.02em]">{title}</h1>
+        {description && <p className="text-ink-500 mt-1 max-w-[64ch] text-sm">{description}</p>}
+        <span
+          aria-hidden
+          className="mt-3 block h-1 w-12 rounded-full bg-gradient-to-r from-[#2f62c6] via-[#7c3aed] to-[#22d3ee]"
+        />
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </div>
@@ -175,14 +186,14 @@ export function ConfirmDialog({
   if (!open || typeof document === "undefined") return null;
   return createPortal(
     <div
-      className="bg-ink-950/40 fixed inset-0 z-[90] flex items-center justify-center p-4"
+      className="glass-fade bg-ink-950/35 fixed inset-0 z-[90] flex items-center justify-center p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="confirm-title"
-        className="border-ink-200 w-full max-w-md rounded-lg border bg-white p-6 shadow-xl"
+        className="glass glass-strong glass-pop w-full max-w-md p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 id="confirm-title" className="text-ink-900 text-base font-semibold">
@@ -231,25 +242,25 @@ export function Modal({
   if (!open || typeof document === "undefined") return null;
   return createPortal(
     <div
-      className="bg-ink-950/40 fixed inset-0 z-[90] flex items-center justify-center p-4"
+      className="glass-fade bg-ink-950/35 fixed inset-0 z-[90] flex items-center justify-center p-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
         role="dialog"
         aria-modal="true"
         className={cn(
-          "border-ink-200 flex max-h-[90vh] w-full flex-col rounded-lg border bg-white shadow-xl",
+          "glass glass-strong glass-pop flex max-h-[90vh] w-full flex-col overflow-hidden",
           wide ? "max-w-4xl" : "max-w-lg",
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="border-ink-100 flex items-center justify-between border-b px-5 py-3">
+        <header className="flex items-center justify-between border-b border-white/70 bg-white/30 px-5 py-3.5">
           <h2 className="text-ink-900 text-sm font-semibold">{title}</h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="text-ink-400 hover:bg-ink-50 hover:text-ink-900 rounded-md p-1"
+            className="text-ink-400 hover:text-ink-900 rounded-lg p-1.5 hover:bg-white/80"
           >
             <X className="size-4" />
           </button>
@@ -264,10 +275,57 @@ export function Modal({
 export function EmptyRow({ colSpan, text }: { colSpan: number; text: string }) {
   return (
     <tr>
-      <td colSpan={colSpan} className="text-ink-400 px-4 py-12 text-center text-sm">
-        {text}
+      <td colSpan={colSpan} className="px-4 py-14 text-center">
+        <span className="bg-ink-900/5 text-ink-400 mx-auto mb-3 grid size-11 place-items-center rounded-2xl">
+          <Inbox className="size-5" aria-hidden />
+        </span>
+        <p className="text-ink-400 text-sm">{text}</p>
       </td>
     </tr>
+  );
+}
+
+/** Glass table chrome: horizontal scroll wrapper + consistent head/body styling. */
+export const tableCls = "w-full";
+export const theadCls = "border-b border-white/80 bg-white/35";
+export const tbodyCls = "divide-y divide-white/70";
+export const trCls = "transition-colors hover:bg-white/55";
+
+export function Pagination({
+  page,
+  totalPages,
+  last,
+  onPage,
+  labels = ["Previous", "Next"],
+}: {
+  page: number;
+  totalPages: number;
+  last: boolean;
+  onPage: (p: number) => void;
+  labels?: [string, string];
+}) {
+  if (totalPages <= 1) return null;
+  return (
+    <div className="text-ink-500 flex items-center justify-between border-t border-white/70 bg-white/25 p-3 text-xs">
+      <AdminButton size="sm" disabled={page === 0} onClick={() => onPage(page - 1)}>
+        {labels[0]}
+      </AdminButton>
+      <span className="font-mono text-[0.65rem] tracking-[0.1em] uppercase">
+        Page {page + 1} of {totalPages}
+      </span>
+      <AdminButton size="sm" disabled={last} onClick={() => onPage(page + 1)}>
+        {labels[1]}
+      </AdminButton>
+    </div>
+  );
+}
+
+/** Small translucent count chip for toolbars ("12 articles"). */
+export function CountChip({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="text-ink-600 inline-flex items-center rounded-full border border-white/80 bg-white/60 px-2.5 py-1 font-mono text-[0.62rem] tracking-[0.1em] uppercase">
+      {children}
+    </span>
   );
 }
 
@@ -277,9 +335,9 @@ export function TableSkeleton({ rows = 6, cols = 5 }: { rows?: number; cols?: nu
       {Array.from({ length: rows }).map((_, r) => (
         <tr key={r}>
           {Array.from({ length: cols }).map((_, c) => (
-            <td key={c} className="px-4 py-3">
+            <td key={c} className="px-4 py-3.5">
               <div
-                className="bg-ink-100 h-3.5 animate-pulse rounded"
+                className="dash-shimmer h-3.5 rounded"
                 style={{ width: `${40 + ((r * 7 + c * 13) % 50)}%` }}
               />
             </td>
@@ -291,5 +349,5 @@ export function TableSkeleton({ rows = 6, cols = 5 }: { rows?: number; cols?: nu
 }
 
 export const th =
-  "px-4 py-2.5 text-left font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink-400";
-export const td = "px-4 py-3 text-sm text-ink-900 align-middle";
+  "px-5 py-3.5 text-left font-mono text-[0.66rem] uppercase tracking-[0.12em] text-ink-500 whitespace-nowrap";
+export const td = "px-5 py-4 text-[0.9375rem] text-ink-900 align-middle";
