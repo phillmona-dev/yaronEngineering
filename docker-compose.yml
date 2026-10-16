@@ -1,5 +1,8 @@
-# Local full-stack development: `docker compose up --build`
-# Frontend http://localhost:3000 · API http://localhost:8080 · PostgreSQL localhost:5433
+# Base service definitions — no port bindings here.
+# Dev:  docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+#       Frontend http://localhost:3000 · API http://localhost:8080 · PostgreSQL localhost:5433
+# Prod: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#       Served via Nginx on :8088 (frontend :3002, backend :8082, postgres :5435)
 services:
   postgres:
     image: postgres:16-alpine
@@ -7,8 +10,6 @@ services:
       POSTGRES_DB: yaron_blog
       POSTGRES_USER: yaron
       POSTGRES_PASSWORD: yaron
-    ports:
-      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -42,8 +43,6 @@ services:
       SMTP_USERNAME: ${SMTP_USERNAME:-}
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       MAIL_FROM: ${MAIL_FROM:-no-reply@yaronengineering.com}
-    ports:
-      - "8080:8080"
     volumes:
       - media:/data/media
     healthcheck:
@@ -66,8 +65,6 @@ services:
       NEXT_PUBLIC_API_URL: http://localhost:8080
       NEXT_PUBLIC_SITE_URL: http://localhost:3000
       REVALIDATE_SECRET: ${REVALIDATE_SECRET:-dev-revalidate-secret}
-    ports:
-      - "3000:3000"
 
 volumes:
   pgdata:
