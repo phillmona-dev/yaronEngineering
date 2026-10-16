@@ -35,10 +35,11 @@ yarn-error.log*
 !.env.example
 !backend/.env.example
 
-# backend / maven
+# backend / maven — ignore runtime data dirs but NOT lib/data (static app data)
 target/
 **/target/
-**/data/
+backend/data/
+backend/**/data/
 
 # vercel
 .vercel
