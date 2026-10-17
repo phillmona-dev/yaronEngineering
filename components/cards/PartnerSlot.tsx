@@ -3,13 +3,18 @@ import type { Partner } from "@/lib/data/partners";
 
 /**
  * Partner slot: renders the official logo when supplied, otherwise a restrained typographic
- * wordmark so the grid stays elegant until assets arrive.
+ * wordmark so the grid stays elegant until assets arrive. Clicking opens the partner's
+ * official website in a new tab.
  */
 export function PartnerSlot({ partner }: { partner: Partner }) {
   return (
-    <div
-      className="group border-border hover:bg-surface flex aspect-[5/3] flex-col items-center justify-center gap-2 border-r border-b p-6 transition-colors duration-300"
-      title={partner.category}
+    <a
+      href={partner.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group border-border hover:bg-surface flex aspect-[5/3] flex-col items-center justify-center gap-2 border-r border-b p-6 transition-colors duration-300 cursor-pointer"
+      title={`${partner.name} · ${partner.category}`}
+      aria-label={`Visit ${partner.name} official website`}
     >
       {partner.logo ? (
         <Image
@@ -29,6 +34,6 @@ export function PartnerSlot({ partner }: { partner: Partner }) {
           </span>
         </>
       )}
-    </div>
+    </a>
   );
 }

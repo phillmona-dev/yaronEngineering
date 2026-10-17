@@ -62,9 +62,13 @@ export function PartnerMarquee({ partners, speed = 55, className }: Props) {
 
 function LogoImage({ partner }: { partner: Partner }) {
   return (
-    <div
+    <a
+      href={partner.url}
+      target="_blank"
+      rel="noopener noreferrer"
       className="group/logo flex h-16 items-center lg:h-20"
       title={`${partner.name} · ${partner.category}`}
+      aria-label={`Visit ${partner.name} official website`}
     >
       <div className="transition-[opacity,transform] duration-300 ease-out opacity-80 group-hover/logo:opacity-100 group-hover/logo:scale-125 group-hover/logo:-translate-y-2 will-change-transform">
         <Image
@@ -76,6 +80,7 @@ function LogoImage({ partner }: { partner: Partner }) {
           className="h-10 w-auto max-w-[170px] object-contain lg:h-14 lg:max-w-[230px]"
         />
       </div>
-    </div>
+    </a>
   );
 }
+
