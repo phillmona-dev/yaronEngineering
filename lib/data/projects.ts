@@ -7,6 +7,7 @@ export type Project = {
   id: string;
   index: string;
   client: string;
+  clientLogo?: string;
   sector: string;
   category: string;
   scope: string;
@@ -23,6 +24,7 @@ export const projects: Project[] = [
     id: "awash-bank",
     index: "01",
     client: "Awash Bank",
+    clientLogo: "/images/customers/awash-bank.png",
     sector: "Banking & Financial Services",
     category: "Data Center, Network & Security",
     scope:
@@ -35,6 +37,7 @@ export const projects: Project[] = [
     id: "esl",
     index: "02",
     client: "Ethiopian Shipping & Logistics Services Enterprise",
+    clientLogo: "/images/customers/esl.png",
     sector: "Enterprise",
     category: "Infrastructure Consultancy",
     scope: "Data center, network and security, and computing and storage consultancy services.",
@@ -49,6 +52,7 @@ export const projects: Project[] = [
     id: "aa-culture-tourism",
     index: "03",
     client: "Addis Ababa Culture, Art and Tourism Bureau",
+    clientLogo: "/images/customers/aa-culture-tourism.png",
     sector: "Government",
     category: "HQ Network, Security & Surveillance",
     scope:
@@ -61,6 +65,7 @@ export const projects: Project[] = [
     id: "lion-insurance",
     index: "04",
     client: "Lion Insurance Company",
+    clientLogo: "/images/customers/lion-insurance.png",
     sector: "Insurance",
     category: "Cybersecurity Deployment",
     scope: "Firewall supply, installation, configuration and training.",
@@ -75,6 +80,7 @@ export const projects: Project[] = [
     id: "rammis-bank",
     index: "05",
     client: "Rammis Bank",
+    clientLogo: "/images/customers/rammis-bank.png",
     sector: "Banking & Financial Services",
     category: "Cloud & Collaboration",
     scope:
@@ -87,6 +93,7 @@ export const projects: Project[] = [
     id: "debre-tabor-university",
     index: "06",
     client: "Debre Tabor University",
+    clientLogo: "/images/customers/debre-tabor-university.png",
     sector: "Education",
     category: "IP Video Surveillance",
     scope: "CCTV project design and supervision — IP video surveillance system.",

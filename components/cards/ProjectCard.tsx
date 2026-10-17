@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
@@ -30,7 +31,20 @@ export function ProjectCard({ project, reverse = false }: { project: Project; re
           <span aria-hidden className="bg-border-strong h-px w-6" />
           <span>{project.sector}</span>
         </p>
-        <h3 className="text-h3 mt-5 font-semibold">{project.category}</h3>
+        <div className="mt-5 flex items-start justify-between gap-4">
+          <h3 className="text-h3 font-semibold">{project.category}</h3>
+          {project.clientLogo && (
+            <div className="bg-surface border-border flex h-12 w-20 shrink-0 items-center justify-center rounded-md border p-1.5 shadow-xs">
+              <Image
+                src={project.clientLogo}
+                alt={`${project.client} logo`}
+                width={80}
+                height={48}
+                className="max-h-9 w-auto max-w-full object-contain"
+              />
+            </div>
+          )}
+        </div>
         <p className="text-foreground mt-3 text-[0.9375rem] font-medium">{project.client}</p>
         <p className="text-body text-muted-foreground mt-4 max-w-[52ch]">{project.scope}</p>
         <dl className="border-border mt-7 grid grid-cols-2 gap-x-6 gap-y-4 border-t pt-6 text-sm">

@@ -22,3 +22,6 @@ export const partners: Partner[] = [
   { name: "Cyber Observer", logo: "/images/partners/cyberobserver.png", category: "Security posture", url: "https://www.cyberobserver.com" },
 ];
 
+export { customers, type Customer } from "./customers";
+export { customers as internalPartners } from "./customers";
+

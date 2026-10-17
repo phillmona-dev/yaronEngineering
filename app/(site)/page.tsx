@@ -5,6 +5,7 @@ import { ServicesShowcase } from "@/components/sections/ServicesShowcase";
 import { SolutionsProcess } from "@/components/sections/SolutionsProcess";
 import { IndustriesGrid } from "@/components/sections/IndustriesGrid";
 import { ProjectsShowcase } from "@/components/sections/ProjectsShowcase";
+import { CustomersSection } from "@/components/sections/CustomersSection";
 import { ExpertiseSection } from "@/components/sections/ExpertiseSection";
 import { PartnersSection } from "@/components/sections/PartnersSection";
 import { WhyYaron } from "@/components/sections/WhyYaron";
@@ -22,6 +23,11 @@ export default function HomePage() {
       <SolutionsProcess showPillars={false} />
       <IndustriesGrid />
       <ProjectsShowcase limit={4} />
+      <CustomersSection
+        eyebrow="National & Enterprise Partners"
+        title="Institutions that trust Yaron Engineering."
+        lead="Mission-critical data center, cybersecurity, and cloud programmes delivered across Ethiopia."
+      />
       <ExpertiseSection />
       <PartnersSection />
       <WhyYaron />

@@ -58,6 +58,14 @@ Arista (Data center networking), Nutanix (Hyper-converged infrastructure),
 Veeam (Backup & recovery), Sophos (Security), Siemon (Structured cabling),
 Mitel (Unified communications), Quantum (Storage), Cyber Observer (Security posture).
 
+── ETHIOPIAN CLIENTS & DOMESTIC PARTNERS ─────────────────────────────
+1. Awash Bank (አዋሽ ባንክ): Data Center, Network & Security, Computing & Storage, IS governance consultancy.
+2. Addis Ababa Culture, Art and Tourism Bureau (ባህል፣ ሥነ ጥበብ እና ቱሪዝም ቢሮ): HQ Network & Security project design/implementation, CCTV and digital signage systems.
+3. Rammis Bank: Microsoft Office 365 supply, installation, configuration and enterprise training.
+4. Lion Insurance Company (አንበሳ ኢንሹራንስ): Enterprise firewall supply, installation, configuration and training.
+5. Debre Tabor University (ደብረ ታቦር ዩኒቨርሲቲ): CCTV project design and supervision, IP video surveillance systems.
+6. Ethiopian Shipping and Logistics Services Enterprise (ESLSE / ESL): Data Center, Network & Security, Computing & Storage consultancy service project.
+
 ── CONTACT DETAILS ───────────────────────────────────────────────────────
 Email: info@yaronengineering.com
 Sales email: yaron.sales@yaronengineering.com
