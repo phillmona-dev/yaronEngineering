@@ -64,7 +64,7 @@ export function FinalCTA({
           className="text-display mt-8 max-w-[14ch] font-semibold text-white"
           lines={[
             <span key="a">{title[0]}</span>,
-            <span key="b" className="text-brand-300">
+            <span key="b" className="text-gold-400">
               {title[1]}
             </span>,
           ]}

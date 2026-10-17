@@ -24,7 +24,7 @@ export default function PartnersPage() {
         title={[
           <span key="a">Partnerships that extend</span>,
           <span key="b">
-            our <span className="text-brand-300">capability.</span>
+            our <span className="text-gold-400">capability.</span>
           </span>,
         ]}
         lead="We design vendor-neutral and deliver with global technology leaders and leading Ethiopian enterprise institutions."

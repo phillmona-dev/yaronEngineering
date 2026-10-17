@@ -16,8 +16,8 @@ export default function OpenGraphImage() {
         flexDirection: "column",
         justifyContent: "space-between",
         padding: 72,
-        background: "linear-gradient(135deg, #05070c 0%, #0a0d14 60%, #0e1a33 100%)",
-        color: "#f3f5f8",
+        background: "linear-gradient(135deg, #0e2250 0%, #143070 60%, #20448f 100%)",
+        color: "#f2f6fc",
         fontFamily: "sans-serif",
       }}
     >
@@ -28,10 +28,10 @@ export default function OpenGraphImage() {
           gap: 16,
           fontSize: 22,
           letterSpacing: 4,
-          color: "#9aa4b8",
+          color: "#9fb3d9",
         }}
       >
-        <div style={{ width: 28, height: 2, background: "#2f62c6" }} />
+        <div style={{ width: 28, height: 2, background: "#f5c518" }} />
         ICT INFRASTRUCTURE · CYBERSECURITY
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -44,10 +44,10 @@ export default function OpenGraphImage() {
             maxWidth: 1000,
           }}
         >
-          Engineering the infrastructure behind a <span style={{ color: "#8fb4f2" }}>secure</span>{" "}
+          Engineering the infrastructure behind a <span style={{ color: "#fbd84a" }}>secure</span>{" "}
           digital future.
         </div>
-        <div style={{ fontSize: 28, color: "#c5ccd9" }}>{company.name} · Addis Ababa, Ethiopia</div>
+        <div style={{ fontSize: 28, color: "#c9d6ee" }}>{company.name} · Addis Ababa, Ethiopia</div>
       </div>
     </div>,
     { ...size },

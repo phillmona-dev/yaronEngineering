@@ -31,13 +31,13 @@ export default function AboutPage() {
         title={[
           <span key="a">A systems integrator built for</span>,
           <span key="b">
-            <span className="text-brand-300">critical</span> infrastructure.
+            <span className="text-gold-400">critical</span> infrastructure.
           </span>,
         ]}
         lead={`Founded in ${company.foundedMonth} ${company.founded} and headquartered in ${company.headquarters.city}, ${company.headquarters.country}.`}
         image={{
-          src: "/images/photos/workspace-mono.jpg",
-          alt: "Monochrome engineering workspace",
+          src: "/images/photos/boardroom.jpg",
+          alt: "Modern boardroom with glass walls",
         }}
       />
 
@@ -67,7 +67,7 @@ export default function AboutPage() {
             >
               {sectors.map((s) => (
                 <div key={s} className="flex flex-col gap-2">
-                  <span aria-hidden className="bg-brand h-px w-5" />
+                  <span aria-hidden className="bg-gold-500 h-px w-5" />
                   <span className="text-sm font-medium">{s}</span>
                 </div>
               ))}
@@ -81,8 +81,8 @@ export default function AboutPage() {
           <div className="lg:col-span-6">
             <ClipReveal className="border-border aspect-[4/3] overflow-hidden rounded-md border">
               <ParallaxImage
-                src="/images/photos/dc-corridor.jpg"
-                alt="Data center corridor"
+                src="/images/photos/hero-datacenter.jpg"
+                alt="Data center aisle with illuminated server racks"
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 containerClassName="h-full w-full"
                 strength={0.06}
@@ -108,7 +108,7 @@ export default function AboutPage() {
                   key={v}
                   className="border-border text-ink-100 flex items-start gap-4 border-b py-4 text-[0.9375rem]"
                 >
-                  <span className="text-brand-300 pt-0.5 font-mono text-[0.66rem] tracking-[0.14em]">
+                  <span className="text-gold-400 pt-0.5 font-mono text-[0.66rem] tracking-[0.14em]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {v}

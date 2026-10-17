@@ -50,7 +50,7 @@ export function ExpertiseSection() {
                   key={role}
                   className="border-border text-ink-100 flex items-start gap-4 border-b py-4 pr-6 text-[0.9375rem]"
                 >
-                  <span className="text-brand-300 pt-0.5 font-mono text-[0.66rem] tracking-[0.14em]">
+                  <span className="text-gold-400 pt-0.5 font-mono text-[0.66rem] tracking-[0.14em]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {role}
@@ -62,8 +62,8 @@ export function ExpertiseSection() {
           <div className="lg:col-span-4 lg:col-start-9">
             <ClipReveal className="border-border aspect-[4/5] overflow-hidden rounded-md border">
               <ParallaxImage
-                src="/images/photos/engineer-ethiopia.jpg"
-                alt="Ethiopian engineer reviewing telemetry data beside enterprise server racks"
+                src="/images/photos/hero-video-poster.jpg"
+                alt="Enterprise server racks in a data center aisle"
                 sizes="(min-width: 1024px) 33vw, 100vw"
                 containerClassName="h-full w-full"
                 strength={0.07}

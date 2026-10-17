@@ -51,8 +51,19 @@ export function StaggerItem({ children, className, as = "div", y = 20 }: ItemPro
     <Tag
       className={className}
       variants={{
-        hidden: { opacity: 0, y: reduce ? 0 : y },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: EASE_OUT_EXPO } },
+        hidden: {
+          opacity: 0,
+          y: reduce ? 0 : y,
+          scale: reduce ? 1 : 0.96,
+          filter: reduce ? "blur(0px)" : "blur(6px)",
+        },
+        visible: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          transition: { duration: 0.75, ease: EASE_OUT_EXPO },
+        },
       }}
     >
       {children}

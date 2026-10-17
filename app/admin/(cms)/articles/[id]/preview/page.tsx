@@ -20,7 +20,7 @@ export default async function PreviewPage({ params }: { params: Promise<{ id: st
   const article = (await res.json()) as ArticleDetail;
   return (
     <div className="-m-4 md:-m-6 lg:-m-8">
-      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+      <div className="sticky top-0 z-40 flex items-center justify-between border-b border-gold-500/40 bg-gold-500/15 px-4 py-2 text-sm text-gold-700">
         <span>
           <strong>Preview</strong> · {article.status} · This is how the article will appear once
           published.

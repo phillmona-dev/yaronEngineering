@@ -14,8 +14,8 @@ export const industries: Industry[] = [
     description:
       "Public institutions need infrastructure that is secure, auditable and built to serve citizens at scale. We support government bodies with network, data center, security and consultancy services aligned to national ICT initiatives.",
     image: {
-      src: "/images/photos/parliament.jpg",
-      alt: "Interior of a parliamentary assembly chamber",
+      src: "/images/photos/earth-night.jpg",
+      alt: "Earth at night seen from orbit, city lights glowing",
     },
   },
   {
@@ -55,8 +55,8 @@ export const industries: Industry[] = [
     description:
       "Non-governmental and development organizations need dependable infrastructure, secure collaboration and cloud platforms that respect budget and compliance obligations.",
     image: {
-      src: "/images/photos/ngo.jpg",
-      alt: "Volunteers handling supplies at a distribution site",
+      src: "/images/photos/cloud-waves.jpg",
+      alt: "Abstract flowing blue surfaces",
     },
   },
   {
@@ -65,7 +65,7 @@ export const industries: Industry[] = [
     summary: "End-to-end infrastructure for organizations scaling their digital operations.",
     description:
       "From shipping and logistics to manufacturing and services, enterprises rely on us for network, data center, compute, cloud and security delivered as one coherent programme.",
-    image: { src: "/images/photos/open-office.jpg", alt: "Open-plan enterprise office" },
+    image: { src: "/images/photos/boardroom.jpg", alt: "Modern boardroom with glass walls" },
   },
   {
     slug: "education",

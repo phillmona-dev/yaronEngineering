@@ -72,8 +72,8 @@ export const projects: Project[] = [
     technologies: ["Next-generation firewall", "Configuration", "Training"],
     location: "Ethiopia",
     image: {
-      src: "/images/photos/code-hands.jpg",
-      alt: "Hands working at a laptop in a dark room",
+      src: "/images/photos/circuit.jpg",
+      alt: "Close-up of a printed circuit board",
     },
   },
   {

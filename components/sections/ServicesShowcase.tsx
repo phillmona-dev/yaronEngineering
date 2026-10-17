@@ -7,6 +7,7 @@ import { AnimatePresence, m } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { services } from "@/lib/data/services";
+import { TiltCard } from "@/components/animations/TiltCard";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
@@ -59,7 +60,7 @@ export function ServicesShowcase() {
                     <span
                       className={cn(
                         "pt-1 font-mono text-[0.72rem] tracking-[0.14em] transition-colors duration-300",
-                        isActive ? "text-brand-300" : "text-ink-400",
+                        isActive ? "text-gold-400" : "text-ink-400",
                       )}
                     >
                       {s.index}
@@ -144,7 +145,7 @@ export function ServicesShowcase() {
                   </p>
                   <p className="text-h4 mt-2 font-semibold text-white">{current.shortTitle}</p>
                 </div>
-                <current.icon className="text-brand-300 size-6" strokeWidth={1.25} aria-hidden />
+                <current.icon className="text-gold-400 size-6" strokeWidth={1.25} aria-hidden />
               </div>
             </div>
           </div>
@@ -155,32 +156,34 @@ export function ServicesShowcase() {
           <ul className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:px-8">
             {services.map((s) => (
               <li key={s.slug} className="w-[78vw] max-w-[360px] shrink-0 snap-start sm:w-[46vw]">
-                <Link
-                  href={`/services/${s.slug}`}
-                  className="group border-border bg-ink-900 flex h-full flex-col overflow-hidden rounded-md border"
-                >
-                  <div className="relative aspect-[4/3]">
-                    <Image
-                      src={s.image.src}
-                      alt={s.image.alt}
-                      fill
-                      sizes="80vw"
-                      className="object-cover"
-                    />
-                    <div aria-hidden className="image-overlay absolute inset-0" />
-                    <span className="text-ink-200 absolute top-4 left-4 font-mono text-[0.68rem] tracking-[0.14em]">
-                      {s.index}
-                    </span>
-                  </div>
-                  <div className="flex flex-1 flex-col gap-3 p-5">
-                    <p className="text-h4 font-semibold text-white">{s.title}</p>
-                    <p className="text-ink-300 text-sm leading-relaxed">{s.summary}</p>
-                    <span className="text-brand-300 mt-auto inline-flex items-center gap-2 pt-2 text-sm font-medium">
-                      Learn more
-                      <ArrowUpRight className="size-4" strokeWidth={1.75} aria-hidden />
-                    </span>
-                  </div>
-                </Link>
+                <TiltCard className="h-full rounded-md">
+                  <Link
+                    href={`/services/${s.slug}`}
+                    className="group border-border bg-ink-900 flex h-full flex-col overflow-hidden rounded-md border"
+                  >
+                    <div className="relative aspect-[4/3]">
+                      <Image
+                        src={s.image.src}
+                        alt={s.image.alt}
+                        fill
+                        sizes="80vw"
+                        className="object-cover"
+                      />
+                      <div aria-hidden className="image-overlay absolute inset-0" />
+                      <span className="text-ink-200 absolute top-4 left-4 font-mono text-[0.68rem] tracking-[0.14em]">
+                        {s.index}
+                      </span>
+                    </div>
+                    <div className="flex flex-1 flex-col gap-3 p-5">
+                      <p className="text-h4 font-semibold text-white">{s.title}</p>
+                      <p className="text-ink-300 text-sm leading-relaxed">{s.summary}</p>
+                      <span className="text-gold-400 mt-auto inline-flex items-center gap-2 pt-2 text-sm font-medium">
+                        Learn more
+                        <ArrowUpRight className="size-4" strokeWidth={1.75} aria-hidden />
+                      </span>
+                    </div>
+                  </Link>
+                </TiltCard>
               </li>
             ))}
           </ul>

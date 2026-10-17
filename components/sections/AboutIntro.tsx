@@ -39,8 +39,8 @@ export function AboutIntro() {
           <div className="lg:col-span-6 lg:col-start-7">
             <ClipReveal className="aspect-[16/10] overflow-hidden rounded-md">
               <ParallaxImage
-                src="/images/photos/team-screens.jpg"
-                alt="Engineers reviewing systems together at a workstation"
+                src="/images/photos/network-switch.jpg"
+                alt="Enterprise network switch with patch cables"
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 containerClassName="h-full w-full"
                 strength={0.06}
@@ -61,7 +61,7 @@ export function AboutIntro() {
             >
               {sectors.map((s) => (
                 <div key={s} className="flex flex-col gap-2">
-                  <span aria-hidden className="bg-brand h-px w-5" />
+                  <span aria-hidden className="bg-gold-500 h-px w-5" />
                   <span className="text-sm font-medium">{s}</span>
                 </div>
               ))}

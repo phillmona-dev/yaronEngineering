@@ -23,13 +23,13 @@ export default function SolutionsPage() {
         title={[
           <span key="a">Technology built around</span>,
           <span key="b">
-            your <span className="text-brand-300">mission.</span>
+            your <span className="text-gold-400">mission.</span>
           </span>,
         ]}
         lead="One disciplined method — discover, architect, integrate, secure, operate, scale — applied to every organization we serve."
         image={{
-          src: "/images/photos/drafting.jpg",
-          alt: "Engineer drafting technical plans",
+          src: "/images/photos/cloud-nodes.jpg",
+          alt: "Abstract network of connected nodes",
           position: "center 40%",
         }}
       />

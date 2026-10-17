@@ -89,7 +89,7 @@ export function ArticlesTable() {
         actions={
           <Link
             href="/admin/articles/new"
-            className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-br from-[#2f62c6] to-[#5b8be6] px-3.5 text-sm font-medium text-white shadow-[0_10px_24px_-10px_rgba(47,98,198,0.8)] transition-[box-shadow,transform] duration-300 hover:-translate-y-px hover:shadow-[0_14px_28px_-10px_rgba(47,98,198,0.9)]"
+            className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-br from-[#3f82dc] to-[#6ca6ee] px-3.5 text-sm font-medium text-white shadow-[0_10px_24px_-10px_rgba(63,130,220,0.8)] transition-[box-shadow,transform] duration-300 hover:-translate-y-px hover:shadow-[0_14px_28px_-10px_rgba(63,130,220,0.9)]"
           >
             <Plus className="size-4" aria-hidden /> New article
           </Link>
@@ -195,7 +195,7 @@ export function ArticlesTable() {
                   <tr key={a.id} className={trCls}>
                     <td className={td}>
                       <div className="flex items-center gap-3">
-                        <span className="relative size-10 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-[#2f62c6] to-[#7c3aed] shadow-[0_6px_14px_-6px_rgba(47,98,198,0.6)]">
+                        <span className="relative size-10 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-[#3f82dc] to-[#6ca6ee] shadow-[0_6px_14px_-6px_rgba(63,130,220,0.6)]">
                           {a.coverImage?.url ? (
                             <Image
                               src={mediaUrl(a.coverImage.url)}
@@ -221,7 +221,7 @@ export function ArticlesTable() {
                               {a.title || "Untitled"}
                             </Link>
                             {a.featured && (
-                              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#e9b917]/15 px-1.5 py-0.5 font-mono text-[0.55rem] tracking-[0.1em] text-amber-800 uppercase ring-1 ring-[#e9b917]/30 ring-inset">
+                              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#f5c518]/15 px-1.5 py-0.5 font-mono text-[0.55rem] tracking-[0.1em] text-gold-700 uppercase ring-1 ring-[#f5c518]/30 ring-inset">
                                 <Star className="size-2.5 fill-current" aria-hidden /> Featured
                               </span>
                             )}
@@ -292,7 +292,7 @@ export function ArticlesTable() {
                             onClick={() => setConfirm({ a, action: "publish" })}
                             aria-label="Publish"
                             title="Publish"
-                            className="rounded-lg p-1.5 text-emerald-600 hover:bg-emerald-500/10"
+                            className="rounded-lg p-1.5 text-brand-600 hover:bg-brand-500/10"
                           >
                             <Send className="size-3.5" />
                           </button>
@@ -314,7 +314,7 @@ export function ArticlesTable() {
                             onClick={() => setConfirm({ a, action: "archive" })}
                             aria-label="Archive"
                             title="Archive"
-                            className="text-ink-500 rounded-lg p-1.5 hover:bg-amber-500/10 hover:text-amber-700"
+                            className="text-ink-500 rounded-lg p-1.5 hover:bg-gold-500/15 hover:text-gold-700"
                           >
                             <Archive className="size-3.5" />
                           </button>

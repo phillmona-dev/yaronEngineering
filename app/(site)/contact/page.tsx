@@ -5,6 +5,7 @@ import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/animations/Reveal";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { WhatsAppIcon } from "@/components/blog/SocialIcons";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { company } from "@/lib/data/company";
 import { breadcrumbSchema, pageMetadata } from "@/lib/utils/seo";
@@ -17,6 +18,9 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const mapQuery = encodeURIComponent(`${company.name}, ${company.headquarters.full}`);
+const whatsappHref = `https://wa.me/${company.contact.whatsappE164}?text=${encodeURIComponent(
+  `Hello ${company.name}, I would like to discuss a project.`,
+)}`;
 
 export default function ContactPage() {
   return (
@@ -29,7 +33,7 @@ export default function ContactPage() {
         title={[
           <span key="a">Let&apos;s talk about</span>,
           <span key="b">
-            what you&apos;re <span className="text-brand-300">building.</span>
+            what you&apos;re <span className="text-gold-400">building.</span>
           </span>,
         ]}
         lead="Tell us what you are building, protecting or transforming. An engineer — not a sales script — will respond."
@@ -100,6 +104,20 @@ export default function ContactPage() {
                   </div>
                 </div>
               </address>
+            </Reveal>
+            <Reveal delay={0.16} className="mt-8">
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ease-out-expo focus-visible:ring-gold-400 focus-visible:ring-offset-background inline-flex h-11 items-center gap-2.5 rounded-full bg-[#25D366] px-6 text-[0.9375rem] font-semibold text-white transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgba(37,211,102,0.6)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.97]"
+              >
+                <WhatsAppIcon className="size-[18px] shrink-0" />
+                Chat on WhatsApp
+              </a>
+              <p className="text-muted-foreground mt-3 text-sm">
+                {company.contact.whatsapp} · replies during office hours
+              </p>
             </Reveal>
             <Reveal delay={0.2} className="border-border mt-10 border-t pt-6">
               <p className="eyebrow mb-2">Office hours</p>

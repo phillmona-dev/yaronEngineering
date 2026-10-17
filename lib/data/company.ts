@@ -24,6 +24,8 @@ export const company = {
     salesEmail: "yaron.sales@yaronengineering.com",
     phones: ["+251 944 159 690", "+251 913 404 580"],
     phonesE164: ["+251944159690", "+251913404580"],
+    whatsapp: "+251 944 159 690",
+    whatsappE164: "251944159690",
   },
   vision:
     "To become the leading ICT Infrastructure and Cyber Security consulting and system integrator firm in Ethiopia and the greater East African region.",

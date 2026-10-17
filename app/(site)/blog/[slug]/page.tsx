@@ -258,7 +258,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
               <div className="flex items-end justify-between gap-6">
                 <div>
                   <p className="eyebrow">
-                    <span aria-hidden className="bg-brand h-px w-6" />
+                    <span aria-hidden className="bg-gold-500 h-px w-6" />
                     Continue reading
                   </p>
                   <h2 className="text-h2 mt-4 font-semibold">Related insights</h2>

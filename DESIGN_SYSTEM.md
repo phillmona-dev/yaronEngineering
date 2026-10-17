@@ -22,48 +22,58 @@ Mood references (quality bar only, never copied): Cisco, Palo Alto Networks, Equ
 
 ## 2. Colour system
 
-Primary brand colour is extracted from the Yaron shield logo (royal blue ≈ `#3060C0`), supported by a cool near‑black foundation.
+Two colours only, both taken from the Yaron shield logo: **light blue** (primary, logo fill ≈ `#3060C0`–`#3870C8`) and **gold** (secondary, logo circuit ≈ `#F5C518`). There is no black: every neutral is a navy tint of the blue, and white is the only other value.
 
 ### Palette tokens (`app/globals.css` → `@theme`)
 
-| Token       | Hex       | Role                                              |
-| ----------- | --------- | ------------------------------------------------- |
-| `ink-950`   | `#05070C` | Deepest page background (hero, final CTA)         |
-| `ink-900`   | `#0A0D14` | Dark section background                           |
-| `ink-850`   | `#0E1219` | Dark surface                                      |
-| `ink-800`   | `#141922` | Dark elevated surface / hover                     |
-| `ink-700`   | `#1C2230` | Dark borders (strong)                             |
-| `ink-600`   | `#2A3242` | Dark borders (subtle), disabled                   |
-| `ink-500`   | `#4A5468` | Muted text on dark                                |
-| `ink-400`   | `#6E7A91` | Muted text (light), icons                         |
-| `ink-300`   | `#9AA4B8` | Secondary text on dark                            |
-| `ink-200`   | `#C5CCD9` | Light borders (strong)                            |
-| `ink-100`   | `#E6E9EF` | Light borders (subtle)                            |
-| `ink-50`    | `#F3F5F8` | Off‑white section background                      |
-| `white`     | `#FFFFFF` | Light page background                             |
-| `brand-300` | `#8FB4F2` | Brand text on dark, links on dark                 |
-| `brand-400` | `#5B8BE6` | Hover on dark, glows                              |
-| `brand-500` | `#2F62C6` | **Primary brand**. CTAs, active nav, accent lines |
-| `brand-600` | `#2650A6` | CTA hover on light                                |
-| `brand-700` | `#1E4088` | Pressed / deep accents                            |
-| `gold-500`  | `#E9B917` | Logo accent only; one live‑signal dot             |
+| Token       | Hex       | Role                                                      |
+| ----------- | --------- | --------------------------------------------------------- |
+| `ink-950`   | `#0E2250` | Deepest page background (hero, final CTA)                 |
+| `ink-900`   | `#143070` | Dark section background; body text on light               |
+| `ink-850`   | `#193A80` | Dark surface                                              |
+| `ink-800`   | `#20448F` | Dark elevated surface / dark borders                      |
+| `ink-700`   | `#2A4F9E` | Dark borders (strong)                                     |
+| `ink-600`   | `#3356A3` | Disabled on dark                                          |
+| `ink-500`   | `#4A66A8` | Muted text on light                                       |
+| `ink-400`   | `#6480B8` | Eyebrows / mono meta on light, icons                      |
+| `ink-300`   | `#9FB3D9` | Secondary text on dark                                    |
+| `ink-200`   | `#C9D6EE` | Light borders (strong)                                    |
+| `ink-100`   | `#E4EBF8` | Light borders (subtle)                                    |
+| `ink-50`    | `#F2F6FC` | Off‑white section background                              |
+| `white`     | `#FFFFFF` | Light page background                                     |
+| `brand-300` | `#A6CCF7` | Brand text on dark, links on dark                         |
+| `brand-400` | `#6CA6EE` | Hover on dark, glows                                      |
+| `brand-500` | `#3F82DC` | **Primary**. CTAs, active states, links, AI chat, admin   |
+| `brand-600` | `#3270C8` | CTA hover on light, link text on light                    |
+| `brand-700` | `#2658A6` | Pressed / deep accents                                    |
+| `gold-300`  | `#FFE98A` | Gold shimmer / soft glow                                  |
+| `gold-400`  | `#FBD84A` | **Secondary on dark**: headline emphasis words, live dots |
+| `gold-500`  | `#F5C518` | **Secondary**. Eyebrow rules, nav underline, focus rings  |
+| `gold-600`  | `#D9A90C` | Gold hover                                                |
+| `gold-700`  | `#B08808` | Gold text on light (draft / warning pills)                |
+
+Red (`red-500/600`) is reserved for validation errors and destructive admin actions; it is a status signal, not part of the palette.
 
 ### Semantic tokens (CSS variables, theme‑switchable per section)
 
 ```
 --background   --foreground   --muted   --muted-foreground
 --border       --border-strong   --surface   --surface-elevated
---brand        --brand-hover   --brand-foreground   --ring
+--brand        --brand-hover   --brand-foreground   --brand-text
+--accent       --accent-hover  --accent-foreground  --accent-text
 ```
+
+`--accent*` is gold (`bg-accent`, `text-accent-text`); `--brand*` is blue.
 
 Sections carry `data-theme="dark" | "light"`. Components only use semantic utilities (`bg-background`, `text-foreground`, `border-border`, `text-muted-foreground`, `bg-surface`) so the same component works on either theme.
 
 ### Usage rules
 
-1. Brand blue is used for: CTAs, active nav indicator, accent rules, hover borders, counters, key emphasis words, focus rings. Never as a section background.
-2. Dark sections dominate the narrative (hero → services → industries → expertise → why → CTA); light sections provide breathing room (about, process, projects, partners, commitment).
-3. Gradients: only dark‑to‑transparent overlays on photography, and one radial brand glow per dark section at ≤ 18 % opacity.
-4. Contrast: body text ≥ 4.5:1, large text ≥ 3:1 on both themes. `ink-300` on `ink-950` = 7.9:1; `ink-400` on white = 4.6:1.
+1. Blue (primary) is used for: CTAs, active nav text, links, hover borders, counters, the AI chat and the whole admin UI. Never as a section background — dark sections use the navy `ink` scale.
+2. Gold (secondary) is used sparingly, as the logo does: eyebrow rules, the active‑nav underline, the emphasis word in every page‑hero headline, stat numerals, footer headings, service card icons and arrows, live‑signal dots, focus rings, text selection, button shimmer, and "draft / warning" states in the CMS. Never for body text and never as a fill behind white text (use `accent-foreground` navy on gold).
+3. Dark sections dominate the narrative (hero → services → industries → expertise → why → CTA); light sections provide breathing room (about, process, projects, partners, commitment).
+4. Gradients: only navy‑to‑transparent overlays on photography, and one radial brand glow per dark section at ≤ 18 % opacity.
+5. Contrast: body text ≥ 4.5:1, large text ≥ 3:1 on both themes. `ink-300` on `ink-950` ≈ 8:1; `ink-500` on white ≈ 5.6:1; `gold-400` on `ink-950` ≈ 11:1; `gold-700` on white ≈ 4.6:1.
 
 ---
 
@@ -84,7 +94,7 @@ One family: **Manrope** (variable, via `next/font/google`). One technical compan
 | Eyebrow / meta | 11–12px                 | 500 (mono) | +0.14em uppercase | 1       |
 | Stat numerals  | 64px → 120px            | 500        | −0.04em           | 0.9     |
 
-Rules: reading width ≤ 65ch; headings never fully bold (700) — 600 reads more premium at scale; emphasise single words in headings with `text-brand-500`/`brand-300` not italics.
+Rules: reading width ≤ 65ch; headings never fully bold (700) — 600 reads more premium at scale; emphasise single words in headings with `text-gold-400` (on dark) or `text-brand-text` (on light), not italics.
 
 ---
 
@@ -95,7 +105,7 @@ Rules: reading width ≤ 65ch; headings never fully bold (700) — 600 reads mor
 - **Grid** 12 columns desktop; editorial sections split 5/7 or 4/8, never 6/6 for text‑and‑image.
 - **Radius** `--radius-sm 6px`, `--radius-md 10px`, `--radius-lg 16px`. Buttons 6px. Images 10–16px. No pill buttons, no fully rounded cards.
 - **Borders** 1px, semantic. Hairline dividers (`border-border`) are the primary structuring device instead of card boxes.
-- **Shadows** almost none on dark. On light: `shadow-[0_1px_0_rgba(10,13,20,.04),0_24px_48px_-24px_rgba(10,13,20,.18)]` for hovered media only.
+- **Shadows** almost none on dark. On light: `shadow-[0_1px_0_rgba(11,26,61,.04),0_24px_48px_-24px_rgba(11,26,61,.18)]` for hovered media only.
 
 ---
 

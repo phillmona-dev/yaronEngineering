@@ -85,22 +85,22 @@ export function AuthPageFrame({
                                           backdrop-filter: blur(8px); }
         .auth-glass input::placeholder  { color: rgba(255,255,255,.35) !important; }
         .auth-glass input:focus         { background: rgba(255,255,255,.18) !important;
-                                          border-color: rgba(34,211,238,.6) !important;
-                                          box-shadow: 0 0 0 3px rgba(34,211,238,.18) !important; }
-        .auth-glass button[type=submit] { background: linear-gradient(135deg,#1d4ed8,#0891b2) !important;
+                                          border-color: rgba(245,197,24,.35) !important;
+                                          box-shadow: 0 0 0 3px rgba(245,197,24,.18) !important; }
+        .auth-glass button[type=submit] { background: linear-gradient(135deg,#3270c8,#3f82dc,#6ca6ee) !important;
                                           border-color: transparent !important;
-                                          box-shadow: 0 8px 24px -6px rgba(8,145,178,.55) !important;
+                                          box-shadow: 0 8px 24px -6px rgba(245,197,24,.55) !important;
                                           color: #fff !important; }
         .auth-glass button[type=submit]:hover {
-                                          background: linear-gradient(135deg,#1e40af,#0e7490) !important;
-                                          box-shadow: 0 12px 28px -6px rgba(8,145,178,.7) !important; }
-        .auth-glass .text-brand-700     { color: rgba(103,232,249,.85) !important; }
+                                          background: linear-gradient(135deg,#2658a6,#3270c8,#3f82dc) !important;
+                                          box-shadow: 0 12px 28px -6px rgba(245,197,24,.7) !important; }
+        .auth-glass .text-brand-700     { color: rgba(255,233,138,.85) !important; }
         .auth-glass [role=alert]        { background: rgba(239,68,68,.18) !important;
                                           border-color: rgba(239,68,68,.35) !important;
                                           color: #fca5a5 !important; }
-        .auth-glass [role=status]       { background: rgba(16,185,129,.18) !important;
-                                          border-color: rgba(16,185,129,.35) !important;
-                                          color: #6ee7b7 !important; }
+        .auth-glass [role=status]       { background: rgba(63,130,220,.25) !important;
+                                          border-color: rgba(63,130,220,.45) !important;
+                                          color: #a6ccf7 !important; }
         /* eye-toggle button inside password field */
         .auth-glass button:not([type=submit]) { background: transparent !important;
                                                  border-color: transparent !important;
@@ -122,12 +122,12 @@ export function AuthPageFrame({
         ))}
 
         {/* Gradient overlay — keeps images visible while giving depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950/80 via-blue-950/70 to-cyan-950/75" />
+        <div className="absolute inset-0 bg-gradient-to-br from-ink-950/80 via-ink-900/70 to-brand-700/75" />
 
         {/* Ambient glow orbs */}
-        <div className="auth-orb-1 pointer-events-none absolute -left-24 top-1/4  h-[520px] w-[520px] rounded-full bg-blue-600/25  blur-3xl" />
-        <div className="auth-orb-2 pointer-events-none absolute -right-24 bottom-1/4 h-[420px] w-[420px] rounded-full bg-cyan-500/20  blur-3xl" />
-        <div className="auth-orb-3 pointer-events-none absolute bottom-10 left-1/3  h-[300px] w-[300px] rounded-full bg-indigo-500/15 blur-3xl" />
+        <div className="auth-orb-1 pointer-events-none absolute -left-24 top-1/4  h-[520px] w-[520px] rounded-full bg-brand-500/25  blur-3xl" />
+        <div className="auth-orb-2 pointer-events-none absolute -right-24 bottom-1/4 h-[420px] w-[420px] rounded-full bg-gold-500/20  blur-3xl" />
+        <div className="auth-orb-3 pointer-events-none absolute bottom-10 left-1/3  h-[300px] w-[300px] rounded-full bg-brand-300/15 blur-3xl" />
 
         {/* ── Content ───────────────────────────────────────────────────── */}
         <div className="relative z-10 w-full max-w-sm">
@@ -136,7 +136,7 @@ export function AuthPageFrame({
           <div className="mb-8 flex items-center gap-4">
             <div
               className="auth-compass shrink-0 rounded-full p-1"
-              style={{ filter: "drop-shadow(0 0 14px rgba(34,211,238,.7))" }}
+              style={{ filter: "drop-shadow(0 0 14px rgba(245,197,24,.7))" }}
             >
               <LogoMark size={52} />
             </div>
@@ -144,7 +144,7 @@ export function AuthPageFrame({
               <p className="text-xl font-bold tracking-tight text-white drop-shadow-md">
                 Yaron CMS
               </p>
-              <p className="mt-0.5 font-mono text-[0.62rem] tracking-[0.18em] uppercase text-cyan-300/80">
+              <p className="mt-0.5 font-mono text-[0.62rem] tracking-[0.18em] uppercase text-gold-300/80">
                 Knowledge Hub · {kicker}
               </p>
             </div>
@@ -152,7 +152,7 @@ export function AuthPageFrame({
 
           {/* Glassmorphic card */}
           <div
-            className="auth-glass rounded-2xl border border-white/20 p-7 shadow-[0_30px_60px_rgba(0,0,0,.45),inset_0_1px_0_rgba(255,255,255,.18)]"
+            className="auth-glass rounded-2xl border border-white/20 p-7 shadow-[0_30px_60px_rgba(14,34,80,.45),inset_0_1px_0_rgba(255,255,255,.18)]"
             style={{ background: "rgba(255,255,255,0.09)", backdropFilter: "blur(28px)" }}
           >
             {children}

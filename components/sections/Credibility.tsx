@@ -21,13 +21,13 @@ export function Credibility() {
               as="li"
               key={s.label}
               className={[
-                "flex flex-col gap-4 py-12 lg:py-16",
+                "flex flex-col gap-4 pt-12 pb-24 lg:pt-16 lg:pb-32",
                 i % 2 === 1 ? "border-border border-l pl-6 lg:pl-10" : "",
                 i >= 2 ? "border-border border-t lg:border-t-0" : "",
                 i === 2 ? "lg:border-l lg:pl-10" : "",
               ].join(" ")}
             >
-              <p className="text-stat font-medium text-white">
+              <p className="text-stat text-gold-400 font-medium">
                 <Counter value={s.value} suffix={s.suffix} plain={"plain" in s && s.plain} />
               </p>
               <div>

@@ -44,7 +44,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 md:col-span-7 md:grid-cols-3 lg:col-span-6 lg:col-start-7">
             {footerNav.map((group) => (
               <div key={group.heading}>
-                <p className="eyebrow">{group.heading}</p>
+                <p className="eyebrow text-gold-400">{group.heading}</p>
                 <ul className="mt-5 flex flex-col gap-3">
                   {group.items.map((item) => (
                     <li key={item.href}>
@@ -60,14 +60,14 @@ export function Footer() {
               </div>
             ))}
             <div className="col-span-2 md:col-span-1">
-              <p className="eyebrow">Start a project</p>
+              <p className="eyebrow text-gold-400">Start a project</p>
               <Link
                 href="/contact"
                 className="group mt-5 inline-flex items-center gap-2 text-[0.9375rem] text-white"
               >
                 Talk to our engineers
                 <ArrowUpRight
-                  className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="text-gold-400 size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   strokeWidth={1.75}
                   aria-hidden
                 />

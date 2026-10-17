@@ -12,7 +12,7 @@ export function PartnerSlot({ partner }: { partner: Partner }) {
       href={partner.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group border-border hover:bg-surface flex aspect-[5/3] flex-col items-center justify-center gap-2 border-r border-b p-6 transition-colors duration-300 cursor-pointer"
+      className="group border-border hover:bg-surface flex aspect-[5/3] cursor-pointer flex-col items-center justify-center gap-2 border-r border-b p-6 transition-colors duration-300"
       title={`${partner.name} · ${partner.category}`}
       aria-label={`Visit ${partner.name} official website`}
     >
@@ -22,7 +22,7 @@ export function PartnerSlot({ partner }: { partner: Partner }) {
           alt={`${partner.name} logo`}
           width={240}
           height={120}
-          className="h-9 w-auto max-w-[140px] object-contain opacity-75 transition-[opacity,transform] duration-300 ease-out group-hover:opacity-100 group-hover:scale-125 group-hover:-translate-y-1.5 will-change-transform lg:h-10"
+          className="h-9 w-auto max-w-[140px] object-contain opacity-75 transition-[opacity,transform] duration-300 ease-out will-change-transform group-hover:-translate-y-1.5 group-hover:scale-125 group-hover:opacity-100 lg:h-10"
         />
       ) : (
         <>

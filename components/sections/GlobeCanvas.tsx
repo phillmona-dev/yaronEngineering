@@ -91,9 +91,9 @@ export function GlobeCanvas() {
 
       // ── Globe base ────────────────────────────────────────────────────────
       const grad = ctx.createRadialGradient(cx - R * 0.25, cy - R * 0.2, R * 0.05, cx, cy, R);
-      grad.addColorStop(0, "rgba(255,140,0,0.08)");
-      grad.addColorStop(0.55, "rgba(30,50,100,0.12)");
-      grad.addColorStop(1, "rgba(0,0,0,0.0)");
+      grad.addColorStop(0, "rgba(245,197,24,0.08)");
+      grad.addColorStop(0.55, "rgba(63,130,220,0.14)");
+      grad.addColorStop(1, "rgba(14,34,80,0.0)");
       ctx.beginPath();
       ctx.arc(cx, cy, R, 0, Math.PI * 2);
       ctx.fillStyle = grad;
@@ -127,7 +127,7 @@ export function GlobeCanvas() {
       ctx.save();
       ctx.beginPath();
       ctx.arc(cx, cy, R, 0, Math.PI * 2);
-      ctx.strokeStyle = "rgba(255,140,0,0.18)";
+      ctx.strokeStyle = "rgba(245,197,24,0.18)";
       ctx.lineWidth = 1.5;
       ctx.stroke();
       ctx.restore();
@@ -144,7 +144,7 @@ export function GlobeCanvas() {
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.quadraticCurveTo(cx, cy - R * 0.1, b.x, b.y);
-        ctx.strokeStyle = `rgba(255,140,0,${0.1 * alpha})`;
+        ctx.strokeStyle = `rgba(245,197,24,${0.1 * alpha})`;
         ctx.lineWidth = 0.8;
         ctx.stroke();
         ctx.restore();
@@ -164,8 +164,8 @@ export function GlobeCanvas() {
           const py = (1 - t) * (1 - t) * a.y + 2 * (1 - t) * t * my + t * t * b.y;
 
           const glow = ctx.createRadialGradient(px, py, 0, px, py, 6);
-          glow.addColorStop(0, `rgba(255,180,60,${0.95 * alpha})`);
-          glow.addColorStop(1, "rgba(255,140,0,0)");
+          glow.addColorStop(0, `rgba(255,233,138,${0.95 * alpha})`);
+          glow.addColorStop(1, "rgba(245,197,24,0)");
           ctx.beginPath();
           ctx.arc(px, py, 6, 0, Math.PI * 2);
           ctx.fillStyle = glow;
@@ -190,8 +190,8 @@ export function GlobeCanvas() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, outerR, 0, Math.PI * 2);
         ctx.strokeStyle = isHQ
-          ? `rgba(255,140,0,${0.5 * pulse})`
-          : `rgba(255,200,80,${0.35 * pulse})`;
+          ? `rgba(245,197,24,${0.5 * pulse})`
+          : `rgba(251,216,74,${0.35 * pulse})`;
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.restore();
@@ -199,15 +199,15 @@ export function GlobeCanvas() {
         // Inner dot
         const innerR = isHQ ? 4 : 2.5;
         const dotGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, innerR * 2.5);
-        dotGrad.addColorStop(0, isHQ ? "#ffb030" : "#ffd080");
-        dotGrad.addColorStop(1, "rgba(255,140,0,0)");
+        dotGrad.addColorStop(0, isHQ ? "#f5c518" : "#ffe98a");
+        dotGrad.addColorStop(1, "rgba(245,197,24,0)");
         ctx.beginPath();
         ctx.arc(p.x, p.y, innerR * 2.5, 0, Math.PI * 2);
         ctx.fillStyle = dotGrad;
         ctx.fill();
         ctx.beginPath();
         ctx.arc(p.x, p.y, innerR, 0, Math.PI * 2);
-        ctx.fillStyle = isHQ ? "#ffaa00" : "#ffe0a0";
+        ctx.fillStyle = isHQ ? "#f5c518" : "#ffe98a";
         ctx.fill();
       });
 

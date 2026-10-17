@@ -86,7 +86,7 @@ export default async function CategoryPage({
               {rows.length > 0 && (
                 <div className="mt-20 lg:mt-24">
                   <p className="eyebrow">
-                    <span aria-hidden className="bg-brand h-px w-6" />
+                    <span aria-hidden className="bg-gold-500 h-px w-6" />
                     Latest in {category.name}
                   </p>
                   <div className="border-border mt-8 border-b">
@@ -106,7 +106,7 @@ export default async function CategoryPage({
               {popular.content.length > 1 && (
                 <div className="mt-24">
                   <p className="eyebrow">
-                    <span aria-hidden className="bg-brand h-px w-6" />
+                    <span aria-hidden className="bg-gold-500 h-px w-6" />
                     Popular in {category.name}
                   </p>
                   <div className="mt-8 grid gap-5 md:grid-cols-3">
@@ -121,7 +121,7 @@ export default async function CategoryPage({
           {related.length > 0 && (
             <div className="border-border mt-24 border-t pt-10">
               <p className="eyebrow">
-                <span aria-hidden className="bg-brand h-px w-6" />
+                <span aria-hidden className="bg-gold-500 h-px w-6" />
                 Related categories
               </p>
               <ul className="mt-6 flex flex-wrap gap-2">

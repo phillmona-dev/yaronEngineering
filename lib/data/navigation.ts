@@ -1,12 +1,12 @@
 export type NavItem = { label: string; href: string; description?: string };
 
 export const primaryNav: NavItem[] = [
-  { label: "Services", href: "/services" },
-  { label: "Solutions", href: "/solutions" },
-  { label: "Industries", href: "/industries" },
-  { label: "Projects", href: "/projects" },
-  { label: "Insights", href: "/blog" },
   { label: "About", href: "/about" },
+  { label: "Solutions", href: "/solutions" },
+  { label: "Services", href: "/services" },
+  { label: "Clients", href: "/projects" },
+  { label: "Partners", href: "/partners" },
+  { label: "Industries", href: "/industries" },
 ];
 
 export const footerNav: { heading: string; items: NavItem[] }[] = [
@@ -25,7 +25,7 @@ export const footerNav: { heading: string; items: NavItem[] }[] = [
       { label: "Services", href: "/services" },
       { label: "Solutions", href: "/solutions" },
       { label: "Industries", href: "/industries" },
-      { label: "Projects", href: "/projects" },
+      { label: "Clients", href: "/projects" },
       { label: "Insights", href: "/blog" },
     ],
   },

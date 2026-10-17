@@ -9,7 +9,7 @@ export function GridLines({ className }: { className?: string }) {
 
 export function Glow({
   className,
-  color = "rgba(47,98,198,0.35)",
+  color = "rgba(63,130,220,0.35)",
 }: {
   className?: string;
   color?: string;

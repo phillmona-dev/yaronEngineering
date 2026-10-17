@@ -154,7 +154,7 @@ export function SecuritySettings() {
                 </span>
               </li>
               {info && !info.resetEmailEnabled && (
-                <li className="flex gap-3 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-amber-800">
+                <li className="flex gap-3 rounded-md border border-gold-500/40 bg-gold-500/15 px-3 py-2 text-gold-700">
                   <MailWarning className="mt-0.5 size-4 shrink-0" aria-hidden />
                   <span>
                     Outgoing email is not configured on the server, so &ldquo;Forgot password&rdquo;

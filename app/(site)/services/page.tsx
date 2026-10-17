@@ -28,7 +28,7 @@ export default function ServicesPage() {
         title={[
           <span key="a">From the physical layer</span>,
           <span key="b">
-            to the <span className="text-brand-300">security</span> operations center.
+            to the <span className="text-gold-400">security</span> operations center.
           </span>,
         ]}
         lead="Seven core competencies, delivered as consulting, system integration, training and supply — by one accountable engineering team."
@@ -65,7 +65,7 @@ export default function ServicesPage() {
                       {s.index}
                     </span>
                     <s.icon
-                      className="text-brand-300 absolute top-6 right-6 size-5"
+                      className="text-gold-400 absolute top-6 right-6 size-5"
                       strokeWidth={1.25}
                       aria-hidden
                     />
@@ -83,7 +83,7 @@ export default function ServicesPage() {
                         </li>
                       ))}
                     </ul>
-                    <span className="text-brand-300 mt-auto inline-flex items-center gap-2 pt-8 text-sm font-medium transition-colors group-hover:text-white">
+                    <span className="text-gold-400 mt-auto inline-flex items-center gap-2 pt-8 text-sm font-medium transition-colors group-hover:text-white">
                       Explore {s.shortTitle}
                       <ArrowUpRight
                         className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

@@ -38,7 +38,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 className={cn(
                   "mt-0.5 size-4 shrink-0",
                   t.kind === "success"
-                    ? "text-emerald-600"
+                    ? "text-brand-600"
                     : t.kind === "error"
                       ? "text-red-600"
                       : "text-brand-500",

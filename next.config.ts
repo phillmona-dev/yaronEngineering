@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
+    qualities: [75, 78],
     deviceSizes: [360, 640, 768, 1024, 1280, 1440, 1920, 2560],
     // Uploaded media is served by the Spring Boot API (local dev + configured public host).
     remotePatterns: [

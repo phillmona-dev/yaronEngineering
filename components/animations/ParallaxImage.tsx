@@ -9,6 +9,8 @@ type Props = Omit<ImageProps, "fill"> & {
   /** Parallax travel as a fraction of container height (0.06 = 6 %). */
   strength?: number;
   containerClassName?: string;
+  /** Set when the container is positioned by the caller (e.g. `absolute inset-0`). */
+  absolute?: boolean;
   overlay?: boolean;
   zoomOnHover?: boolean;
 };
@@ -17,6 +19,7 @@ type Props = Omit<ImageProps, "fill"> & {
 export function ParallaxImage({
   strength = 0.08,
   containerClassName,
+  absolute = false,
   className,
   overlay,
   zoomOnHover,
@@ -29,7 +32,14 @@ export function ParallaxImage({
   const y = useTransform(scrollYProgress, [0, 1], [`${-strength * 100}%`, `${strength * 100}%`]);
 
   return (
-    <div ref={ref} className={cn("group/media relative overflow-hidden", containerClassName)}>
+    <div
+      ref={ref}
+      className={cn(
+        "group/media overflow-hidden",
+        absolute ? "absolute inset-0" : "relative",
+        containerClassName,
+      )}
+    >
       <m.div
         className="absolute inset-0"
         style={reduce ? undefined : { y, scale: 1 + strength * 2.2 }}

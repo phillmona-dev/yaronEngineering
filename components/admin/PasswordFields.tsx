@@ -117,7 +117,7 @@ export function NewPasswordFields({
             key={c.label}
             className={cn(
               "flex items-center gap-1.5",
-              c.ok ? "text-emerald-700" : touched ? "text-ink-500" : "text-ink-400",
+              c.ok ? "text-brand-700" : touched ? "text-ink-500" : "text-ink-400",
             )}
           >
             {c.ok ? (

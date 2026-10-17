@@ -83,7 +83,7 @@ export function Header() {
                     <span
                       aria-hidden
                       className={cn(
-                        "bg-brand-400 ease-out-expo absolute inset-x-3.5 -bottom-px h-px origin-left transition-transform duration-300",
+                        "bg-gold-500 ease-out-expo absolute inset-x-3.5 -bottom-px h-px origin-left transition-transform duration-300",
                         active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
                       )}
                     />

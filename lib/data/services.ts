@@ -58,7 +58,7 @@ export const services: Service[] = [
       "Real-time environmental visibility",
     ],
     image: {
-      src: "/images/photos/dc-corridor.jpg",
+      src: "/images/photos/hero-datacenter.jpg",
       alt: "Data center corridor with illuminated server racks",
     },
     icon: Server,
@@ -111,8 +111,8 @@ export const services: Service[] = [
       "Controls mapped to compliance obligations",
     ],
     image: {
-      src: "/images/photos/soc-analyst.jpg",
-      alt: "Security analyst working across multiple monitors in a dark operations room",
+      src: "/images/photos/network-red.jpg",
+      alt: "Dense red patch cabling in a network rack",
     },
     icon: ShieldCheck,
     theme: "Security operations",
@@ -161,8 +161,8 @@ export const services: Service[] = [
       "Recoverable by design",
     ],
     image: {
-      src: "/images/photos/server-hands.jpg",
-      alt: "Engineer installing components into a server chassis",
+      src: "/images/photos/storage-disk.jpg",
+      alt: "Open hard-disk drive platter and actuator",
     },
     icon: HardDrive,
     theme: "Compute & storage",

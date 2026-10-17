@@ -87,40 +87,40 @@ function pct(part: number, total: number) {
 type Accent = "blue" | "emerald" | "amber" | "violet" | "cyan" | "orange";
 const accents: Record<Accent, { chip: string; glow: string; text: string; bar: string }> = {
   blue: {
-    chip: "from-[#2f62c6] to-[#6ea0ff]",
-    glow: "shadow-[0_12px_30px_-10px_rgba(47,98,198,0.7)]",
-    text: "text-[#2f62c6]",
-    bar: "from-[#2f62c6] to-[#8fb4f2]",
+    chip: "from-[#3f82dc] to-[#a6ccf7] text-white",
+    glow: "shadow-[0_12px_30px_-10px_rgba(63,130,220,0.7)]",
+    text: "text-[#3f82dc]",
+    bar: "from-[#3f82dc] to-[#a6ccf7]",
   },
   emerald: {
-    chip: "from-[#059669] to-[#34d399]",
-    glow: "shadow-[0_12px_30px_-10px_rgba(5,150,105,0.7)]",
-    text: "text-emerald-600",
-    bar: "from-emerald-500 to-emerald-300",
+    chip: "from-[#d9a90c] to-[#fbd84a] text-[#143070]",
+    glow: "shadow-[0_12px_30px_-10px_rgba(245,197,24,0.6)]",
+    text: "text-gold-700",
+    bar: "from-gold-600 to-gold-400",
   },
   amber: {
-    chip: "from-[#d97706] to-[#fbbf24]",
-    glow: "shadow-[0_12px_30px_-10px_rgba(217,119,6,0.7)]",
-    text: "text-amber-600",
-    bar: "from-amber-500 to-amber-300",
+    chip: "from-[#3f82dc] to-[#a6ccf7] text-white",
+    glow: "shadow-[0_12px_30px_-10px_rgba(63,130,220,0.7)]",
+    text: "text-[#3f82dc]",
+    bar: "from-[#3f82dc] to-[#a6ccf7]",
   },
   violet: {
-    chip: "from-[#7c3aed] to-[#a78bfa]",
-    glow: "shadow-[0_12px_30px_-10px_rgba(124,58,237,0.7)]",
-    text: "text-violet-600",
-    bar: "from-violet-500 to-violet-300",
+    chip: "from-[#d9a90c] to-[#fbd84a] text-[#143070]",
+    glow: "shadow-[0_12px_30px_-10px_rgba(245,197,24,0.6)]",
+    text: "text-gold-700",
+    bar: "from-gold-600 to-gold-400",
   },
   cyan: {
-    chip: "from-[#0891b2] to-[#22d3ee]",
-    glow: "shadow-[0_12px_30px_-10px_rgba(8,145,178,0.7)]",
-    text: "text-cyan-600",
-    bar: "from-cyan-500 to-cyan-300",
+    chip: "from-[#3f82dc] to-[#a6ccf7] text-white",
+    glow: "shadow-[0_12px_30px_-10px_rgba(63,130,220,0.7)]",
+    text: "text-[#3f82dc]",
+    bar: "from-[#3f82dc] to-[#a6ccf7]",
   },
   orange: {
-    chip: "from-[#ea580c] to-[#fb923c]",
-    glow: "shadow-[0_12px_30px_-10px_rgba(234,88,12,0.7)]",
-    text: "text-orange-600",
-    bar: "from-orange-500 to-orange-300",
+    chip: "from-[#d9a90c] to-[#fbd84a] text-[#143070]",
+    glow: "shadow-[0_12px_30px_-10px_rgba(245,197,24,0.6)]",
+    text: "text-gold-700",
+    bar: "from-gold-600 to-gold-400",
   },
 };
 
@@ -152,7 +152,7 @@ function Kpi({
       <div className="flex items-start justify-between">
         <span
           className={cn(
-            "grid size-11 place-items-center rounded-2xl bg-gradient-to-br text-white",
+            "grid size-11 place-items-center rounded-2xl bg-gradient-to-br",
             a.chip,
             a.glow,
           )}
@@ -174,7 +174,7 @@ function Kpi({
     </>
   );
   const cls =
-    "glass group block p-5 transition-[transform,box-shadow] duration-500 ease-out-expo hover:-translate-y-1 hover:shadow-[0_30px_60px_-28px_rgba(10,13,20,0.4)]";
+    "glass group block p-5 transition-[transform,box-shadow] duration-500 ease-out-expo hover:-translate-y-1 hover:shadow-[0_30px_60px_-28px_rgba(14,34,80,0.4)]";
   return href ? (
     <m.div variants={item}>
       <Link href={href} className={cls}>
@@ -197,7 +197,7 @@ function Delta({ now, prev }: { now: number; prev: number }) {
     <span
       className={cn(
         "inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-medium",
-        up ? "bg-emerald-500/10 text-emerald-700" : "bg-red-500/10 text-red-700",
+        up ? "bg-brand-500/10 text-brand-700" : "bg-ink-900/8 text-ink-500",
       )}
     >
       {up ? (
@@ -294,14 +294,14 @@ function ViewsChart({ data }: { data: { date: string; views: number }[] }) {
       >
         <defs>
           <linearGradient id="dash-area" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stopColor="#2f62c6" stopOpacity="0.35" />
-            <stop offset="0.6" stopColor="#7c3aed" stopOpacity="0.08" />
-            <stop offset="1" stopColor="#7c3aed" stopOpacity="0" />
+            <stop offset="0" stopColor="#3f82dc" stopOpacity="0.35" />
+            <stop offset="0.6" stopColor="#6ca6ee" stopOpacity="0.08" />
+            <stop offset="1" stopColor="#6ca6ee" stopOpacity="0" />
           </linearGradient>
           <linearGradient id="dash-stroke" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0" stopColor="#2f62c6" />
-            <stop offset="0.55" stopColor="#7c3aed" />
-            <stop offset="1" stopColor="#22d3ee" />
+            <stop offset="0" stopColor="#3f82dc" />
+            <stop offset="0.55" stopColor="#6ca6ee" />
+            <stop offset="1" stopColor="#a6ccf7" />
           </linearGradient>
           <filter id="dash-glow" x="-20%" y="-50%" width="140%" height="200%">
             <feGaussianBlur stdDeviation="3" result="b" />
@@ -318,7 +318,7 @@ function ViewsChart({ data }: { data: { date: string; views: number }[] }) {
               x2={W - padR}
               y1={y(g)}
               y2={y(g)}
-              stroke="rgba(10,13,20,0.08)"
+              stroke="rgba(14,34,80,0.08)"
               strokeDasharray={g === 0 ? undefined : "3 5"}
             />
             <text
@@ -326,7 +326,7 @@ function ViewsChart({ data }: { data: { date: string; views: number }[] }) {
               y={y(g) + 3.5}
               textAnchor="end"
               fontSize="10"
-              fill="#6e7a91"
+              fill="#6480b8"
               fontFamily="var(--font-geist-mono)"
             >
               {g}
@@ -349,7 +349,7 @@ function ViewsChart({ data }: { data: { date: string; views: number }[] }) {
             y={H - 8}
             textAnchor={i === 0 ? "start" : i === data.length - 1 ? "end" : "middle"}
             fontSize="10"
-            fill="#6e7a91"
+            fill="#6480b8"
             fontFamily="var(--font-geist-mono)"
           >
             {label(data[i].date)}
@@ -362,16 +362,16 @@ function ViewsChart({ data }: { data: { date: string; views: number }[] }) {
               x2={x(hover)}
               y1={padT}
               y2={H - padB}
-              stroke="rgba(47,98,198,0.35)"
+              stroke="rgba(63,130,220,0.35)"
               strokeDasharray="3 4"
             />
-            <circle cx={x(hover)} cy={y(h.views)} r="9" fill="rgba(47,98,198,0.15)" />
+            <circle cx={x(hover)} cy={y(h.views)} r="9" fill="rgba(63,130,220,0.15)" />
             <circle
               cx={x(hover)}
               cy={y(h.views)}
               r="4.5"
               fill="#fff"
-              stroke="#2f62c6"
+              stroke="#3f82dc"
               strokeWidth="2.5"
             />
           </g>
@@ -419,7 +419,7 @@ function Donut({
     <div className="flex items-center gap-6">
       <div className="relative size-36 shrink-0">
         <svg viewBox="0 0 140 140" className="size-36 -rotate-90">
-          <circle cx="70" cy="70" r={r} fill="none" stroke="rgba(10,13,20,0.07)" strokeWidth="14" />
+          <circle cx="70" cy="70" r={r} fill="none" stroke="rgba(14,34,80,0.07)" strokeWidth="14" />
           {parts.map((p) => {
             const len = total === 0 ? 0 : (p.value / total) * c;
             const el = (
@@ -513,9 +513,9 @@ function PanelLink({ href, children }: { href: string; children: React.ReactNode
 }
 
 const messageTone: Record<ContactStatus, string> = {
-  NEW: "bg-orange-500/15 text-orange-700",
+  NEW: "bg-gold-500/15 text-gold-700",
   READ: "bg-ink-900/8 text-ink-500",
-  REPLIED: "bg-emerald-500/15 text-emerald-700",
+  REPLIED: "bg-brand-500/10 text-brand-700",
   ARCHIVED: "bg-ink-900/8 text-ink-400",
 };
 
@@ -575,20 +575,20 @@ export function Dashboard() {
             {
               label: "Published",
               value: stats.published,
-              color: "#10b981",
+              color: "#3f82dc",
               status: "PUBLISHED" as const,
             },
-            { label: "Drafts", value: stats.drafts, color: "#f59e0b", status: "DRAFT" as const },
+            { label: "Drafts", value: stats.drafts, color: "#f5c518", status: "DRAFT" as const },
             {
               label: "Scheduled",
               value: stats.scheduled,
-              color: "#8b5cf6",
+              color: "#2658a6",
               status: "SCHEDULED" as const,
             },
             {
               label: "Archived",
               value: stats.archived,
-              color: "#9aa4b8",
+              color: "#9fb3d9",
               status: "ARCHIVED" as const,
             },
           ]
@@ -607,17 +607,17 @@ export function Dashboard() {
           <div
             aria-hidden
             className="pointer-events-none absolute -top-24 -right-16 size-72 rounded-full opacity-60 blur-3xl"
-            style={{ background: "radial-gradient(circle, #5b8be6, transparent 65%)" }}
+            style={{ background: "radial-gradient(circle, #6ca6ee, transparent 65%)" }}
           />
           <div
             aria-hidden
             className="pointer-events-none absolute -bottom-28 left-1/3 size-64 rounded-full opacity-50 blur-3xl"
-            style={{ background: "radial-gradient(circle, #ff6b00, transparent 65%)" }}
+            style={{ background: "radial-gradient(circle, #fbd84a, transparent 65%)" }}
           />
           <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 font-mono text-[0.62rem] tracking-[0.14em] text-white/80 uppercase">
-                <Sparkles className="size-3.5 text-[#e9b917]" aria-hidden />
+                <Sparkles className="size-3.5 text-[#f5c518]" aria-hidden />
                 Knowledge Hub · Overview
               </p>
               <h1 className="mt-4 text-[1.75rem] leading-tight font-semibold tracking-[-0.02em] md:text-[2.1rem]">
@@ -634,7 +634,7 @@ export function Dashboard() {
                 {stats && stats.unreadMessages > 0 && (
                   <>
                     {" · "}
-                    <Link href="/admin/messages" className="text-[#fdba74] hover:underline">
+                    <Link href="/admin/messages" className="text-[#ffe98a] hover:underline">
                       {stats.unreadMessages} unread{" "}
                       {stats.unreadMessages === 1 ? "message" : "messages"} waiting
                     </Link>
@@ -811,7 +811,7 @@ export function Dashboard() {
                         className={cn(
                           "grid size-7 shrink-0 place-items-center rounded-lg font-mono text-[0.68rem] font-semibold",
                           i === 0
-                            ? "bg-gradient-to-br from-[#e9b917] to-[#f59e0b] text-white shadow-[0_8px_20px_-8px_rgba(233,185,23,0.9)]"
+                            ? "bg-gradient-to-br from-[#d9a90c] to-[#fbd84a] text-[#143070] shadow-[0_8px_20px_-8px_rgba(245,197,24,0.9)]"
                             : "bg-ink-900/6 text-ink-500",
                         )}
                       >
@@ -934,7 +934,7 @@ export function Dashboard() {
                       href={`/admin/articles/${a.id}/edit`}
                       className="flex items-center gap-3 px-5 py-3 transition-colors hover:bg-white/50"
                     >
-                      <span className="relative size-11 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-[#2f62c6] to-[#7c3aed]">
+                      <span className="relative size-11 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-[#3f82dc] to-[#6ca6ee]">
                         {a.coverImage?.url ? (
                           <Image
                             src={mediaUrl(a.coverImage.url)}
@@ -983,7 +983,7 @@ export function Dashboard() {
                       className={cn(
                         "relative z-10 mt-1 size-3.5 shrink-0 rounded-full border-2 border-white",
                         i === 0
-                          ? "bg-gradient-to-br from-[#2f62c6] to-[#22d3ee] shadow-[0_0_0_4px_rgba(47,98,198,0.15)]"
+                          ? "bg-gradient-to-br from-[#3f82dc] to-[#a6ccf7] shadow-[0_0_0_4px_rgba(63,130,220,0.15)]"
                           : "bg-ink-300",
                       )}
                       aria-hidden

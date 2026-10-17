@@ -30,11 +30,11 @@ export default function CareersPage() {
         title={[
           <span key="a">Engineer the systems</span>,
           <span key="b">
-            a region <span className="text-brand-300">depends on.</span>
+            a region <span className="text-gold-400">depends on.</span>
           </span>,
         ]}
         lead="We hire engineers, consultants and project leaders who want their work to run banks, ministries and universities."
-        image={{ src: "/images/photos/devs-desk.jpg", alt: "Engineers working at their desks" }}
+        image={{ src: "/images/photos/boardroom.jpg", alt: "Modern boardroom with glass walls" }}
       />
 
       <Section theme="light" aria-labelledby="careers-why">
@@ -42,8 +42,8 @@ export default function CareersPage() {
           <div className="lg:col-span-5">
             <ClipReveal className="aspect-[4/5] overflow-hidden rounded-md">
               <ParallaxImage
-                src="/images/photos/whiteboard.jpg"
-                alt="Two engineers planning at a whiteboard"
+                src="/images/photos/cloud-waves.jpg"
+                alt="Abstract flowing blue surfaces"
                 sizes="(min-width: 1024px) 40vw, 100vw"
                 containerClassName="h-full w-full"
                 strength={0.06}

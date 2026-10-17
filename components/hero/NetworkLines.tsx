@@ -36,9 +36,9 @@ export function NetworkLines({ className }: { className?: string }) {
     >
       <defs>
         <linearGradient id="nl-grad" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor="#5b8be6" stopOpacity="0" />
-          <stop offset="0.5" stopColor="#8fb4f2" stopOpacity="0.9" />
-          <stop offset="1" stopColor="#5b8be6" stopOpacity="0" />
+          <stop offset="0" stopColor="#6ca6ee" stopOpacity="0" />
+          <stop offset="0.5" stopColor="#a6ccf7" stopOpacity="0.9" />
+          <stop offset="1" stopColor="#6ca6ee" stopOpacity="0" />
         </linearGradient>
       </defs>
       {PATHS.map((d, i) => (
@@ -59,13 +59,13 @@ export function NetworkLines({ className }: { className?: string }) {
       ))}
       {NODES.map(([x, y], i) => (
         <g key={`${x}-${y}`}>
-          <circle cx={x} cy={y} r="2" fill="#8fb4f2" />
+          <circle cx={x} cy={y} r="2" fill="#a6ccf7" />
           {!reduce && (
             <m.circle
               cx={x}
               cy={y}
               r="6"
-              stroke="#8fb4f2"
+              stroke="#a6ccf7"
               strokeWidth="0.6"
               initial={{ opacity: 0, scale: 0.4 }}
               animate={{ opacity: [0, 0.6, 0], scale: [0.4, 1.6, 2.2] }}

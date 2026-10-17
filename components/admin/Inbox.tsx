@@ -30,9 +30,9 @@ const FILTERS: { key: ContactStatus | ""; label: string }[] = [
 ];
 
 const statusCls: Record<ContactStatus, string> = {
-  NEW: "bg-orange-500/15 text-orange-800 ring-1 ring-inset ring-orange-500/25",
+  NEW: "bg-gold-500/15 text-gold-700 ring-1 ring-inset ring-gold-500/40",
   READ: "bg-ink-900/6 text-ink-600 ring-1 ring-inset ring-ink-900/10",
-  REPLIED: "bg-emerald-500/12 text-emerald-800 ring-1 ring-inset ring-emerald-500/20",
+  REPLIED: "bg-brand-500/10 text-brand-700 ring-1 ring-inset ring-brand-500/20",
   ARCHIVED: "bg-ink-900/6 text-ink-400 ring-1 ring-inset ring-ink-900/10",
 };
 
@@ -48,7 +48,7 @@ function Avatar({ name, unread }: { name: string; unread?: boolean }) {
       className={cn(
         "flex size-9 shrink-0 items-center justify-center rounded-full font-mono text-[0.68rem] tracking-[0.08em] text-white",
         unread
-          ? "bg-gradient-to-br from-[#ea580c] to-[#fb923c] shadow-[0_8px_18px_-8px_rgba(234,88,12,0.8)]"
+          ? "bg-gradient-to-br from-[#d9a90c] to-[#fbd84a] text-[#143070] shadow-[0_8px_18px_-8px_rgba(245,197,24,0.8)]"
           : "from-ink-400 to-ink-300 bg-gradient-to-br",
       )}
       aria-hidden
@@ -181,7 +181,7 @@ export function Inbox({ user }: { user: User | null }) {
             <div className="flex gap-2">
               {(
                 [
-                  ["unread", counts.unread, "text-orange-700"],
+                  ["unread", counts.unread, "text-gold-700"],
                   ["last 24h", counts.last24h, "text-brand-700"],
                   ["total", counts.total, "text-ink-900"],
                 ] as const
@@ -234,7 +234,7 @@ export function Inbox({ user }: { user: User | null }) {
                   className={cn(
                     "rounded-full px-2.5 py-1 text-xs font-medium transition-[background,color,box-shadow] duration-300",
                     filter === f.key
-                      ? "bg-gradient-to-r from-[#2f62c6] to-[#5b8be6] text-white shadow-[0_8px_20px_-8px_rgba(47,98,198,0.9)]"
+                      ? "bg-gradient-to-r from-[#3f82dc] to-[#6ca6ee] text-white shadow-[0_8px_20px_-8px_rgba(63,130,220,0.9)]"
                       : "text-ink-500 hover:text-ink-900 hover:bg-white/80",
                   )}
                 >
@@ -243,7 +243,7 @@ export function Inbox({ user }: { user: User | null }) {
                     <span
                       className={cn(
                         "ml-1.5 rounded-full px-1.5 font-mono text-[0.6rem]",
-                        filter === "NEW" ? "bg-white/25" : "bg-orange-500 text-white",
+                        filter === "NEW" ? "bg-white/25" : "bg-gold-500 text-ink-900",
                       )}
                     >
                       {counts.unread}
@@ -279,7 +279,7 @@ export function Inbox({ user }: { user: User | null }) {
                       className={cn(
                         "flex w-full gap-3 border-b border-white/70 px-4 py-3 text-left transition-colors hover:bg-white/60",
                         active &&
-                          "bg-gradient-to-r from-[#2f62c6]/12 to-transparent shadow-[inset_3px_0_0_#2f62c6]",
+                          "bg-gradient-to-r from-[#3f82dc]/12 to-transparent shadow-[inset_3px_0_0_#3f82dc]",
                       )}
                     >
                       <Avatar name={m.name} unread={unread} />
@@ -311,7 +311,7 @@ export function Inbox({ user }: { user: User | null }) {
                       </span>
                       {unread && (
                         <span
-                          className="mt-2 size-2 shrink-0 rounded-full bg-orange-500 shadow-[0_0_0_3px_rgba(249,115,22,0.2)]"
+                          className="mt-2 size-2 shrink-0 rounded-full bg-gold-500 shadow-[0_0_0_3px_rgba(245,197,24,0.25)]"
                           aria-label="Unread"
                         />
                       )}
@@ -380,7 +380,7 @@ export function Inbox({ user }: { user: User | null }) {
                     onClick={() => {
                       if (selected.status !== "REPLIED") act("replied");
                     }}
-                    className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-br from-[#2f62c6] to-[#5b8be6] px-3.5 text-sm font-medium text-white shadow-[0_10px_24px_-10px_rgba(47,98,198,0.8)] transition-[box-shadow,transform] duration-300 hover:-translate-y-px"
+                    className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-gradient-to-br from-[#3f82dc] to-[#6ca6ee] px-3.5 text-sm font-medium text-white shadow-[0_10px_24px_-10px_rgba(63,130,220,0.8)] transition-[box-shadow,transform] duration-300 hover:-translate-y-px"
                   >
                     <Reply className="size-4" aria-hidden /> Reply by email
                   </a>
@@ -423,7 +423,7 @@ export function Inbox({ user }: { user: User | null }) {
                   {selected.message}
                 </p>
                 {selected.repliedAt && (
-                  <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-emerald-500/12 px-3 py-1.5 text-xs text-emerald-800 ring-1 ring-emerald-500/20 ring-inset">
+                  <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-3 py-1.5 text-xs text-brand-700 ring-1 ring-brand-500/30 ring-inset">
                     <Check className="size-3.5" aria-hidden /> Replied{" "}
                     {formatDateTime(selected.repliedAt)}
                   </p>

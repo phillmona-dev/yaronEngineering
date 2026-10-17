@@ -23,7 +23,7 @@ type ButtonProps = CommonProps & { href?: undefined } & Omit<
   >;
 
 const base =
-  "group/btn relative inline-flex items-center justify-center gap-2.5 rounded-full font-semibold tracking-[-0.005em] transition-[box-shadow,transform,background] duration-300 ease-out-expo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50";
+  "group/btn relative inline-flex items-center justify-center gap-2.5 rounded-full font-semibold tracking-[-0.005em] transition-[box-shadow,transform,background] duration-300 ease-out-expo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50";
 
 const sizes: Record<Size, string> = {
   md: "h-11 px-6 text-[0.9375rem]",
@@ -34,7 +34,7 @@ const variants: Record<Variant, string> = {
   primary:
     "overflow-hidden active:scale-[0.97] hover:scale-[1.03] hover:-translate-y-0.5",
   secondary:
-    "border border-border-strong bg-transparent text-foreground hover:border-foreground/60 hover:bg-foreground/[0.04]",
+    "border border-border-strong bg-transparent text-foreground hover:border-gold-500 hover:bg-gold-500/[0.06]",
   ghost: "bg-transparent text-foreground hover:text-brand-text px-2",
   inverse: "bg-foreground text-background hover:bg-brand hover:text-brand-foreground",
 };
@@ -65,28 +65,28 @@ function PrimaryInner({
 }) {
   return (
     <>
-      {/* Crisp white base */}
+      {/* Brand-blue base */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-[inherit]"
         style={{
-          background: "linear-gradient(145deg, #ffffff 0%, #fff7f0 100%)",
-          border: "1.5px solid rgba(255,120,30,0.25)",
+          background: "linear-gradient(145deg, #6ca6ee 0%, #3f82dc 55%, #3270c8 100%)",
+          border: "1.5px solid rgba(245,197,24,0.35)",
         }}
       />
 
-      {/* Subtle orange bottom-edge glow */}
+      {/* Gold edge glow */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-[inherit]"
         style={{
           boxShadow:
-            "0 2px 0 0 rgba(255,140,0,0.18) inset, 0 6px 24px -6px rgba(255,110,0,0.35), 0 0 0 3px rgba(255,140,0,0.12)",
+            "0 1px 0 0 rgba(255,255,255,0.25) inset, 0 6px 24px -6px rgba(63,130,220,0.55), 0 0 0 3px rgba(245,197,24,0.16)",
           animation: "btn-glow-pulse 2.4s ease-in-out infinite",
         }}
       />
 
-      {/* Shimmer sweep */}
+      {/* Gold shimmer sweep */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]"
@@ -97,29 +97,29 @@ function PrimaryInner({
             inset: 0,
             width: "45%",
             background:
-              "linear-gradient(90deg, transparent 0%, rgba(255,160,60,0.18) 50%, transparent 100%)",
+              "linear-gradient(90deg, transparent 0%, rgba(255,233,138,0.28) 50%, transparent 100%)",
             animation: "btn-shimmer 2.8s ease-in-out infinite",
           }}
         />
       </span>
 
-      {/* Hover inner brightening */}
+      {/* Hover brightening */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100"
         style={{
           boxShadow:
-            "inset 0 1px 0 rgba(255,255,255,1), 0 12px 36px -10px rgba(255,110,0,0.5)",
-          background: "rgba(255,245,235,0.6)",
+            "inset 0 1px 0 rgba(255,255,255,0.35), 0 12px 36px -10px rgba(63,130,220,0.7), 0 0 0 3px rgba(245,197,24,0.3)",
+          background: "rgba(95,152,232,0.35)",
         }}
       />
 
-      {/* Orange text + arrow — sit above all layers */}
+      {/* White text + arrow — sit above all layers */}
       <span
         className="relative z-10 flex items-center gap-2.5"
         style={{
-          color: "#e05e00",
-          textShadow: "0 1px 0 rgba(255,255,255,0.8)",
+          color: "#ffffff",
+          textShadow: "0 1px 0 rgba(14,34,80,0.25)",
         }}
       >
         <span>{children}</span>

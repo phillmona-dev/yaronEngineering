@@ -58,7 +58,7 @@ export default async function BlogPage({
           <div className="lg:col-span-8">
             <Reveal>
               <p className="eyebrow text-ink-300">
-                <span aria-hidden className="bg-brand h-px w-6" />
+                <span aria-hidden className="bg-gold-500 h-px w-6" />
                 Yaron Engineering · Insights
               </p>
             </Reveal>
@@ -69,7 +69,7 @@ export default async function BlogPage({
               lines={[
                 <span key="a">Engineering insights</span>,
                 <span key="b">
-                  for a <span className="text-brand-300">digital</span> world.
+                  for a <span className="text-gold-400">digital</span> world.
                 </span>,
               ]}
             />
@@ -108,7 +108,7 @@ export default async function BlogPage({
               <div className="mt-20 flex items-end justify-between gap-6 lg:mt-28">
                 <div>
                   <p className="eyebrow">
-                    <span aria-hidden className="bg-brand h-px w-6" />
+                    <span aria-hidden className="bg-gold-500 h-px w-6" />
                     {page === 0 ? "Latest insights" : `Insights · page ${page + 1}`}
                   </p>
                   <h2 className="text-h2 mt-4 font-semibold">
@@ -145,7 +145,7 @@ export default async function BlogPage({
               {popular && popular.content.length > 1 && (
                 <div className="mt-24 lg:mt-32">
                   <p className="eyebrow">
-                    <span aria-hidden className="bg-brand h-px w-6" />
+                    <span aria-hidden className="bg-gold-500 h-px w-6" />
                     Most read
                   </p>
                   <div className="mt-8 grid gap-5 md:grid-cols-3">

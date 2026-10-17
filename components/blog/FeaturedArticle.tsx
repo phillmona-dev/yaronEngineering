@@ -38,7 +38,7 @@ export function FeaturedArticle({
       <div className="flex flex-col justify-center lg:col-span-5">
         <Reveal>
           <p className="text-brand-text flex items-center gap-3 font-mono text-[0.68rem] tracking-[0.16em] uppercase">
-            <span aria-hidden className="bg-brand h-px w-6" />
+            <span aria-hidden className="bg-gold-500 h-px w-6" />
             {eyebrow}
           </p>
         </Reveal>

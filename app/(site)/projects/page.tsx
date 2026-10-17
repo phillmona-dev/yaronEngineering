@@ -26,7 +26,7 @@ export default function ProjectsPage() {
         title={[
           <span key="a">Infrastructure delivered</span>,
           <span key="b">
-            for institutions that <span className="text-brand-300">matter.</span>
+            for institutions that <span className="text-gold-400">matter.</span>
           </span>,
         ]}
         lead="More than 30 high-impact projects for more than 40 clients across government, finance, education and enterprise. A selection is indexed below; detailed case studies are published as they are approved."

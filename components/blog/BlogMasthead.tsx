@@ -62,7 +62,7 @@ export function BlogMasthead({
         </Reveal>
         <Reveal delay={0.05}>
           <p className="eyebrow text-ink-300">
-            <span aria-hidden className="bg-brand h-px w-6" />
+            <span aria-hidden className="bg-gold-500 h-px w-6" />
             {eyebrow}
           </p>
         </Reveal>

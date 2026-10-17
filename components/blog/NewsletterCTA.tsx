@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { GridLines, Glow } from "@/components/ui/Backdrop";
 import { Button } from "@/components/ui/Button";
 

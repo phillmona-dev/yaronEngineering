@@ -86,7 +86,7 @@ function Shell({ children }: { children: React.ReactNode }) {
       <div className="p-3">
         <Link
           href="/admin/articles/new"
-          className="flex h-9 items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-[#2f62c6] to-[#5b8be6] text-sm font-medium text-white shadow-[0_10px_24px_-10px_rgba(47,98,198,0.8)] transition-[box-shadow,transform] duration-300 hover:-translate-y-px hover:shadow-[0_14px_28px_-10px_rgba(47,98,198,0.9)]"
+          className="flex h-9 items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-[#3f82dc] to-[#6ca6ee] text-sm font-medium text-white shadow-[0_10px_24px_-10px_rgba(63,130,220,0.8)] transition-[box-shadow,transform] duration-300 hover:-translate-y-px hover:shadow-[0_14px_28px_-10px_rgba(63,130,220,0.9)]"
         >
           <PenSquare className="size-4" aria-hidden /> New article
         </Link>
@@ -103,7 +103,7 @@ function Shell({ children }: { children: React.ReactNode }) {
                   className={cn(
                     "flex h-9 items-center gap-3 rounded-md px-3 text-sm transition-colors",
                     active
-                      ? "text-ink-900 bg-gradient-to-r from-[#2f62c6]/12 to-[#7c3aed]/8 font-medium shadow-[inset_0_0_0_1px_rgba(47,98,198,0.15)]"
+                      ? "text-ink-900 bg-gradient-to-r from-[#3f82dc]/12 to-[#6ca6ee]/8 font-medium shadow-[inset_0_0_0_1px_rgba(63,130,220,0.15)]"
                       : "text-ink-500 hover:text-ink-900 hover:bg-white/70",
                   )}
                 >
@@ -171,7 +171,7 @@ function Shell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div data-theme="light" className="text-ink-900 min-h-screen bg-[#eef1f7] antialiased">
+      <div data-theme="light" className="text-ink-900 min-h-screen bg-[#eef3fb] antialiased">
         <aside className="glass-sidebar fixed inset-y-0 left-0 z-40 hidden w-60 lg:block">
           {sidebar}
         </aside>

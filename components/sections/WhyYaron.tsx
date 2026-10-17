@@ -27,7 +27,7 @@ export function WhyYaron() {
             {whyPrinciples.map((p, i) => (
               <Reveal as="li" key={p.index} delay={0.03 * i} amount={0.3}>
                 <div className="group border-border grid grid-cols-[3rem_1fr] gap-6 border-b py-8 transition-colors duration-300 md:grid-cols-[6rem_1fr] md:py-10">
-                  <span className="text-ink-400 group-hover:text-brand-300 pt-2 font-mono text-[0.72rem] tracking-[0.14em] transition-colors">
+                  <span className="text-ink-400 group-hover:text-gold-400 pt-2 font-mono text-[0.72rem] tracking-[0.14em] transition-colors">
                     {p.index}
                   </span>
                   <div className="grid gap-4 md:grid-cols-12">

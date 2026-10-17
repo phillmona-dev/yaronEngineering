@@ -28,7 +28,7 @@ export default function IndustriesPage() {
         title={[
           <span key="a">Serving the institutions</span>,
           <span key="b">
-            that <span className="text-brand-300">cannot pause.</span>
+            that <span className="text-gold-400">cannot pause.</span>
           </span>,
         ]}
         lead="Eight sectors where reliability, security and compliance are obligations — and where Yaron Engineering has the depth to deliver."

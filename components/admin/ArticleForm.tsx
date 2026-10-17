@@ -299,7 +299,7 @@ export function ArticleForm({
             </Link>
             <StatusBadge status={status} />
             {article?.featured && (
-              <span className="inline-flex items-center gap-1 font-mono text-[0.62rem] tracking-[0.1em] text-amber-700 uppercase">
+              <span className="inline-flex items-center gap-1 font-mono text-[0.62rem] tracking-[0.1em] text-gold-700 uppercase">
                 <Star className="size-3" /> Featured
               </span>
             )}
@@ -475,10 +475,10 @@ export function ArticleForm({
                   Search preview
                 </p>
                 <p className="text-ink-500 mt-2 text-xs">Yaron Engineering PLC</p>
-                <p className="truncate text-base font-medium text-[#1a0dab]">
+                <p className="truncate text-base font-medium text-[#3270c8]">
                   {seoTitle.length > 60 ? `${seoTitle.slice(0, 57)}…` : seoTitle}
                 </p>
-                <p className="truncate font-mono text-xs text-emerald-700">
+                <p className="truncate font-mono text-xs text-brand-700">
                   {SITE}/blog/{previewSlug}
                 </p>
                 <p className="text-ink-600 mt-1 line-clamp-2 text-sm">{seoDesc}</p>
@@ -527,7 +527,7 @@ export function ArticleForm({
               {checklist.map(([label, ok]) => (
                 <li key={label} className="flex items-center gap-2">
                   <span
-                    className={cn("size-1.5 rounded-full", ok ? "bg-emerald-500" : "bg-ink-300")}
+                    className={cn("size-1.5 rounded-full", ok ? "bg-brand-500" : "bg-ink-300")}
                     aria-hidden
                   />
                   {label}
@@ -536,7 +536,7 @@ export function ArticleForm({
               ))}
             </ul>
             {article?.scheduledAt && status === "SCHEDULED" && (
-              <p className="mt-4 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800">
+              <p className="mt-4 rounded-md border border-gold-500/40 bg-gold-500/15 px-3 py-2 text-xs text-gold-700">
                 Goes live {formatDateTime(article.scheduledAt)}.
               </p>
             )}
