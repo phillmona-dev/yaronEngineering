@@ -4,18 +4,18 @@
 
 @theme {
   /* ---------- Palette ---------- */
-  /* Navy neutrals — derived from the logo blue, no pure black anywhere */
-  --color-ink-950: #0e2250;
-  --color-ink-900: #143070;
-  --color-ink-850: #193a80;
-  --color-ink-800: #20448f;
-  --color-ink-700: #2a4f9e;
-  --color-ink-600: #3356a3;
-  --color-ink-500: #4a66a8;
-  --color-ink-400: #6480b8;
-  --color-ink-300: #9fb3d9;
-  --color-ink-200: #c9d6ee;
-  --color-ink-100: #e4ebf8;
+  /* Navy neutrals — derived from the logo blue, lifted to real blue (not blue-black) */
+  --color-ink-950: #0d2d6e;
+  --color-ink-900: #123580;
+  --color-ink-850: #173f92;
+  --color-ink-800: #1e4aa0;
+  --color-ink-700: #2855ae;
+  --color-ink-600: #3362b8;
+  --color-ink-500: #4a72c0;
+  --color-ink-400: #6488cc;
+  --color-ink-300: #9fb8e0;
+  --color-ink-200: #c9daef;
+  --color-ink-100: #e4ecf8;
   --color-ink-50: #f2f6fc;
 
   /* Primary — logo light blue */
@@ -70,7 +70,7 @@
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
 
-  --shadow-media: 0 1px 0 rgba(14, 34, 80, 0.04), 0 24px 48px -24px rgba(14, 34, 80, 0.28);
+  --shadow-media: 0 1px 0 rgba(13, 45, 110, 0.04), 0 24px 48px -24px rgba(13, 45, 110, 0.28);
 
   --animate-drift: drift 28s linear infinite;
   --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
@@ -160,28 +160,28 @@
 }
 
 [data-theme="dark"] {
-  --background: #0e2250;
+  --background: #0d2d6e;
   --foreground: #f2f6fc;
-  --muted: #143070;
-  --muted-foreground: #9fb3d9;
-  --border: #20448f;
-  --border-strong: #2a4f9e;
-  --surface: #143070;
-  --surface-elevated: #20448f;
+  --muted: #123580;
+  --muted-foreground: #9fb8e0;
+  --border: #1e4aa0;
+  --border-strong: #2855ae;
+  --surface: #123580;
+  --surface-elevated: #1e4aa0;
   --brand: #3f82dc;
   --brand-hover: #6ca6ee;
   --brand-foreground: #ffffff;
   --brand-text: #a6ccf7;
   --accent: #f5c518;
   --accent-hover: #fbd84a;
-  --accent-foreground: #0e2250;
+  --accent-foreground: #0d2d6e;
   --accent-text: #fbd84a;
   color-scheme: dark;
 }
 
 [data-theme="dark"][data-tone="soft"] {
-  --background: #143070;
-  --surface: #193a80;
+  --background: #123580;
+  --surface: #173f92;
 }
 
 [data-theme="light"][data-tone="soft"] {
@@ -301,9 +301,9 @@
 @utility image-overlay {
   background: linear-gradient(
     to top,
-    #0e2250 0%,
-    rgba(14, 34, 80, 0.72) 38%,
-    rgba(14, 34, 80, 0.18) 100%
+    #0d2d6e 0%,
+    rgba(13, 45, 110, 0.72) 38%,
+    rgba(13, 45, 110, 0.18) 100%
   );
 }
 
@@ -641,11 +641,11 @@ html[data-cursor="custom"] .ai-msg-bubble p {
     background: rgba(255, 255, 255, 0.72);
   }
   .glass-dark {
-    background: linear-gradient(135deg, rgba(14, 34, 80, 0.94), rgba(26, 53, 127, 0.88));
+    background: linear-gradient(135deg, rgba(13, 45, 110, 0.94), rgba(23, 63, 146, 0.88));
     border-color: rgba(255, 255, 255, 0.12);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      0 30px 70px -30px rgba(14, 34, 80, 0.7);
+      0 30px 70px -30px rgba(13, 45, 110, 0.7);
   }
   /* Square grid behind the admin pages (no colour wash) */
   .admin-grid {
@@ -654,8 +654,8 @@ html[data-cursor="custom"] .ai-msg-bubble p {
     z-index: 0;
     pointer-events: none;
     background-image:
-      linear-gradient(rgba(14, 34, 80, 0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(14, 34, 80, 0.055) 1px, transparent 1px);
+      linear-gradient(rgba(13, 45, 110, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(13, 45, 110, 0.055) 1px, transparent 1px);
     background-size: 36px 36px;
     mask-image: radial-gradient(ellipse at 40% 0%, #000 30%, rgba(0, 0, 0, 0.35) 100%);
     -webkit-mask-image: radial-gradient(ellipse at 40% 0%, #000 30%, rgba(0, 0, 0, 0.35) 100%);
