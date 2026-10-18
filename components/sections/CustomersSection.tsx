@@ -103,7 +103,7 @@ export function CustomersSection({
               </>
             );
             return (
-              <StaggerItem key={c.id} y={28}>
+              <StaggerItem key={c.id} y={14}>
                 <TiltCard className="h-full rounded-xl">
                   {external ? (
                     <a

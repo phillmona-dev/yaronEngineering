@@ -15,8 +15,8 @@ type GroupProps = {
 export function StaggerGroup({
   children,
   className,
-  stagger = 0.08,
-  delay = 0.05,
+  stagger = 0.06,
+  delay = 0,
   as = "div",
   amount,
 }: GroupProps) {
@@ -44,7 +44,7 @@ type ItemProps = {
   y?: number;
 };
 
-export function StaggerItem({ children, className, as = "div", y = 20 }: ItemProps) {
+export function StaggerItem({ children, className, as = "div", y = 16 }: ItemProps) {
   const reduce = useReducedMotion();
   const Tag = m[as];
   return (
@@ -54,15 +54,11 @@ export function StaggerItem({ children, className, as = "div", y = 20 }: ItemPro
         hidden: {
           opacity: 0,
           y: reduce ? 0 : y,
-          scale: reduce ? 1 : 0.96,
-          filter: reduce ? "blur(0px)" : "blur(6px)",
         },
         visible: {
           opacity: 1,
           y: 0,
-          scale: 1,
-          filter: "blur(0px)",
-          transition: { duration: 0.75, ease: EASE_OUT_EXPO },
+          transition: { duration: 0.45, ease: EASE_OUT_EXPO },
         },
       }}
     >
