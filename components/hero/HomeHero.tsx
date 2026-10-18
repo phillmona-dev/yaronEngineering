@@ -159,6 +159,7 @@ export function HomeHero() {
                         alt={c.name}
                         width={120}
                         height={40}
+                        priority
                         className="h-7 w-auto"
                       />
                     </a>

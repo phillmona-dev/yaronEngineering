@@ -19,7 +19,7 @@ type Props = {
  */
 export function ClipReveal({ children, className, delay = 0, direction = "up" }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.25 });
+  const inView = useInView(ref, { once: true, amount: 0.05, margin: "0px 0px 60px 0px" });
   const reduce = useReducedMotion();
   const hidden = direction === "up" ? "inset(100% 0% 0% 0%)" : "inset(0% 100% 0% 0%)";
   const shown = "inset(0% 0% 0% 0%)";
@@ -29,7 +29,7 @@ export function ClipReveal({ children, className, delay = 0, direction = "up" }:
         className="h-full w-full"
         initial={reduce ? { opacity: 0 } : { clipPath: hidden }}
         animate={inView ? (reduce ? { opacity: 1 } : { clipPath: shown }) : undefined}
-        transition={{ duration: reduce ? 0.3 : 1.1, delay, ease: EASE_OUT_EXPO }}
+        transition={{ duration: reduce ? 0.2 : 0.75, delay, ease: EASE_OUT_EXPO }}
       >
         {children}
       </m.div>

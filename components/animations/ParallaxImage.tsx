@@ -24,6 +24,7 @@ export function ParallaxImage({
   overlay,
   zoomOnHover,
   alt,
+  priority,
   ...img
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
@@ -47,6 +48,7 @@ export function ParallaxImage({
         <Image
           alt={alt}
           fill
+          priority={priority}
           className={cn(
             "ease-out-expo object-cover transition-transform duration-700",
             zoomOnHover && "group-hover/media:scale-[1.03]",

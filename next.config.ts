@@ -4,9 +4,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
-    formats: ["image/avif", "image/webp"],
-    qualities: [75, 78],
-    deviceSizes: [360, 640, 768, 1024, 1280, 1440, 1920, 2560],
+    formats: ["image/webp"],            // drop AVIF – encoding is CPU-heavy on first request
+    qualities: [70, 75],               // slightly lower quality = significantly smaller files
+    minimumCacheTTL: 60 * 60 * 24 * 30, // cache optimised images for 30 days
+    deviceSizes: [360, 640, 768, 1024, 1280, 1440, 1920],
     // Uploaded media is served by the Spring Boot API (local dev + configured public host).
     remotePatterns: [
       { protocol: "http", hostname: "localhost", port: "8080", pathname: "/media/**" },
