@@ -20,7 +20,7 @@ export function ExpertiseSection() {
             </Reveal>
             <Reveal delay={0.08}>
               <p className="text-stat mt-8 font-medium text-white">
-                <Counter value={17} suffix="+" />
+                <Counter value={20} suffix="+" />
               </p>
             </Reveal>
             <Reveal delay={0.14}>
@@ -33,7 +33,7 @@ export function ExpertiseSection() {
             </Reveal>
             <Reveal delay={0.2}>
               <p className="text-lead text-ink-300 mt-6 max-w-[56ch]">
-                The founding team brings more than 17 years of combined leadership experience,
+                The founding team brings more than 20 years of combined leadership experience,
                 including contributions to Ethiopia&apos;s flagship digital transformation
                 initiatives and ICT modernization programmes.
               </p>

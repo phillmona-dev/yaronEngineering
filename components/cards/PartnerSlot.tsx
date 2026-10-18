@@ -3,18 +3,24 @@ import type { Partner } from "@/lib/data/partners";
 
 /**
  * Partner slot: renders the official logo when supplied, otherwise a restrained typographic
- * wordmark so the grid stays elegant until assets arrive. Clicking opens the partner's
- * official website in a new tab.
+ * wordmark so the grid stays elegant until assets arrive. When a website is known, clicking
+ * opens it in a new tab.
  */
 export function PartnerSlot({ partner }: { partner: Partner }) {
+  const Wrapper = partner.url ? "a" : "div";
+  const linkProps = partner.url
+    ? {
+        href: partner.url,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        "aria-label": `Visit ${partner.name} official website`,
+      }
+    : {};
   return (
-    <a
-      href={partner.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group border-border hover:bg-surface flex aspect-[5/3] cursor-pointer flex-col items-center justify-center gap-2 border-r border-b p-6 transition-colors duration-300"
+    <Wrapper
+      {...linkProps}
+      className="group border-border hover:bg-surface flex aspect-[5/3] flex-col items-center justify-center gap-2 border-r border-b p-6 transition-colors duration-300"
       title={`${partner.name} · ${partner.category}`}
-      aria-label={`Visit ${partner.name} official website`}
     >
       {partner.logo ? (
         <Image
@@ -34,6 +40,6 @@ export function PartnerSlot({ partner }: { partner: Partner }) {
           </span>
         </>
       )}
-    </a>
+    </Wrapper>
   );
 }

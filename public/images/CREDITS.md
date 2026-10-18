@@ -23,6 +23,7 @@ Replace any file with official company photography of the same name to update th
 | hospital.jpg | 1519494026892-80bbd2d6fd0d |
 | university.jpg | 1562774053-701939374585 |
 | powerlines.jpg | 1473341304170-971dccb5ac1e |
+| circuit-glow.jpg | 1550751827-4bd374c3f58b |
 
 The shield logo in `public/images/brand` is the company's own asset.
 

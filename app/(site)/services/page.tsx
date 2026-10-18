@@ -5,10 +5,13 @@ import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/hero/PageHero";
 import { Section } from "@/components/ui/Section";
 import { StaggerGroup, StaggerItem } from "@/components/animations/Stagger";
+import { Reveal } from "@/components/animations/Reveal";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { SolutionsProcess } from "@/components/sections/SolutionsProcess";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { services } from "@/lib/data/services";
+import { company } from "@/lib/data/company";
 import { breadcrumbSchema, pageMetadata } from "@/lib/utils/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -97,6 +100,54 @@ export default function ServicesPage() {
                     className="bg-brand-400 ease-out-expo absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
                   />
                 </Link>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
+        </div>
+      </Section>
+
+      <Section theme="light" aria-labelledby="delivery-title">
+        <div className="container-x">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-12">
+            <div className="lg:col-span-6">
+              <Reveal>
+                <Eyebrow>How we deliver</Eyebrow>
+              </Reveal>
+              <Reveal delay={0.08}>
+                <h2 id="delivery-title" className="text-h2 mt-6 font-semibold">
+                  Consult, integrate, <span className="text-brand-text">supply.</span>
+                </h2>
+              </Reveal>
+            </div>
+          </div>
+          <StaggerGroup
+            as="ul"
+            className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3"
+            stagger={0.08}
+            amount={0.1}
+          >
+            {company.serviceLines.map((line, i) => (
+              <StaggerItem
+                as="li"
+                key={line.title}
+                className="border-border bg-surface flex flex-col rounded-md border p-6 lg:p-8"
+              >
+                <span className="text-muted-foreground font-mono text-[0.66rem] tracking-[0.14em]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-h4 mt-4 font-semibold">{line.title}</h3>
+                <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{line.text}</p>
+                <ul className="border-border mt-6 border-t">
+                  {line.items.map((item) => (
+                    <li
+                      key={item}
+                      className="border-border flex items-start gap-3 border-b py-3 text-[0.875rem]"
+                    >
+                      <span aria-hidden className="bg-brand mt-2 size-1.5 shrink-0 rounded-full" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </StaggerItem>
             ))}
           </StaggerGroup>

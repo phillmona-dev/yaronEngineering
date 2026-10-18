@@ -34,7 +34,7 @@ export default function PartnersPage() {
       <CustomersSection
         eyebrow="Domestic & Enterprise Partners"
         title="Enterprise partners & clients in Ethiopia."
-        lead="Key infrastructure, cybersecurity, and systems delivered for premier banks, national enterprises, government bureaus and universities."
+        lead="Infrastructure, cybersecurity, surveillance and cloud systems delivered for the judiciary, government institutions, banks and microfinance, national enterprises, aviation, hospitality, NGOs and universities."
       />
       <WhyYaron />
       <FinalCTA />

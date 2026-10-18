@@ -139,14 +139,31 @@ export function HomeHero() {
               Trusted by
             </p>
             <ul className="mt-4 flex flex-wrap items-center gap-3">
-              {customers.slice(0, 5).map((c) => (
-                <li
-                  key={c.id}
-                  className="rounded-md bg-white/90 px-3 py-2 opacity-90 transition-opacity hover:opacity-100"
-                >
-                  <Image src={c.logo} alt={c.name} width={120} height={40} className="h-7 w-auto" />
-                </li>
-              ))}
+              {customers
+                .filter((c): c is typeof c & { logo: string; url: string } =>
+                  Boolean(c.logo && c.url),
+                )
+                .slice(0, 5)
+                .map((c) => (
+                  <li key={c.id}>
+                    <a
+                      href={c.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`${c.name} — official website`}
+                      aria-label={`${c.name} — visit official website (opens in a new tab)`}
+                      className="client-chip focus-visible:ring-gold-400 block rounded-md bg-white/90 px-3 py-2 opacity-90 focus-visible:ring-2 focus-visible:outline-none"
+                    >
+                      <Image
+                        src={c.logo}
+                        alt={c.name}
+                        width={120}
+                        height={40}
+                        className="h-7 w-auto"
+                      />
+                    </a>
+                  </li>
+                ))}
             </ul>
           </m.div>
         </div>

@@ -6,13 +6,14 @@ import { Reveal } from "@/components/animations/Reveal";
 import { Credibility } from "@/components/sections/Credibility";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { JsonLd } from "@/components/layout/JsonLd";
-import { projects, projectCategories } from "@/lib/data/projects";
+import { featuredProjects, projectCategories } from "@/lib/data/projects";
+import { ProjectIndex } from "@/components/sections/ProjectIndex";
 import { breadcrumbSchema, pageMetadata } from "@/lib/utils/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Projects",
   description:
-    "Selected ICT infrastructure, data center, cybersecurity and cloud projects delivered by Yaron Engineering for banks, public institutions, universities and enterprises in Ethiopia.",
+    "ICT infrastructure, data center, cybersecurity, surveillance and cloud projects delivered by Yaron Engineering for the judiciary, banks, public institutions, universities, NGOs and enterprises in Ethiopia.",
   path: "/projects",
 });
 
@@ -29,7 +30,7 @@ export default function ProjectsPage() {
             for institutions that <span className="text-gold-400">matter.</span>
           </span>,
         ]}
-        lead="More than 30 high-impact projects for more than 40 clients across government, finance, education and enterprise. A selection is indexed below; detailed case studies are published as they are approved."
+        lead="More than 30 high-impact projects for more than 40 clients across government institutions, enterprises, NGOs and financial organizations — consultancy, system integration, supply and cloud services."
         image={{
           src: "/images/photos/network-switch.jpg",
           alt: "Enterprise network switch with patch cables",
@@ -49,19 +50,14 @@ export default function ProjectsPage() {
 
       <Credibility />
 
-      <Section theme="light" className="pt-10 md:pt-14 xl:pt-16" aria-label="Project index">
+      <Section theme="light" className="pt-10 md:pt-14 xl:pt-16" aria-label="Featured projects">
         <div className="container-x border-border border-b">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} reverse={i % 2 === 1} />
+          {featuredProjects.map((p, i) => (
+            <ProjectCard key={p.id} project={p} index={i} reverse={i % 2 === 1} />
           ))}
         </div>
-        <div className="container-x mt-8">
-          <p className="text-muted-foreground font-mono text-[0.68rem] tracking-[0.12em] uppercase">
-            Outcomes and metrics are shown only once verified with the client. Additional projects
-            are added to the index on approval.
-          </p>
-        </div>
       </Section>
+      <ProjectIndex />
       <FinalCTA />
     </>
   );

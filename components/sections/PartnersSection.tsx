@@ -18,11 +18,11 @@ export function PartnersSection({ grid = false }: { grid?: boolean }) {
           eyebrow="Global partners"
           title={
             <span id="partners-title">
-              Technology partnerships that{" "}
-              <span className="text-brand-text">extend our capability.</span>
+              Powered by global partnerships.{" "}
+              <span className="text-brand-text">Delivered locally.</span>
             </span>
           }
-          lead="A growing network of global technology vendors behind our designs — matched to each project by requirement, not by preference."
+          lead="Powered by global partnerships, delivered locally. Direct partnerships with globally renowned vendors and regional distributors bring world-class technology to local organizations — and we deliver, support and integrate it across mission-critical environments."
         />
       </div>
 

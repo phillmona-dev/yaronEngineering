@@ -4,7 +4,7 @@ import { LogoMark } from "@/components/ui/Logo";
  * Full-screen glassmorphic auth wrapper — animated background slideshow,
  * spinning compass, frosted glass card. Used by sign-in and password-recovery pages.
  *
- * Background cycles through 5 no-people tech images via CSS crossfade (40 s loop).
+ * Background cycles through 5 no-people tech images via CSS crossfade (15 s loop).
  */
 export function AuthPageFrame({
   kicker,
@@ -15,11 +15,11 @@ export function AuthPageFrame({
   children: React.ReactNode;
   footer?: React.ReactNode;
 }) {
-  /** Images cycle: each visible for 8 s, 2 s crossfade — total 40 s loop */
+  /** Images cycle: each visible for ~3 s with a 0.75 s crossfade — total 15 s loop */
   const SLIDES = [
-    "/images/photos/hero-datacenter.jpg",
+    "/images/photos/circuit-glow.jpg",
     "/images/photos/network-patch.jpg",
-    "/images/photos/circuit.jpg",
+    "/images/photos/hero-datacenter.jpg",
     "/images/photos/rack-mono.jpg",
     "/images/photos/cloud-nodes.jpg",
   ];
@@ -45,15 +45,20 @@ export function AuthPageFrame({
           from { transform: scale(1);    }
           to   { transform: scale(1.08); }
         }
+        /* Hidden until each slide's turn — without the backwards fill, delayed slides sit
+           fully opaque on top of the stack while they wait. */
         .bg-slide {
-          animation: bgFade 40s linear infinite,
-                     bgZoom 40s ease-in-out infinite alternate;
+          opacity: 0;
+          animation: bgFade 15s linear infinite,
+                     bgZoom 15s ease-in-out infinite alternate;
+          animation-fill-mode: backwards, none;
         }
-        .bg-s1 { animation-delay: 0s,  0s;  }
-        .bg-s2 { animation-delay: 8s,  8s;  }
-        .bg-s3 { animation-delay: 16s, 16s; }
-        .bg-s4 { animation-delay: 24s, 24s; }
-        .bg-s5 { animation-delay: 32s, 32s; }
+        /* Slide 1 starts already faded in so the page never opens on an empty frame. */
+        .bg-s1 { animation-delay: -0.75s, 0s; }
+        .bg-s2 { animation-delay: 3s,  3s;  }
+        .bg-s3 { animation-delay: 6s,  6s;  }
+        .bg-s4 { animation-delay: 9s,  9s;  }
+        .bg-s5 { animation-delay: 12s, 12s; }
 
         /* ── Compass & orbs ── */
         @keyframes compassSpin {

@@ -27,6 +27,7 @@ export default function HomePage() {
         eyebrow="National & Enterprise Partners"
         title="Institutions that trust Yaron Engineering."
         lead="Mission-critical data center, cybersecurity, and cloud programmes delivered across Ethiopia."
+        limit={6}
       />
       <ExpertiseSection />
       <PartnersSection />

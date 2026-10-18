@@ -5,16 +5,23 @@ import { cn } from "@/lib/utils/cn";
 import type { Project } from "@/lib/data/projects";
 import { ParallaxImage } from "@/components/animations/ParallaxImage";
 import { ClipReveal } from "@/components/animations/ClipReveal";
-import { Placeholder } from "@/components/ui/Placeholder";
 
-export function ProjectCard({ project, reverse = false }: { project: Project; reverse?: boolean }) {
+export function ProjectCard({
+  project,
+  index,
+  reverse = false,
+}: {
+  project: Project & Required<Pick<Project, "featured">>;
+  index: number;
+  reverse?: boolean;
+}) {
   return (
     <article className="border-border grid grid-cols-1 items-center gap-x-8 gap-y-8 border-t py-12 lg:grid-cols-12 lg:py-16">
       <div className={cn("lg:col-span-6", reverse && "lg:order-2")}>
         <ClipReveal className="aspect-[16/10] overflow-hidden rounded-md">
           <ParallaxImage
-            src={project.image.src}
-            alt={project.image.alt}
+            src={project.featured.image.src}
+            alt={project.featured.image.alt}
             sizes="(min-width: 1024px) 50vw, 100vw"
             containerClassName="h-full w-full"
             strength={0.05}
@@ -27,12 +34,12 @@ export function ProjectCard({ project, reverse = false }: { project: Project; re
         className={cn("lg:col-span-5", reverse ? "lg:order-1 lg:col-start-1" : "lg:col-start-8")}
       >
         <p className="text-muted-foreground flex items-center gap-4 font-mono text-[0.7rem] tracking-[0.14em] uppercase">
-          <span>Project {project.index}</span>
+          <span>Project {String(index + 1).padStart(2, "0")}</span>
           <span aria-hidden className="bg-border-strong h-px w-6" />
           <span>{project.sector}</span>
         </p>
         <div className="mt-5 flex items-start justify-between gap-4">
-          <h3 className="text-h3 font-semibold">{project.category}</h3>
+          <h3 className="text-h3 font-semibold">{project.name}</h3>
           {project.clientLogo && (
             <div className="bg-surface border-border flex h-12 w-20 shrink-0 items-center justify-center rounded-md border p-1.5 shadow-xs">
               <Image
@@ -46,15 +53,25 @@ export function ProjectCard({ project, reverse = false }: { project: Project; re
           )}
         </div>
         <p className="text-foreground mt-3 text-[0.9375rem] font-medium">{project.client}</p>
-        <p className="text-body text-muted-foreground mt-4 max-w-[52ch]">{project.scope}</p>
+        <p className="text-body text-muted-foreground mt-4 max-w-[52ch]">{project.summary}</p>
+        {project.highlights.length > 0 && (
+          <ul className="mt-5 flex flex-col gap-1.5">
+            {project.highlights.map((h) => (
+              <li key={h} className="flex items-center gap-3 text-[0.875rem]">
+                <span aria-hidden className="bg-brand size-1.5 shrink-0 rounded-full" />
+                {h}
+              </li>
+            ))}
+          </ul>
+        )}
         <dl className="border-border mt-7 grid grid-cols-2 gap-x-6 gap-y-4 border-t pt-6 text-sm">
           <div>
             <dt className="eyebrow mb-2">Location</dt>
             <dd>{project.location}</dd>
           </div>
           <div>
-            <dt className="eyebrow mb-2">Result</dt>
-            <dd>{project.result ?? <Placeholder label="Verified outcome" />}</dd>
+            <dt className="eyebrow mb-2">Period</dt>
+            <dd>{project.year ?? "—"}</dd>
           </div>
           <div className="col-span-2">
             <dt className="eyebrow mb-2">Technology</dt>

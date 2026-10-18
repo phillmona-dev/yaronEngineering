@@ -2,7 +2,7 @@ export const whyPrinciples = [
   {
     index: "01",
     title: "Engineering Expertise",
-    text: "Founded and led by engineers with 17+ years of combined leadership across national and international ICT infrastructure programmes.",
+    text: "Founded and led by engineers with 20+ years of combined leadership across national and international ICT infrastructure programmes.",
   },
   {
     index: "02",

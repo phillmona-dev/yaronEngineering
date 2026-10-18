@@ -61,16 +61,22 @@ export function PartnerMarquee({ partners, speed = 55, className }: Props) {
 }
 
 function LogoImage({ partner }: { partner: Partner }) {
+  const Wrapper = partner.url ? "a" : "div";
+  const linkProps = partner.url
+    ? {
+        href: partner.url,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        "aria-label": `Visit ${partner.name} official website`,
+      }
+    : {};
   return (
-    <a
-      href={partner.url}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Wrapper
+      {...linkProps}
       className="group/logo flex h-16 items-center lg:h-20"
       title={`${partner.name} · ${partner.category}`}
-      aria-label={`Visit ${partner.name} official website`}
     >
-      <div className="transition-[opacity,transform] duration-300 ease-out opacity-80 group-hover/logo:opacity-100 group-hover/logo:scale-125 group-hover/logo:-translate-y-2 will-change-transform">
+      <div className="opacity-80 transition-[opacity,transform] duration-300 ease-out will-change-transform group-hover/logo:-translate-y-2 group-hover/logo:scale-125 group-hover/logo:opacity-100">
         <Image
           src={partner.logo as string}
           alt={`${partner.name} logo`}
@@ -80,7 +86,6 @@ function LogoImage({ partner }: { partner: Partner }) {
           className="h-10 w-auto max-w-[170px] object-contain lg:h-14 lg:max-w-[230px]"
         />
       </div>
-    </a>
+    </Wrapper>
   );
 }
-

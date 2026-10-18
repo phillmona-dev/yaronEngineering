@@ -715,3 +715,157 @@ html[data-cursor="custom"] .ai-msg-bubble p {
     }
   }
 }
+
+/* ---------- Client cards: animated brand border, logo shine and glow ---------- */
+@property --client-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@layer components {
+  .client-card {
+    position: relative;
+    isolation: isolate;
+  }
+  /* Rotating blue→gold ring, revealed on hover/focus. */
+  .client-card::before {
+    content: "";
+    position: absolute;
+    inset: -1.5px;
+    z-index: -1;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--client-angle),
+      transparent 0deg,
+      var(--color-brand-500) 70deg,
+      var(--color-gold-500) 140deg,
+      transparent 210deg,
+      var(--color-brand-500) 300deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: client-spin 4s linear infinite;
+    animation-play-state: paused;
+  }
+  /* Soft brand glow under the card. */
+  .client-card::after {
+    content: "";
+    position: absolute;
+    inset: 12% 8% -6%;
+    z-index: -2;
+    border-radius: inherit;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--color-brand-500) 45%, transparent),
+      transparent
+    );
+    filter: blur(22px);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+  }
+  .client-card:hover::before,
+  .client-card:focus-visible::before {
+    opacity: 1;
+    animation-play-state: running;
+  }
+  .client-card:hover::after,
+  .client-card:focus-visible::after {
+    opacity: 0.55;
+  }
+
+  /* Diagonal light sweep across the logo plate. */
+  .client-logo {
+    position: relative;
+    overflow: hidden;
+  }
+  .client-logo::after {
+    content: "";
+    position: absolute;
+    inset: -20% auto -20% -60%;
+    width: 45%;
+    transform: skewX(-20deg) translateX(0);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
+    pointer-events: none;
+  }
+  .client-card:hover .client-logo::after,
+  .client-card:focus-visible .client-logo::after {
+    animation: client-shine 0.9s ease-out;
+  }
+  .client-logo img {
+    transition:
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.5s ease;
+  }
+  .client-card:hover .client-logo img,
+  .client-card:focus-visible .client-logo img {
+    transform: translateY(-3px) scale(1.08);
+    filter: drop-shadow(0 8px 14px rgba(14, 34, 80, 0.18));
+  }
+
+  /* Small hero "Trusted by" chips. */
+  .client-chip {
+    position: relative;
+    overflow: hidden;
+    transition:
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.35s ease,
+      opacity 0.3s ease;
+  }
+  .client-chip::after {
+    content: "";
+    position: absolute;
+    inset: -30% auto -30% -70%;
+    width: 50%;
+    transform: skewX(-20deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+    pointer-events: none;
+  }
+  .client-chip:hover,
+  .client-chip:focus-visible {
+    transform: translateY(-4px) scale(1.06);
+    box-shadow:
+      0 0 0 2px var(--color-gold-500),
+      0 12px 28px -10px color-mix(in oklab, var(--color-brand-500) 70%, transparent);
+    opacity: 1;
+  }
+  .client-chip:hover::after,
+  .client-chip:focus-visible::after {
+    animation: client-shine 0.8s ease-out;
+  }
+
+  @keyframes client-spin {
+    to {
+      --client-angle: 360deg;
+    }
+  }
+  @keyframes client-shine {
+    from {
+      left: -60%;
+    }
+    to {
+      left: 130%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .client-card::before {
+      animation: none;
+    }
+    .client-logo::after,
+    .client-chip::after {
+      display: none;
+    }
+    .client-logo img,
+    .client-chip {
+      transition: none;
+    }
+  }
+}

@@ -80,7 +80,7 @@ export const industries: Industry[] = [
     title: "Critical Infrastructure",
     summary: "Hardened, monitored systems for utilities, transport and essential services.",
     description:
-      "Operators of essential services need infrastructure engineered for resilience and defended in depth. We bring data center, network and security expertise to critical environments.",
+      "Operators of essential services need infrastructure engineered for resilience and defended in depth. We bring data center, network, surveillance and fire-alarm expertise to critical environments such as airports.",
     image: { src: "/images/photos/powerlines.jpg", alt: "High-voltage transmission lines at dusk" },
   },
 ];

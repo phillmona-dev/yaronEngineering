@@ -1,7 +1,7 @@
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ProjectCard } from "@/components/cards/ProjectCard";
-import { projects } from "@/lib/data/projects";
+import { featuredProjects } from "@/lib/data/projects";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/animations/Reveal";
 
@@ -18,7 +18,7 @@ export function ProjectsShowcase({ limit = 4 }: { limit?: number }) {
                 <span className="text-brand-text">Delivered.</span>
               </span>
             }
-            lead="A selection of the programmes we have designed, implemented and supervised for banks, public institutions, universities and enterprises."
+            lead="A selection of the programmes we have designed, implemented and supervised for the judiciary, banks, public institutions, universities, hospitality and enterprises."
           />
           <Reveal delay={0.2} className="shrink-0">
             <Button href="/projects" variant="secondary">
@@ -27,8 +27,8 @@ export function ProjectsShowcase({ limit = 4 }: { limit?: number }) {
           </Reveal>
         </div>
         <div className="border-border mt-12 border-b">
-          {projects.slice(0, limit).map((p, i) => (
-            <ProjectCard key={p.id} project={p} reverse={i % 2 === 1} />
+          {featuredProjects.slice(0, limit).map((p, i) => (
+            <ProjectCard key={p.id} project={p} index={i} reverse={i % 2 === 1} />
           ))}
         </div>
       </div>

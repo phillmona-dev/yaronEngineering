@@ -98,24 +98,79 @@ export default function AboutPage() {
                 {company.vision}
               </h2>
             </Reveal>
-            <Reveal delay={0.16} className="mt-12">
+            <Reveal delay={0.12} className="mt-12">
+              <Eyebrow>Mission</Eyebrow>
+            </Reveal>
+            <Reveal delay={0.16}>
+              <p className="text-lead text-ink-100 mt-6">{company.mission}</p>
+            </Reveal>
+            <Reveal delay={0.2} className="mt-12">
               <Eyebrow>Core values</Eyebrow>
             </Reveal>
             <StaggerGroup as="ul" className="border-border mt-6 border-t" stagger={0.06}>
               {company.coreValues.map((v, i) => (
                 <StaggerItem
                   as="li"
-                  key={v}
-                  className="border-border text-ink-100 flex items-start gap-4 border-b py-4 text-[0.9375rem]"
+                  key={v.title}
+                  className="border-border flex items-start gap-4 border-b py-4"
                 >
-                  <span className="text-gold-400 pt-0.5 font-mono text-[0.66rem] tracking-[0.14em]">
+                  <span className="text-gold-400 pt-1 font-mono text-[0.66rem] tracking-[0.14em]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  {v}
+                  <span>
+                    <span className="block text-[0.9375rem] font-medium text-white">{v.title}</span>
+                    <span className="text-ink-300 mt-1 block text-sm leading-relaxed">
+                      {v.text}
+                    </span>
+                  </span>
                 </StaggerItem>
               ))}
             </StaggerGroup>
           </div>
+        </div>
+      </Section>
+
+      <Section theme="light" aria-labelledby="areas-title">
+        <div className="container-x">
+          <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <Reveal>
+                <Eyebrow>Main business areas</Eyebrow>
+              </Reveal>
+              <Reveal delay={0.08}>
+                <h2 id="areas-title" className="text-h2 mt-6 font-semibold">
+                  {company.slogan}
+                </h2>
+              </Reveal>
+            </div>
+            <Reveal delay={0.12} className="lg:col-span-6 lg:col-start-7 lg:self-end">
+              <p className="text-body text-muted-foreground">
+                End-to-end consulting, system integration and training across the full spectrum of
+                ICT and security domains — each solution tailored to organizational goals,
+                performance expectations and regulatory requirements.
+              </p>
+            </Reveal>
+          </div>
+          <StaggerGroup
+            as="ul"
+            className="border-border mt-14 grid grid-cols-1 border-t md:grid-cols-2 lg:grid-cols-3"
+            stagger={0.05}
+            amount={0.1}
+          >
+            {company.businessAreas.map((a, i) => (
+              <StaggerItem
+                as="li"
+                key={a.title}
+                className="border-border flex flex-col gap-3 border-b py-8 md:pr-8"
+              >
+                <span className="text-muted-foreground font-mono text-[0.66rem] tracking-[0.14em]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-h4 font-semibold">{a.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{a.text}</p>
+              </StaggerItem>
+            ))}
+          </StaggerGroup>
         </div>
       </Section>
 
