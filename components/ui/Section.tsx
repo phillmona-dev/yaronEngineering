@@ -5,6 +5,8 @@ type Props = React.HTMLAttributes<HTMLElement> & {
   tone?: "soft";
   as?: "section" | "div" | "header" | "footer";
   padded?: boolean;
+  /** Content drops into place as the section scrolls into view (default on). */
+  drop?: boolean;
 };
 
 /** Theme-scoped section. Children use semantic colour utilities and adapt automatically. */
@@ -13,6 +15,7 @@ export function Section({
   tone,
   as: Tag = "section",
   padded = true,
+  drop = true,
   className,
   children,
   ...rest
@@ -21,7 +24,12 @@ export function Section({
     <Tag
       data-theme={theme}
       data-tone={tone}
-      className={cn("bg-background text-foreground relative", padded && "section-y", className)}
+      className={cn(
+        "bg-background text-foreground relative",
+        padded && "section-y",
+        drop && "section-drop",
+        className,
+      )}
       {...rest}
     >
       {children}

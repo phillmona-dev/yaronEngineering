@@ -10,7 +10,7 @@ import { leadershipRoles } from "@/lib/data/company";
 
 export function ExpertiseSection() {
   return (
-    <Section theme="dark" className="overflow-hidden" aria-labelledby="expertise-title">
+    <Section theme="dark" className="overflow-clip" aria-labelledby="expertise-title">
       <GridLines className="text-white opacity-40" />
       <div className="container-x relative">
         <div className="grid grid-cols-1 gap-x-8 gap-y-14 lg:grid-cols-12">

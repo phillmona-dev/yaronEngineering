@@ -24,7 +24,7 @@ export function ServicesShowcase() {
   const current = services[active];
 
   return (
-    <Section theme="dark" className="overflow-hidden" aria-labelledby="services-title">
+    <Section theme="dark" className="overflow-clip" aria-labelledby="services-title">
       <Glow className="top-20 -right-40 h-[520px] w-[520px] opacity-50" />
       <div className="container-x relative">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">

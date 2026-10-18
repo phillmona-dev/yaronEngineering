@@ -201,6 +201,10 @@
       scroll-behavior: auto;
     }
   }
+  /* Lenis drives smooth scrolling itself; native smooth behaviour would fight it. */
+  html.lenis {
+    scroll-behavior: auto;
+  }
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-feature-settings: "ss01", "cv11";
@@ -247,7 +251,7 @@
   margin-top: calc(var(--sheet-radius) * -1);
   border-top-left-radius: var(--sheet-radius);
   border-top-right-radius: var(--sheet-radius);
-  overflow: hidden;
+  overflow: clip;
 }
 /* A faint lip so a light sheet reads as sitting on top of the dark section */
 [data-theme="dark"] + [data-theme="light"] {
@@ -866,6 +870,34 @@ html[data-cursor="custom"] .ai-msg-bubble p {
     .client-logo img,
     .client-chip {
       transition: none;
+    }
+  }
+}
+
+/* ---------- Scroll-driven section entrance ---------- */
+/* Each section's content drops into place as it enters the viewport: it rises, sharpens and
+   scales up to rest. Pure CSS (scroll timelines); browsers without support show content as-is. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @layer components {
+      .section-drop > * {
+        animation: section-drop linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 55%;
+        transform-origin: 50% 0%;
+      }
+      @keyframes section-drop {
+        from {
+          opacity: 0.15;
+          transform: translateY(90px) scale(0.94);
+          filter: blur(6px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+          filter: none;
+        }
+      }
     }
   }
 }

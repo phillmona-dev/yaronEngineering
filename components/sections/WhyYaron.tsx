@@ -6,7 +6,7 @@ import { whyPrinciples } from "@/lib/data/why";
 
 export function WhyYaron() {
   return (
-    <Section theme="dark" className="overflow-hidden" aria-labelledby="why-title">
+    <Section theme="dark" className="overflow-clip" aria-labelledby="why-title">
       <Glow className="bottom-0 -left-48 h-[560px] w-[560px] opacity-40" />
       <div className="container-x relative">
         <div className="grid grid-cols-1 gap-x-12 gap-y-14 lg:grid-cols-12">

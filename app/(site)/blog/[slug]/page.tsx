@@ -206,7 +206,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
       </div>
 
       {/* Body */}
-      <Section theme="light" className="pt-12 md:pt-16 xl:pt-20">
+      <Section theme="light" drop={false} className="pt-12 md:pt-16 xl:pt-20">
         <div className="container-x">
           <div className="grid gap-10 xl:grid-cols-[180px_minmax(0,740px)_1fr] xl:gap-14">
             <aside className="hidden xl:block">

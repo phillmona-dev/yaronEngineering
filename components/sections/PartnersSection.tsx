@@ -12,7 +12,7 @@ import { Reveal } from "@/components/animations/Reveal";
  */
 export function PartnersSection({ grid = false }: { grid?: boolean }) {
   return (
-    <Section theme="light" aria-labelledby="partners-title" className="overflow-hidden">
+    <Section theme="light" aria-labelledby="partners-title" className="overflow-clip">
       <div className="container-x">
         <SectionHeader
           eyebrow="Global partners"
