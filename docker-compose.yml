@@ -5,6 +5,7 @@
 #       Served via Nginx on :8088 (frontend :3002, backend :8082, postgres :5435)
 services:
   postgres:
+    restart: unless-stopped
     image: postgres:16-alpine
     environment:
       POSTGRES_DB: yaron_blog
@@ -19,6 +20,7 @@ services:
       retries: 20
 
   backend:
+    restart: unless-stopped
     build: ./backend
     depends_on:
       postgres:
@@ -52,6 +54,7 @@ services:
       retries: 30
 
   frontend:
+    restart: unless-stopped
     build:
       context: .
       args:
