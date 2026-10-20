@@ -299,7 +299,7 @@ export function ArticleForm({
             </Link>
             <StatusBadge status={status} />
             {article?.featured && (
-              <span className="inline-flex items-center gap-1 font-mono text-[0.62rem] tracking-[0.1em] text-gold-700 uppercase">
+              <span className="text-gold-700 inline-flex items-center gap-1 font-mono text-[0.62rem] tracking-[0.1em] uppercase">
                 <Star className="size-3" /> Featured
               </span>
             )}
@@ -478,7 +478,7 @@ export function ArticleForm({
                 <p className="truncate text-base font-medium text-[#3270c8]">
                   {seoTitle.length > 60 ? `${seoTitle.slice(0, 57)}…` : seoTitle}
                 </p>
-                <p className="truncate font-mono text-xs text-brand-700">
+                <p className="text-brand-700 truncate font-mono text-xs">
                   {SITE}/blog/{previewSlug}
                 </p>
                 <p className="text-ink-600 mt-1 line-clamp-2 text-sm">{seoDesc}</p>
@@ -536,7 +536,7 @@ export function ArticleForm({
               ))}
             </ul>
             {article?.scheduledAt && status === "SCHEDULED" && (
-              <p className="mt-4 rounded-md border border-gold-500/40 bg-gold-500/15 px-3 py-2 text-xs text-gold-700">
+              <p className="border-gold-500/40 bg-gold-500/15 text-gold-700 mt-4 rounded-md border px-3 py-2 text-xs">
                 Goes live {formatDateTime(article.scheduledAt)}.
               </p>
             )}

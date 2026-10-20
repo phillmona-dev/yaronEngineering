@@ -6,7 +6,9 @@ import Link from "next/link";
 import { AnimatePresence, m } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
-import { services } from "@/lib/data/services";
+import { useSiteContent } from "@/lib/content/context";
+import { serviceIcon } from "@/lib/content/icons";
+import { Highlight } from "@/lib/content/highlight";
 import { TiltCard } from "@/components/animations/TiltCard";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -20,26 +22,31 @@ import { EASE_OUT_EXPO } from "@/lib/utils/motion";
  * that crossfades to the hovered/focused service. On mobile it becomes a horizontal snap rail.
  */
 export function ServicesShowcase() {
+  const { services: servicesContent, home } = useSiteContent();
+  const services = servicesContent.items;
+  const intro = home.sections.services;
   const [active, setActive] = useState(0);
-  const current = services[active];
+  const current = services[Math.min(active, services.length - 1)];
+  const CurrentIcon = serviceIcon(current?.icon);
+  if (!current) return null;
 
   return (
-    <Section theme="dark" className="overflow-clip" aria-labelledby="services-title">
+    <Section theme="light" className="overflow-clip" aria-labelledby="services-title">
       <Glow className="top-20 -right-40 h-[520px] w-[520px] opacity-50" />
       <div className="container-x relative">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeader
-            eyebrow="Core competencies"
+            eyebrow={intro.eyebrow}
             title={
               <span id="services-title">
-                Seven disciplines. <span className="text-brand-text">One</span> accountable team.
+                <Highlight text={intro.title} highlight={intro.highlight} />
               </span>
             }
-            lead="From the physical layer to the security operations center, we design, integrate and support the infrastructure organizations run on."
+            lead={intro.lead}
           />
           <Reveal delay={0.2} className="shrink-0">
             <Button href="/services" variant="secondary">
-              All services
+              {intro.ctaLabel}
             </Button>
           </Reveal>
         </div>
@@ -59,8 +66,8 @@ export function ServicesShowcase() {
                   >
                     <span
                       className={cn(
-                        "pt-1 font-mono text-[0.72rem] tracking-[0.14em] transition-colors duration-300",
-                        isActive ? "text-gold-400" : "text-ink-400",
+                        "font-label pt-1 text-[0.7rem] font-semibold tracking-[0.14em] transition-colors duration-300",
+                        isActive ? "text-brand-text" : "text-muted-foreground",
                       )}
                     >
                       {s.index}
@@ -69,7 +76,9 @@ export function ServicesShowcase() {
                       <span
                         className={cn(
                           "text-h3 block font-semibold transition-colors duration-300",
-                          isActive ? "text-white" : "text-ink-300 group-hover:text-white",
+                          isActive
+                            ? "text-foreground"
+                            : "text-muted-foreground group-hover:text-foreground",
                         )}
                       >
                         {s.title}
@@ -84,14 +93,14 @@ export function ServicesShowcase() {
                             transition={{ duration: 0.45, ease: EASE_OUT_EXPO }}
                             className="block overflow-hidden"
                           >
-                            <span className="text-ink-300 block max-w-[52ch] pt-3 text-[0.9375rem] leading-relaxed">
+                            <span className="text-muted-foreground text-body block max-w-[52ch] pt-3">
                               {s.summary}
                             </span>
                             <span className="mt-4 flex flex-wrap gap-2">
                               {s.capabilities.map((c) => (
                                 <span
                                   key={c}
-                                  className="border-border text-ink-300 rounded-sm border px-2 py-1 font-mono text-[0.66rem] tracking-[0.1em] uppercase"
+                                  className="border-border text-muted-foreground font-label rounded-sm border px-2 py-1 text-[0.7rem] font-semibold tracking-[0.14em] uppercase"
                                 >
                                   {c}
                                 </span>
@@ -106,7 +115,7 @@ export function ServicesShowcase() {
                         "mt-1 flex size-10 items-center justify-center rounded-sm border transition-all duration-300",
                         isActive
                           ? "border-brand-500 bg-brand-500 text-white"
-                          : "border-border text-ink-400 group-hover:border-ink-500",
+                          : "border-border-strong text-muted-foreground group-hover:border-brand-500",
                       )}
                     >
                       <ArrowUpRight className="size-4" strokeWidth={1.75} aria-hidden />
@@ -118,7 +127,7 @@ export function ServicesShowcase() {
           </ul>
 
           <div className="col-span-5">
-            <div className="border-border bg-ink-900 sticky top-28 aspect-[4/5] overflow-hidden rounded-md border">
+            <div className="bg-ink-950 sticky top-28 aspect-[4/5] overflow-hidden rounded-md border">
               <AnimatePresence mode="sync">
                 <m.div
                   key={current.slug}
@@ -133,19 +142,21 @@ export function ServicesShowcase() {
                     alt={current.image.alt}
                     fill
                     sizes="(min-width: 1024px) 36vw, 100vw"
-                    className="object-cover"
+                    className="duotone-media object-cover"
                   />
                 </m.div>
               </AnimatePresence>
+              <div aria-hidden className="duotone-shadows absolute inset-0" />
+              <div aria-hidden className="duotone-lights absolute inset-0" />
               <div aria-hidden className="image-overlay absolute inset-0" />
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-7">
                 <div>
-                  <p className="text-ink-300 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
+                  <p className="text-ink-300 font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                     {current.theme}
                   </p>
                   <p className="text-h4 mt-2 font-semibold text-white">{current.shortTitle}</p>
                 </div>
-                <current.icon className="text-gold-400 size-6" strokeWidth={1.25} aria-hidden />
+                <CurrentIcon className="text-gold-400 size-6" strokeWidth={1.25} aria-hidden />
               </div>
             </div>
           </div>
@@ -159,7 +170,7 @@ export function ServicesShowcase() {
                 <TiltCard className="h-full rounded-md">
                   <Link
                     href={`/services/${s.slug}`}
-                    className="group border-border bg-ink-900 flex h-full flex-col overflow-hidden rounded-md border"
+                    className="group bg-ink-950 flex h-full flex-col overflow-hidden rounded-md border"
                   >
                     <div className="relative aspect-[4/3]">
                       <Image
@@ -167,17 +178,19 @@ export function ServicesShowcase() {
                         alt={s.image.alt}
                         fill
                         sizes="80vw"
-                        className="object-cover"
+                        className="duotone-media object-cover"
                       />
+                      <div aria-hidden className="duotone-shadows absolute inset-0" />
+                      <div aria-hidden className="duotone-lights absolute inset-0" />
                       <div aria-hidden className="image-overlay absolute inset-0" />
-                      <span className="text-ink-200 absolute top-4 left-4 font-mono text-[0.68rem] tracking-[0.14em]">
+                      <span className="text-ink-200 font-label absolute top-4 left-4 text-[0.7rem] font-semibold tracking-[0.14em]">
                         {s.index}
                       </span>
                     </div>
                     <div className="flex flex-1 flex-col gap-3 p-5">
                       <p className="text-h4 font-semibold text-white">{s.title}</p>
-                      <p className="text-ink-300 text-sm leading-relaxed">{s.summary}</p>
-                      <span className="text-gold-400 mt-auto inline-flex items-center gap-2 pt-2 text-sm font-medium">
+                      <p className="text-ink-300 text-body">{s.summary}</p>
+                      <span className="text-gold-400 text-body mt-auto inline-flex items-center gap-2 pt-2 font-medium">
                         Learn more
                         <ArrowUpRight className="size-4" strokeWidth={1.75} aria-hidden />
                       </span>

@@ -5,33 +5,26 @@ import { ServicesShowcase } from "@/components/sections/ServicesShowcase";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { breadcrumbSchema, pageMetadata } from "@/lib/utils/seo";
+import { getSiteContent } from "@/lib/content/server";
+import { pageHeroProps } from "@/lib/content/highlight";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Solutions",
-  description:
-    "Every Yaron Engineering solution is tailored to organizational objectives, performance, regulatory and security requirements, scalability and business continuity.",
-  path: "/solutions",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const { pages } = await getSiteContent();
+  return pageMetadata({
+    title: pages.solutions.metaTitle,
+    description: pages.solutions.metaDescription,
+    path: "/solutions",
+  });
+}
 
-export default function SolutionsPage() {
+export default async function SolutionsPage() {
+  const { pages } = await getSiteContent();
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Solutions", path: "/solutions" }])} />
       <PageHero
-        eyebrow="Solutions"
+        {...pageHeroProps(pages.solutions)}
         crumbs={[{ label: "Solutions", href: "/solutions" }]}
-        title={[
-          <span key="a">Technology built around</span>,
-          <span key="b">
-            your <span className="text-gold-400">mission.</span>
-          </span>,
-        ]}
-        lead="One disciplined method — discover, architect, integrate, secure, operate, scale — applied to every organization we serve."
-        image={{
-          src: "/images/photos/cloud-nodes.jpg",
-          alt: "Abstract network of connected nodes",
-          position: "center 40%",
-        }}
       />
       <SolutionsProcess showCta={false} />
       <ServicesShowcase />

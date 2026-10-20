@@ -129,7 +129,7 @@ export default async function CategoryPage({
                   <li key={c.slug}>
                     <Link
                       href={`/blog/category/${c.slug}`}
-                      className="border-border text-muted-foreground hover:border-foreground hover:text-foreground inline-flex h-9 items-center rounded-sm border px-3.5 text-sm transition-colors"
+                      className="border-border text-muted-foreground hover:border-foreground hover:text-foreground text-body inline-flex h-9 items-center rounded-sm border px-3.5 transition-colors"
                     >
                       {c.name}
                     </Link>

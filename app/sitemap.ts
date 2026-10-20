@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
-import { services } from "@/lib/data/services";
+import { getSiteContent } from "@/lib/content/server";
 import { absoluteUrl } from "@/lib/utils/site";
 import { blogApi } from "@/lib/blog/api";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const blog = await blogApi.sitemap();
+  const [blog, { services }] = await Promise.all([blogApi.sitemap(), getSiteContent()]);
   const staticRoutes = [
     "/",
     "/about",
@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: path === "/" ? ("weekly" as const) : ("monthly" as const),
       priority: path === "/" ? 1 : path === "/privacy" || path === "/terms" ? 0.2 : 0.7,
     })),
-    ...services.map((s) => ({
+    ...services.items.map((s) => ({
       url: absoluteUrl(`/services/${s.slug}`),
       lastModified: now,
       changeFrequency: "monthly" as const,

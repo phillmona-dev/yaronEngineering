@@ -39,7 +39,7 @@ export function ArticleRow({
         <div className="flex-1">
           <div className="flex items-center gap-4">
             {typeof index === "number" && (
-              <span className="text-muted-foreground font-mono text-[0.68rem] tracking-[0.14em]">
+              <span className="text-muted-foreground font-label text-[0.7rem] font-semibold tracking-[0.14em]">
                 {String(index + 1).padStart(2, "0")}
               </span>
             )}

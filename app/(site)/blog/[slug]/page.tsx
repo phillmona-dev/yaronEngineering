@@ -123,7 +123,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         <div className="container-x">
           <Reveal>
             <nav aria-label="Breadcrumb">
-              <ol className="text-muted-foreground flex flex-wrap items-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
+              <ol className="text-muted-foreground font-label flex flex-wrap items-center gap-2 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                 <li>
                   <Link href="/blog" className="hover:text-foreground">
                     Insights
@@ -149,7 +149,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
             </h1>
           </Reveal>
           <Reveal delay={0.16}>
-            <p className="text-lead text-muted-foreground mt-6 max-w-[62ch]">{article.excerpt}</p>
+            <p className="text-body text-muted-foreground mt-6 max-w-[62ch]">{article.excerpt}</p>
           </Reveal>
           <Reveal
             delay={0.22}
@@ -159,7 +159,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
               {article.author && <AuthorAvatar author={article.author} size={44} />}
               <div>
                 <Byline article={article} />
-                <p className="text-muted-foreground mt-1 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
+                <p className="text-muted-foreground font-label mt-1 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                   {article.publishedAt && (
                     <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
                   )}
@@ -199,7 +199,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
               className="aspect-[21/9] rounded-md"
             />
             {article.coverImage?.altText && (
-              <p className="text-muted-foreground mt-3 text-xs">{article.coverImage.altText}</p>
+              <p className="text-muted-foreground text-body mt-3">{article.coverImage.altText}</p>
             )}
           </Reveal>
         </div>
@@ -230,7 +230,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                     <li key={t.slug}>
                       <Link
                         href={`/blog/tag/${t.slug}`}
-                        className="border-border text-muted-foreground hover:border-foreground hover:text-foreground inline-flex h-8 items-center rounded-sm border px-3 font-mono text-[0.66rem] tracking-[0.12em] uppercase transition-colors"
+                        className="border-border text-muted-foreground hover:border-foreground hover:text-foreground font-label inline-flex h-8 items-center rounded-sm border px-3 text-[0.7rem] font-semibold tracking-[0.14em] uppercase transition-colors"
                       >
                         {t.name}
                       </Link>
@@ -263,7 +263,10 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                   </p>
                   <h2 className="text-h2 mt-4 font-semibold">Related insights</h2>
                 </div>
-                <Link href="/blog" className="text-brand-text hidden text-sm font-medium md:block">
+                <Link
+                  href="/blog"
+                  className="text-brand-text text-body hidden font-medium md:block"
+                >
                   All insights
                 </Link>
               </div>

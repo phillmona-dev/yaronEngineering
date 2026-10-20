@@ -9,33 +9,28 @@ import { ParallaxImage } from "@/components/animations/ParallaxImage";
 import { Button } from "@/components/ui/Button";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { JsonLd } from "@/components/layout/JsonLd";
-import { careerValues, openRoles } from "@/lib/data/careers";
-import { company } from "@/lib/data/company";
 import { breadcrumbSchema, pageMetadata } from "@/lib/utils/seo";
+import { getSiteContent } from "@/lib/content/server";
+import { pageHeroProps } from "@/lib/content/highlight";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Careers",
-  description:
-    "Join Yaron Engineering PLC in Addis Ababa and build the ICT infrastructure and cybersecurity systems Ethiopia and East Africa depend on.",
-  path: "/careers",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const { pages } = await getSiteContent();
+  return pageMetadata({
+    title: pages.careers.metaTitle,
+    description: pages.careers.metaDescription,
+    path: "/careers",
+  });
+}
 
-export default function CareersPage() {
+export default async function CareersPage() {
+  const { careers, company, pages } = await getSiteContent();
+  const careerValues = careers.values;
+  const openRoles = careers.openRoles;
+  const copy = pages.careers;
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Careers", path: "/careers" }])} />
-      <PageHero
-        eyebrow="Careers"
-        crumbs={[{ label: "Careers", href: "/careers" }]}
-        title={[
-          <span key="a">Engineer the systems</span>,
-          <span key="b">
-            a region <span className="text-gold-400">depends on.</span>
-          </span>,
-        ]}
-        lead="We hire engineers, consultants and project leaders who want their work to run banks, ministries and universities."
-        image={{ src: "/images/photos/boardroom.jpg", alt: "Modern boardroom with glass walls" }}
-      />
+      <PageHero {...pageHeroProps(copy)} crumbs={[{ label: "Careers", href: "/careers" }]} />
 
       <Section theme="light" aria-labelledby="careers-why">
         <div className="container-x grid grid-cols-1 gap-x-8 gap-y-12 lg:grid-cols-12">
@@ -52,11 +47,11 @@ export default function CareersPage() {
           </div>
           <div className="lg:col-span-6 lg:col-start-7">
             <Reveal>
-              <Eyebrow>Why join</Eyebrow>
+              <Eyebrow>{copy.whyEyebrow}</Eyebrow>
             </Reveal>
             <Reveal delay={0.08}>
               <h2 id="careers-why" className="text-h2 mt-6 font-semibold">
-                Serious work, senior mentorship, real impact.
+                {copy.whyHeading}
               </h2>
             </Reveal>
             <StaggerGroup as="ul" className="border-border-strong mt-10 border-t" stagger={0.08}>
@@ -66,7 +61,7 @@ export default function CareersPage() {
                   key={v.title}
                   className="border-border grid grid-cols-[3rem_1fr] gap-4 border-b py-6"
                 >
-                  <span className="text-muted-foreground pt-1 font-mono text-[0.7rem] tracking-[0.14em]">
+                  <span className="text-muted-foreground font-label pt-1 text-[0.7rem] font-semibold tracking-[0.14em]">
                     0{i + 1}
                   </span>
                   <div>
@@ -83,11 +78,11 @@ export default function CareersPage() {
       <Section theme="dark" aria-labelledby="roles-title">
         <div className="container-x">
           <Reveal>
-            <Eyebrow>Open roles</Eyebrow>
+            <Eyebrow>{copy.rolesEyebrow}</Eyebrow>
           </Reveal>
           <Reveal delay={0.08}>
             <h2 id="roles-title" className="text-h2 mt-6 font-semibold text-white">
-              Current opportunities
+              {copy.rolesHeading}
             </h2>
           </Reveal>
           {openRoles.length === 0 ? (
@@ -95,17 +90,14 @@ export default function CareersPage() {
               delay={0.16}
               className="border-border-strong mt-10 max-w-[60ch] rounded-md border border-dashed p-8"
             >
-              <p className="text-body text-ink-200">
-                No vacancies are published at the moment. We review speculative applications from
-                experienced network, data center, security and cloud engineers on a rolling basis.
-              </p>
+              <p className="text-body text-ink-200">{copy.noVacanciesText}</p>
               <div className="mt-6">
                 <Button
                   href={`mailto:${company.contact.email}?subject=Speculative application`}
                   variant="secondary"
                   arrow="up"
                 >
-                  Send a speculative application
+                  {copy.applyLabel}
                 </Button>
               </div>
             </Reveal>
@@ -117,7 +109,7 @@ export default function CareersPage() {
                   className="border-border flex flex-col gap-2 border-b py-6 md:flex-row md:items-center md:justify-between"
                 >
                   <span className="text-h4 font-semibold text-white">{r.title}</span>
-                  <span className="text-ink-300 font-mono text-[0.7rem] tracking-[0.12em] uppercase">
+                  <span className="text-ink-300 font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                     {r.team} · {r.location} · {r.type}
                   </span>
                 </li>
@@ -127,10 +119,10 @@ export default function CareersPage() {
         </div>
       </Section>
       <FinalCTA
-        title={["Build what", "comes next."]}
-        text="Tell us about your experience and the problems you want to work on."
-        primary={{ label: "Contact Us", href: "/contact" }}
-        secondary={{ label: "About Yaron", href: "/about" }}
+        title={[copy.finalCta.titleLine1, copy.finalCta.titleLine2]}
+        text={copy.finalCta.text}
+        primary={copy.finalCta.primary}
+        secondary={copy.finalCta.secondary}
       />
     </>
   );

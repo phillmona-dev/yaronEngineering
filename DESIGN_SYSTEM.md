@@ -8,13 +8,13 @@ The system exists to make Yaron Engineering read, in five seconds, as a **global
 
 ## 1. Brand position & visual philosophy
 
-| Principle   | What it means in the UI                                                                                                    |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Cinematic   | Dark, image‑led hero and climax sections; controlled gradients; low‑opacity technical line work.                           |
-| Editorial   | Asymmetric two‑column compositions, large statement typography, numbered items, generous whitespace.                       |
-| Technical   | Small uppercase mono metadata, fine grid lines, coordinates/IDs as texture.                                                |
-| Restrained  | Brand blue is an _accent_, never a background fill for whole sections. Gold appears only in the logo and one micro‑signal. |
-| Trustworthy | High contrast, honest content, placeholders clearly marked. No fabricated clients, metrics or people.                      |
+| Principle   | What it means in the UI                                                                                                                       |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Blue first  | The company colour is the logo's royal / light blue. Dark sections are **blue**, never navy or blue‑black; photos are re‑coloured to match.   |
+| Cinematic   | Heroes are pure brand colour: gradient mesh, drifting blooms, orbit ornament and circuit lines — no photography. Photos live inside sections. |
+| Editorial   | Asymmetric two‑column compositions, large statement typography, numbered items, generous whitespace.                                          |
+| Technical   | Small uppercase labels, fine grid lines, coordinates/IDs as texture.                                                                          |
+| Trustworthy | High contrast, honest content, placeholders clearly marked. No fabricated clients, metrics or people.                                         |
 
 Mood references (quality bar only, never copied): Cisco, Palo Alto Networks, Equinix, Cloudflare, Siemens, Accenture.
 
@@ -22,35 +22,39 @@ Mood references (quality bar only, never copied): Cisco, Palo Alto Networks, Equ
 
 ## 2. Colour system
 
-Two colours only, both taken from the Yaron shield logo: **light blue** (primary, logo fill ≈ `#3060C0`–`#3870C8`) and **gold** (secondary, logo circuit ≈ `#F5C518`). There is no black: every neutral is a navy tint of the blue, and white is the only other value.
+Two colours only, both taken from the Yaron shield logo: **blue** (primary, logo fill ≈ `#3060C0`–`#4888D8`) and **gold** (secondary, logo circuit ≈ `#F5C518`). There is no black and no navy: the darkest value on the site is the saturated royal blue `ink-950`, and every neutral is a tint of that blue.
+
+> **Revision 2026‑10‑20.** The owner reported that the site read as blue‑black. Two causes: the `ink` scale bottomed out at navy (`#0E2250` → `#0D2D6E`) and dark stock photography was covered with navy‑to‑black gradients. Both are gone: `ink-950` is now `#1540A6`, overlays are blue, and every photo inside a dark section goes through the **blue duotone** recipe below.
 
 ### Palette tokens (`app/globals.css` → `@theme`)
 
-| Token       | Hex       | Role                                                      |
-| ----------- | --------- | --------------------------------------------------------- |
-| `ink-950`   | `#0E2250` | Deepest page background (hero, final CTA)                 |
-| `ink-900`   | `#143070` | Dark section background; body text on light               |
-| `ink-850`   | `#193A80` | Dark surface                                              |
-| `ink-800`   | `#20448F` | Dark elevated surface / dark borders                      |
-| `ink-700`   | `#2A4F9E` | Dark borders (strong)                                     |
-| `ink-600`   | `#3356A3` | Disabled on dark                                          |
-| `ink-500`   | `#4A66A8` | Muted text on light                                       |
-| `ink-400`   | `#6480B8` | Eyebrows / mono meta on light, icons                      |
-| `ink-300`   | `#9FB3D9` | Secondary text on dark                                    |
-| `ink-200`   | `#C9D6EE` | Light borders (strong)                                    |
-| `ink-100`   | `#E4EBF8` | Light borders (subtle)                                    |
-| `ink-50`    | `#F2F6FC` | Off‑white section background                              |
-| `white`     | `#FFFFFF` | Light page background                                     |
-| `brand-300` | `#A6CCF7` | Brand text on dark, links on dark                         |
-| `brand-400` | `#6CA6EE` | Hover on dark, glows                                      |
-| `brand-500` | `#3F82DC` | **Primary**. CTAs, active states, links, AI chat, admin   |
-| `brand-600` | `#3270C8` | CTA hover on light, link text on light                    |
-| `brand-700` | `#2658A6` | Pressed / deep accents                                    |
-| `gold-300`  | `#FFE98A` | Gold shimmer / soft glow                                  |
-| `gold-400`  | `#FBD84A` | **Secondary on dark**: headline emphasis words, live dots |
-| `gold-500`  | `#F5C518` | **Secondary**. Eyebrow rules, nav underline, focus rings  |
-| `gold-600`  | `#D9A90C` | Gold hover                                                |
-| `gold-700`  | `#B08808` | Gold text on light (draft / warning pills)                |
+| Token       | Hex       | Role                                                                |
+| ----------- | --------- | ------------------------------------------------------------------- |
+| `ink-950`   | `#1540A6` | Dark section background (hero, services, why, CTA, footer)          |
+| `ink-900`   | `#1B49B4` | Dark soft‑tone background, dark surface                             |
+| `ink-850`   | `#2152BF` | Dark elevated surface                                               |
+| `ink-800`   | `#2A5EC9` | Dark borders                                                        |
+| `ink-700`   | `#3369D1` | Dark borders (strong)                                               |
+| `ink-600`   | `#3F76D6` | Disabled on dark                                                    |
+| `ink-500`   | `#6A97E0` | Hover borders on dark                                               |
+| `ink-400`   | `#9DBDEE` | Labels / meta on dark (4.7:1 on `ink-950`)                          |
+| `ink-300`   | `#BCD2F3` | Secondary text on dark (6:1)                                        |
+| `ink-200`   | `#D6E4F9` | Body text on dark (6.9:1), light borders (strong)                   |
+| `ink-100`   | `#E9F1FC` | Light borders (subtle)                                              |
+| `ink-50`    | `#F3F7FD` | Lightest tint (inputs, pills)                                       |
+| `white`     | `#FFFFFF` | Cards and surfaces on light sections — never a whole section        |
+| `brand-300` | `#A6CCF7` | Brand text on dark, links on dark                                   |
+| `brand-400` | `#6CA6EE` | Hover on dark, glows                                                |
+| `brand-500` | `#3F82DC` | **Primary**. Active states, links, AI chat, admin                   |
+| `brand-600` | `#2F6FCF` | Hover on light                                                      |
+| `brand-700` | `#2560C4` | Link / emphasis text on light (5.9:1)                               |
+| `gold-300`  | `#FFE98A` | Gold shimmer / soft glow                                            |
+| `gold-400`  | `#FBD84A` | **Secondary on dark**: headline emphasis words, stat numerals       |
+| `gold-500`  | `#F5C518` | **Secondary**. Primary buttons, eyebrow rules, nav underline, focus |
+| `gold-600`  | `#D9A90C` | Gold hover                                                          |
+| `gold-700`  | `#B08808` | Gold on light surfaces (pills, rules)                               |
+
+Light sections are a soft blue tint, not white: `--background #EAF1FC` (soft tone `#E0EAFA`) with a light‑blue radial wash in one corner (`globals.css`), white `--surface` cards, `--border #CFDDF3`. Text: `--foreground #143A8C` (9.2:1 on the tint), `--muted-foreground #41619F` (5.4:1), `brand-700` links (5.2:1).
 
 Red (`red-500/600`) is reserved for validation errors and destructive admin actions; it is a status signal, not part of the palette.
 
@@ -67,40 +71,57 @@ Red (`red-500/600`) is reserved for validation errors and destructive admin acti
 
 Sections carry `data-theme="dark" | "light"`. Components only use semantic utilities (`bg-background`, `text-foreground`, `border-border`, `text-muted-foreground`, `bg-surface`) so the same component works on either theme.
 
+### Blue duotone imagery (`duotone-*` utilities)
+
+Every photograph or video that sits inside a dark section is re‑coloured so it cannot pull the page towards black:
+
+1. the media element gets `duotone-media` (`grayscale(1) contrast(1.05)`);
+2. a `duotone-shadows` layer (`ink-950`, `mix-blend-mode: lighten`) lifts every shadow to royal blue;
+3. a `duotone-lights` layer (`#9CC6F5`, `mix-blend-mode: multiply`) pulls highlights down to the logo's light blue;
+4. an optional `image-overlay` / `from-ink-950` gradient protects text.
+
+`ParallaxImage` exposes this as the `duotone` prop; `HeroVideo`, `PageHero`, `FinalCTA`, `IndustryCard`, `HeroPanel` and the service cards place the layers directly. Photos in **light** sections keep their natural colour.
+
 ### Usage rules
 
-1. Blue (primary) is used for: CTAs, active nav text, links, hover borders, counters, the AI chat and the whole admin UI. Never as a section background — dark sections use the navy `ink` scale.
-2. Gold (secondary) is used sparingly, as the logo does: eyebrow rules, the active‑nav underline, the emphasis word in every page‑hero headline, stat numerals, footer headings, service card icons and arrows, live‑signal dots, focus rings, text selection, button shimmer, and "draft / warning" states in the CMS. Never for body text and never as a fill behind white text (use `accent-foreground` navy on gold).
+1. Blue is the whole stage: dark sections use the royal `ink` scale as their background, light sections use white / `ink-50`. Nothing on the site is darker than `ink-950`.
+2. Gold is the signal colour and the **primary button**: gold fill with `#143A8C` text (5.6:1) so the call to action pops on both blue and white. It also marks eyebrow rules, the active‑nav underline, the emphasis word in every page‑hero headline, stat numerals, footer headings, icons, live dots, focus rings and text selection. Never gold body text.
 3. Dark sections dominate the narrative (hero → services → industries → expertise → why → CTA); light sections provide breathing room (about, process, projects, partners, commitment).
-4. Gradients: only navy‑to‑transparent overlays on photography, and one radial brand glow per dark section at ≤ 18 % opacity.
-5. Contrast: body text ≥ 4.5:1, large text ≥ 3:1 on both themes. `ink-300` on `ink-950` ≈ 8:1; `ink-500` on white ≈ 5.6:1; `gold-400` on `ink-950` ≈ 11:1; `gold-700` on white ≈ 4.6:1.
+4. Gradients: only `ink-950`‑to‑transparent overlays on duotoned photography, and one radial `brand-400` glow per dark section.
+5. Contrast: body text ≥ 4.5:1, large text ≥ 3:1 on both themes. `white` on `ink-950` ≈ 9:1; `ink-300` on `ink-950` ≈ 6:1; `gold-400` on `ink-950` ≈ 6.5:1; `brand-700` on white ≈ 5.9:1.
 
 ---
 
 ## 3. Typography
 
-One family: **Manrope** (variable, via `next/font/google`). One technical companion: **Geist Mono** for metadata only.
+Two families with two clear jobs, both self‑hosted through `next/font/google`:
 
-| Style          | Size (mobile → desktop) | Weight     | Tracking          | Leading |
-| -------------- | ----------------------- | ---------- | ----------------- | ------- |
-| Display (hero) | 44px → 96px (`clamp`)   | 600        | −0.035em          | 0.98    |
-| H1 (page hero) | 40px → 72px             | 600        | −0.03em           | 1.02    |
-| H2 (section)   | 32px → 56px             | 600        | −0.025em          | 1.05    |
-| H3             | 24px → 32px             | 600        | −0.02em           | 1.15    |
-| H4             | 18px → 20px             | 600        | −0.01em           | 1.3     |
-| Lead           | 18px → 22px             | 400        | 0                 | 1.5     |
-| Body           | 16px → 17px             | 400        | 0                 | 1.65    |
-| Small          | 14px                    | 400        | 0                 | 1.5     |
-| Eyebrow / meta | 11–12px                 | 500 (mono) | +0.14em uppercase | 1       |
-| Stat numerals  | 64px → 120px            | 500        | −0.04em           | 0.9     |
+- **Sora** (`--font-display`, `--font-label`) — every headline, stat numeral, button, navigation item, logo wordmark and small uppercase label. Geometric and confident; it is what makes the site look like a technology company rather than a brochure.
+- **Plus Jakarta Sans** (`--font-sans`) — body copy, leads, forms and UI text. Open and friendly at small sizes.
+- **Geist Mono** is kept only for code inside articles and CMS slugs/IDs. It is no longer used for site labels.
 
-Rules: reading width ≤ 65ch; headings never fully bold (700) — 600 reads more premium at scale; emphasise single words in headings with `text-gold-400` (on dark) or `text-brand-text` (on light), not italics.
+`h1`–`h4` pick up Sora 700 from the base layer; the `eyebrow` and `label` utilities pick up Sora 600 with `+0.14–0.16em` tracking, so labels are uniform across every component instead of ad‑hoc mono sizes.
+
+| Style           | Size (mobile → desktop) | Family / weight | Tracking          | Leading |
+| --------------- | ----------------------- | --------------- | ----------------- | ------- |
+| Display (hero)  | 44px → 96px (`clamp`)   | Sora 700        | −0.03em           | 1.0     |
+| H1 (every hero) | 38px → 64px             | Sora 700        | −0.025em          | 1.04    |
+| H2 (section)    | 30px → 48px             | Sora 700        | −0.02em           | 1.08    |
+| H3              | 24px → 32px             | Sora 600–700    | −0.015em          | 1.18    |
+| H4              | 18px → 20px             | Sora 600        | −0.01em           | 1.3     |
+| Lead            | 18px → 22px             | Jakarta 400     | 0                 | 1.5     | (hero intros and section headers only)
+| Body            | 16px, fixed             | Jakarta 400     | 0                 | 1.6     | (every other sentence: paragraphs, bullets, details, tags, footer, forms)
+| Button / nav    | 15–16px                 | Sora 500–600    | +0.01em           | 1       |
+| Eyebrow / label | 11–12px                 | Sora 600        | +0.14em uppercase | 1       |
+| Stat numerals   | 64px → 120px            | Sora 700        | −0.03em           | 1       |
+
+Rules: one size per level — `text-h1` for every hero and the closing CTA, `text-h2` for every section heading, `text-body` (a fixed 16px) for **all** running text — there is no small text size on the public site, the owner asked for one body size (2026‑10‑20) — and a single label size `text-[0.7rem]` / `tracking-[0.14em]` for all uppercase labels. Reading width ≤ 65ch; emphasise single words in headings with `text-gold-400` (on dark) or `text-brand-text` (on light), not italics; never introduce a third family.
 
 ---
 
 ## 4. Spacing, layout & radius
 
-- **Base unit** 4px. Section rhythm: `py-24 md:py-32 xl:py-40`.
+- **Base unit** 4px. Section rhythm: `py-20 md:py-24 xl:py-28` (tightened 2026‑10‑20 so pages scroll like a corporate site, not a landing page). Heroes are compact: no `min-h-screen`.
 - **Container** `max-w-[1440px]` with gutters `px-5 sm:px-8 lg:px-12 xl:px-16`. A `narrow` variant at `max-w-[1120px]` for reading sections.
 - **Grid** 12 columns desktop; editorial sections split 5/7 or 4/8, never 6/6 for text‑and‑image.
 - **Radius** `--radius-sm 6px`, `--radius-md 10px`, `--radius-lg 16px`. Buttons 6px. Images 10–16px. No pill buttons, no fully rounded cards.
@@ -155,19 +176,19 @@ Breakpoints: `sm 640`, `md 768`, `lg 1024`, `xl 1280`, `2xl 1536`. Design is che
 
 Source: Unsplash (licence permits commercial use). Every image is dark, architectural or technical, no handshakes, no stock smiles, no holograms. Files live in `public/images/photos` and are credited in `public/images/CREDITS.md`.
 
-| Section        | Image                                                                                                                   | Treatment                                                     |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Home hero      | `hero-datacenter` (cabled server racks)                                                                                 | Slow 1.0→1.06 scale, dark gradient, network lines, brand glow |
-| About          | `team-screens` (engineers at screens) + `rack-mono`                                                                     | Clip‑path reveal, subtle parallax                             |
-| Services panel | one per service: `network-patch`, `dc-corridor`, `boardroom`, `soc-analyst`, `cloud-nodes`, `server-hands`, `cctv-wall` | Crossfade on hover/focus                                      |
-| Process        | `drafting`, `whiteboard`                                                                                                | Low‑key, cropped tight                                        |
-| Industries     | `parliament`, `financial-district`, `towers-glass`, `hospital`, `ngo`, `open-office`, `university`, `powerlines`        | Desaturated 20 %, brightens on hover                          |
-| Projects       | `network-switch`, `rack-mono`, `code-hands`, `earth-night`                                                              | Monochrome‑leaning                                            |
-| Expertise      | `engineer-lab`, `workspace-mono`                                                                                        | Editorial                                                     |
-| Final CTA      | `earth-night`                                                                                                           | Heavy dark overlay                                            |
-| Contact        | `towers-glass`                                                                                                          | Page hero                                                     |
+| Section        | Image                                                                                                                   | Treatment                                  |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Home hero      | none — `hero-mesh` gradient + `hero-blob` blooms + `HeroOrbits` + `NetworkLines`                                        | No photography (owner request, 2026‑10‑20) |
+| Page heroes    | none — same brand composition, smaller orbits                                                                           | `PageHero` has no image prop               |
+| About          | `team-screens` (engineers at screens) + `rack-mono`                                                                     | Clip‑path reveal, subtle parallax          |
+| Services panel | one per service: `network-patch`, `dc-corridor`, `boardroom`, `soc-analyst`, `cloud-nodes`, `server-hands`, `cctv-wall` | Crossfade on hover/focus                   |
+| Process        | `drafting`, `whiteboard`                                                                                                | Low‑key, cropped tight                     |
+| Industries     | `parliament`, `financial-district`, `towers-glass`, `hospital`, `ngo`, `open-office`, `university`, `powerlines`        | Desaturated 20 %, brightens on hover       |
+| Projects       | `network-switch`, `rack-mono`, `code-hands`, `earth-night`                                                              | Monochrome‑leaning                         |
+| Expertise      | `engineer-lab`, `workspace-mono`                                                                                        | Editorial                                  |
+| Final CTA      | `earth-night`                                                                                                           | Heavy dark overlay                         |
 
-Overlay recipe for dark imagery: `linear-gradient(to top, ink-950 0%, ink-950/70 40%, ink-950/20 100%)` plus a side vignette. Images are served through `next/image` with explicit `sizes`, `priority` only on the hero.
+Overlay recipe for dark imagery: the blue duotone (§2) plus `linear-gradient(to top, ink-950 0%, ink-950/60 40%, ink-950/15 100%)` and a side vignette. Images are served through `next/image` with explicit `sizes`, `priority` only on the hero.
 
 ---
 

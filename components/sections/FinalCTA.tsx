@@ -3,20 +3,21 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/animations/Reveal";
 import { TextReveal } from "@/components/animations/TextReveal";
 import { MagneticButton } from "@/components/animations/MagneticButton";
-import { company } from "@/lib/data/company";
+import { getSiteContent } from "@/lib/content/server";
 import { GlobeCanvas } from "@/components/sections/GlobeCanvas";
 
-export function FinalCTA({
-  title = ["Let's engineer", "what's next."],
-  text = "Tell us what you're building, protecting or transforming. Our team can help architect the infrastructure behind it.",
-  primary = { label: "Start a Conversation", href: "/contact" },
-  secondary = { label: "Explore Our Services", href: "/services" },
-}: {
+export async function FinalCTA(props: {
   title?: [string, string];
   text?: string;
   primary?: { label: string; href: string };
   secondary?: { label: string; href: string };
 }) {
+  const { home, company } = await getSiteContent();
+  const cta = home.finalCta;
+  const title = props.title ?? [cta.titleLine1, cta.titleLine2];
+  const text = props.text ?? cta.text;
+  const primary = props.primary ?? cta.primary;
+  const secondary = props.secondary ?? cta.secondary;
   return (
     <section
       data-theme="dark"
@@ -30,28 +31,30 @@ export function FinalCTA({
           alt=""
           fill
           sizes="100vw"
-          className="object-cover object-center opacity-90"
+          className="duotone-media object-cover object-center"
         />
-        {/* lighter top+bottom vignette */}
+        {/* Blue duotone so the night-earth photo reads as brand blue, not black */}
+        <div aria-hidden className="duotone-shadows absolute inset-0" />
+        <div aria-hidden className="duotone-lights absolute inset-0" />
         <div
           aria-hidden
-          className="from-ink-950/80 via-ink-950/20 to-ink-950/80 absolute inset-0 bg-gradient-to-b"
+          className="from-ink-950/70 via-ink-950/10 to-ink-950/70 absolute inset-0 bg-gradient-to-b"
         />
         {/* left text-protection gradient */}
         <div
           aria-hidden
-          className="from-ink-950/85 absolute inset-0 bg-gradient-to-r to-transparent via-ink-950/20"
+          className="from-ink-950/85 via-ink-950/25 absolute inset-0 bg-gradient-to-r to-transparent"
           style={{ backgroundSize: "60% 100%" }}
         />
       </div>
 
       {/* ── Animated globe (right side) ── */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 -z-10">
         <GlobeCanvas />
       </div>
 
       {/* ── Content ── */}
-      <div className="container-x relative flex min-h-[80svh] flex-col justify-center py-28 lg:py-40">
+      <div className="container-x relative flex flex-col justify-center py-24 lg:py-32">
         <Reveal>
           <p className="eyebrow text-ink-300">
             {company.headquarters.city} · {company.headquarters.country}
@@ -61,7 +64,7 @@ export function FinalCTA({
           as="h2"
           inView
           delay={0.1}
-          className="text-display mt-8 max-w-[14ch] font-semibold text-white"
+          className="text-h1 mt-8 max-w-[14ch] font-bold text-white"
           lines={[
             <span key="a">{title[0]}</span>,
             <span key="b" className="text-gold-400">

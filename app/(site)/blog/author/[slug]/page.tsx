@@ -66,7 +66,7 @@ export default async function AuthorPage({
         <div className="container-x relative">
           <Reveal>
             <nav aria-label="Breadcrumb" className="mb-8">
-              <ol className="text-ink-400 flex flex-wrap items-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
+              <ol className="text-ink-400 font-label flex flex-wrap items-center gap-2 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                 <li>
                   <Link href="/blog" className="hover:text-white">
                     Insights
@@ -84,7 +84,7 @@ export default async function AuthorPage({
             <div>
               <h1 className="text-h1 font-semibold text-white">{author.name}</h1>
               {author.position && <p className="text-lead text-ink-300 mt-2">{author.position}</p>}
-              <p className="text-ink-400 mt-4 flex flex-wrap items-center gap-5 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
+              <p className="text-ink-400 font-label mt-4 flex flex-wrap items-center gap-5 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                 <span>
                   {list.totalElements} article{list.totalElements === 1 ? "" : "s"}
                 </span>

@@ -3,19 +3,24 @@ import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/animations/Reveal";
 import { StaggerGroup, StaggerItem } from "@/components/animations/Stagger";
-import { projectGroups, projects } from "@/lib/data/projects";
+import { getSiteContent } from "@/lib/content/server";
+import { Highlight } from "@/lib/content/highlight";
 
 /** Full project reference list, grouped by service line as in the company profile. */
-export function ProjectIndex() {
+export async function ProjectIndex() {
+  const { projects: projectsContent, pages } = await getSiteContent();
+  const projectGroups = projectsContent.groups;
+  const projects = projectsContent.items;
+  const copy = pages.projects;
   return (
     <Section theme="light" aria-labelledby="project-index-title">
       <div className="container-x">
         <Reveal>
-          <Eyebrow>Project index</Eyebrow>
+          <Eyebrow>{copy.indexEyebrow}</Eyebrow>
         </Reveal>
         <Reveal delay={0.08}>
           <h2 id="project-index-title" className="text-h2 mt-6 max-w-[24ch] font-semibold">
-            Customers and project <span className="text-brand-text">experience.</span>
+            <Highlight text={copy.indexTitle} highlight={copy.indexHighlight} />
           </h2>
         </Reveal>
 
@@ -28,9 +33,7 @@ export function ProjectIndex() {
                   <h3 className="text-h3 font-semibold">{group.title}</h3>
                 </Reveal>
                 <Reveal delay={0.06} className="lg:col-span-5 lg:col-start-8 lg:self-end">
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {group.description}
-                  </p>
+                  <p className="text-muted-foreground text-body">{group.description}</p>
                 </Reveal>
               </div>
 
@@ -47,8 +50,8 @@ export function ProjectIndex() {
                     y={10}
                     className="border-border grid grid-cols-1 gap-x-8 gap-y-3 border-b py-6 md:grid-cols-12"
                   >
-                    <div className="text-muted-foreground font-mono text-[0.7rem] tracking-[0.12em] uppercase md:col-span-2">
-                      {p.year ?? "—"}
+                    <div className="text-muted-foreground font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase md:col-span-2">
+                      {p.year || "—"}
                     </div>
                     <div className="flex items-start gap-4 md:col-span-4">
                       {p.clientLogo && (
@@ -63,19 +66,19 @@ export function ProjectIndex() {
                         </div>
                       )}
                       <div>
-                        <p className="text-[0.9375rem] font-semibold">{p.name}</p>
-                        <p className="text-muted-foreground mt-1 text-sm">{p.client}</p>
-                        <p className="text-muted-foreground mt-2 font-mono text-[0.62rem] tracking-[0.12em] uppercase">
+                        <p className="text-body font-semibold">{p.name}</p>
+                        <p className="text-muted-foreground text-body mt-1">{p.client}</p>
+                        <p className="text-muted-foreground font-label mt-2 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                           {p.sector} · {p.location}
                         </p>
                       </div>
                     </div>
                     <div className="md:col-span-6">
-                      <p className="text-muted-foreground text-sm leading-relaxed">{p.summary}</p>
+                      <p className="text-muted-foreground text-body">{p.summary}</p>
                       {p.highlights.length > 0 && (
                         <ul className="mt-3 flex flex-wrap gap-2">
                           {p.highlights.map((h) => (
-                            <li key={h} className="bg-muted rounded-sm px-2 py-1 text-[0.8125rem]">
+                            <li key={h} className="bg-muted text-body rounded-sm px-2 py-1">
                               {h}
                             </li>
                           ))}

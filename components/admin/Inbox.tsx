@@ -48,7 +48,7 @@ function Avatar({ name, unread }: { name: string; unread?: boolean }) {
       className={cn(
         "flex size-9 shrink-0 items-center justify-center rounded-full font-mono text-[0.68rem] tracking-[0.08em] text-white",
         unread
-          ? "bg-gradient-to-br from-[#d9a90c] to-[#fbd84a] text-[#143070] shadow-[0_8px_18px_-8px_rgba(245,197,24,0.8)]"
+          ? "bg-gradient-to-br from-[#d9a90c] to-[#fbd84a] text-[#143a8c] shadow-[0_8px_18px_-8px_rgba(245,197,24,0.8)]"
           : "from-ink-400 to-ink-300 bg-gradient-to-br",
       )}
       aria-hidden
@@ -311,7 +311,7 @@ export function Inbox({ user }: { user: User | null }) {
                       </span>
                       {unread && (
                         <span
-                          className="mt-2 size-2 shrink-0 rounded-full bg-gold-500 shadow-[0_0_0_3px_rgba(245,197,24,0.25)]"
+                          className="bg-gold-500 mt-2 size-2 shrink-0 rounded-full shadow-[0_0_0_3px_rgba(245,197,24,0.25)]"
                           aria-label="Unread"
                         />
                       )}
@@ -423,7 +423,7 @@ export function Inbox({ user }: { user: User | null }) {
                   {selected.message}
                 </p>
                 {selected.repliedAt && (
-                  <p className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-500/10 px-3 py-1.5 text-xs text-brand-700 ring-1 ring-brand-500/30 ring-inset">
+                  <p className="bg-brand-500/10 text-brand-700 ring-brand-500/30 mt-6 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs ring-1 ring-inset">
                     <Check className="size-3.5" aria-hidden /> Replied{" "}
                     {formatDateTime(selected.repliedAt)}
                   </p>

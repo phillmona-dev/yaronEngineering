@@ -249,6 +249,8 @@ After publish / unpublish / archive / update of a published article / scheduler 
 
 Failures are logged and never block the editorial action.
 
+Saving or resetting a website content section (§8) sends `tags: ["site-content"]`; the Next.js route then revalidates the whole public site (`revalidatePath("/", "layout")`). The Next.js admin proxy also purges that cache itself right after a successful write, so edits show up even when `REVALIDATE_URL` is not configured.
+
 ---
 
 ## 6. Environment
@@ -285,3 +287,23 @@ Submissions from the website contact form are stored and managed in the CMS inbo
 | DELETE | `/contact-messages/{id}`                                            | ADMIN                                           | —                                                                        | `204`                                           |
 
 `ContactMessage`: `{ id, name, email, organization, subject, message, status, notes, createdAt, updatedAt, readAt, repliedAt }`. The dashboard `Stats` object additionally carries `unreadMessages` and `recentMessages` (latest 5). Sender IPs are stored only as a SHA-256 hash.
+
+---
+
+## 8. Website content (added)
+
+The owner edits the public website's text, lists, links and pictures from **Admin → Website content**. Each editable _section_ (`company`, `home`, `about`, `pages`, `navigation`, `services`, `solutions`, `industries`, `projects`, `customers`, `partners`, `why`, `careers`) is stored as one JSON document. A section with no stored document falls back to the built-in content compiled into the frontend (`lib/content/defaults.ts`), and the frontend merges a stored document over those defaults field by field (`lib/content/merge.ts`), so a document saved before a field existed still renders correctly.
+
+| Method | Path                      | Role      | Notes                                                                                        |
+| ------ | ------------------------- | --------- | -------------------------------------------------------------------------------------------- |
+| GET    | `/public/site-content`    | —         | `{ "<section>": <json>, … }` — customised sections only. Read by the Next.js server.         |
+| GET    | `/site-content`           | any staff | `SiteContentDoc[]`                                                                           |
+| GET    | `/site-content/{section}` | any staff | `SiteContentDoc` · `404` when the section uses built-in content                              |
+| PUT    | `/site-content/{section}` | ADMIN     | Body: the section's JSON object (≤ 512 KB). Returns `SiteContentDoc`. Triggers revalidation. |
+| DELETE | `/site-content/{section}` | ADMIN     | `204` — removes the document so the site returns to its built-in content.                    |
+
+```
+SiteContentDoc { section: string, data: object, updatedAt: ISO, updatedBy: string | null }
+```
+
+Section names match `^[a-z][a-z0-9-]{1,59}$`. The field layout of each section, with the labels and help texts shown in the editor, is defined in `lib/content/schema.ts`; the TypeScript shape is `lib/content/types.ts`.

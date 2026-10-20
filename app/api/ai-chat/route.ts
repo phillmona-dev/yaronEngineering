@@ -1,42 +1,51 @@
 import { NextResponse } from "next/server";
-import { company, leadershipRoles, stats } from "@/lib/data/company";
-import { services } from "@/lib/data/services";
-import { partners } from "@/lib/data/partners";
-import { projectGroups, projects } from "@/lib/data/projects";
+import { getSiteContent } from "@/lib/content/server";
+import type { SiteContent } from "@/lib/content/types";
 
-const SYSTEM_PROMPT = `You are an AI assistant embedded on the Yaron Engineering PLC website.
-You answer questions about Yaron Engineering in a friendly, professional, and confident way.
+/** The assistant's knowledge is built from the same editable content the website renders. */
+function buildSystemPrompt({
+  company,
+  about,
+  home,
+  services,
+  partners,
+  projects,
+  pages,
+}: SiteContent) {
+  const address = `${company.headquarters.streetAddress}, ${company.headquarters.city}, ${company.headquarters.country}`;
+  return `You are an AI assistant embedded on the ${company.name} website.
+You answer questions about ${company.shortName} in a friendly, professional, and confident way.
 Keep answers concise (2-4 sentences max), engaging, and use emojis very sparingly.
 If asked something you do not know or that falls outside what is documented below, say:
 "I don't have that detail on hand — please reach out to our team at ${company.contact.salesEmail} or call ${company.contact.phones[0]} and they'll be happy to help."
 Never guess, never fabricate facts. Never quote contract values, prices or project costs.
 
-── ABOUT YARON ENGINEERING PLC ──────────────────────────────────────────
+── ABOUT ${company.name.toUpperCase()} ──────────────────────────────────────────
 Full name: ${company.legalName}
 Tagline: ${company.tagline} — "${company.slogan}"
 Founded: ${company.founded}
-Headquarters: ${company.headquarters.full}
+Headquarters: ${address}
 
-Vision: ${company.vision}
-Mission: ${company.mission}
+Vision: ${about.vision}
+Mission: ${about.mission}
 
 Description: ${company.description}
 
-Story: ${company.story.join(" ")}
+Story: ${about.story.join(" ")}
 
 Core values:
-${company.coreValues.map((v) => `- ${v.title}: ${v.text}`).join("\n")}
+${about.coreValues.map((v) => `- ${v.title}: ${v.text}`).join("\n")}
 
-Business lines: ${company.businessLines.join(", ")}.
+Business lines: ${about.businessLines.join(", ")}.
 
 Main business areas:
-${company.businessAreas.map((a) => `- ${a.title}: ${a.text}`).join("\n")}
+${about.businessAreas.map((a) => `- ${a.title}: ${a.text}`).join("\n")}
 
 Key stats:
-${stats.map((s) => `- ${s.value}${s.suffix} ${s.label.toLowerCase()} (${s.note})`).join("\n")}
+${home.stats.map((s) => `- ${s.value}${s.suffix} ${s.label.toLowerCase()} (${s.note})`).join("\n")}
 
 ── SERVICES ──────────────────────────────────────────────────────────────
-${services
+${services.items
   .map(
     (s, i) =>
       `${i + 1}. ${s.title} (/services/${s.slug})\n   ${s.summary} Capabilities: ${s.capabilities.join(", ")}.`,
@@ -44,16 +53,16 @@ ${services
   .join("\n")}
 
 How we deliver:
-${company.serviceLines.map((l) => `- ${l.title}: ${l.items.join("; ")}.`).join("\n")}
+${about.serviceLines.map((l) => `- ${l.title}: ${l.items.join("; ")}.`).join("\n")}
 
 ── TECHNOLOGY PARTNERS ───────────────────────────────────────────────────
-${partners.map((p) => `${p.name} (${p.category})`).join(", ")}.
+${partners.items.map((p) => `${p.name} (${p.category})`).join(", ")}.
 
 ── PROJECTS & CLIENTS (see /projects) ────────────────────────────────────
-${projectGroups
+${projects.groups
   .map(
     (g) =>
-      `${g.title}:\n${projects
+      `${g.title}:\n${projects.items
         .filter((p) => p.group === g.id)
         .map(
           (p) =>
@@ -68,19 +77,20 @@ Email: ${company.contact.email}
 Sales email: ${company.contact.salesEmail}
 Phone: ${company.contact.phones.join(", ")}
 WhatsApp: ${company.contact.whatsapp}
-Address: ${company.headquarters.full}
-Office hours: Monday – Friday, East Africa Time (UTC+3)
+Address: ${address}
+Office hours: ${company.contact.officeHours}
 Contact page: /contact
 
 ── CAREERS ────────────────────────────────────────────────────────────────
-Yaron Engineering looks for ${leadershipRoles.join(", ")}.
-No open roles are currently listed on the site, but interested candidates can email ${company.contact.email}.
+${company.shortName} looks for ${about.leadershipRoles.join(", ")}.
+${pages.careers.noVacanciesText} Interested candidates can email ${company.contact.email}.
 
 ── WEBSITE PAGES ──────────────────────────────────────────────────────────
 Home: / | About: /about | Services: /services | Solutions: /solutions
 Industries: /industries | Projects: /projects | Partners: /partners
 Careers: /careers | Contact: /contact | Blog / Knowledge Hub: /blog
 `;
+}
 
 type GeminiMessage = { role: string; content: string };
 
@@ -97,6 +107,7 @@ const BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models";
 async function callGemini(
   apiKey: string,
   model: string,
+  systemPrompt: string,
   contents: object[],
 ): Promise<{ ok: boolean; text?: string; error?: string; status?: number }> {
   const res = await fetch(`${BASE_URL}/${model}:generateContent`, {
@@ -106,7 +117,7 @@ async function callGemini(
       "x-goog-api-key": apiKey,
     },
     body: JSON.stringify({
-      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      system_instruction: { parts: [{ text: systemPrompt }] },
       contents,
       generationConfig: { temperature: 0.8, maxOutputTokens: 350 },
     }),
@@ -136,6 +147,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
     }
 
+    const systemPrompt = buildSystemPrompt(await getSiteContent());
     const contents = messages.map((m: GeminiMessage) => ({
       role: m.role === "assistant" ? "model" : "user",
       parts: [{ text: m.content }],
@@ -144,7 +156,7 @@ export async function POST(request: Request) {
     // Try each model in order until one succeeds
     let lastError = "All AI models are currently unavailable. Please try again shortly.";
     for (const model of GEMINI_MODELS) {
-      const result = await callGemini(apiKey, model, contents);
+      const result = await callGemini(apiKey, model, systemPrompt, contents);
       if (result.ok && result.text) {
         return NextResponse.json({ reply: result.text });
       }

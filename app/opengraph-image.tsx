@@ -16,7 +16,7 @@ export default function OpenGraphImage() {
         flexDirection: "column",
         justifyContent: "space-between",
         padding: 72,
-        background: "linear-gradient(135deg, #0e2250 0%, #143070 60%, #20448f 100%)",
+        background: "linear-gradient(135deg, #1540a6 0%, #143a8c 60%, #2a5ec9 100%)",
         color: "#f2f6fc",
         fontFamily: "sans-serif",
       }}
@@ -47,7 +47,7 @@ export default function OpenGraphImage() {
           Engineering the infrastructure behind a <span style={{ color: "#fbd84a" }}>secure</span>{" "}
           digital future.
         </div>
-        <div style={{ fontSize: 28, color: "#c9d6ee" }}>{company.name} · Addis Ababa, Ethiopia</div>
+        <div style={{ fontSize: 28, color: "#d6e4f9" }}>{company.name} · Addis Ababa, Ethiopia</div>
       </div>
     </div>,
     { ...size },

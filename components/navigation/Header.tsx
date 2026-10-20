@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { m, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
-import { primaryNav } from "@/lib/data/navigation";
+import { useSiteContent } from "@/lib/content/context";
 import { Logo } from "@/components/ui/Logo";
 import { Button } from "@/components/ui/Button";
 import { MobileMenu } from "./MobileMenu";
@@ -17,6 +17,8 @@ import { ServicesPanel } from "./ServicesPanel";
  */
 export function Header() {
   const pathname = usePathname();
+  const { navigation } = useSiteContent();
+  const primaryNav = navigation.primary;
   const reduce = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -75,7 +77,7 @@ export function Header() {
                     aria-expanded={isServices ? panelOpen : undefined}
                     onFocus={() => isServices && setPanelOpen(true)}
                     className={cn(
-                      "group text-ink-200 relative inline-flex h-10 items-center px-3.5 text-[0.9375rem] font-medium transition-colors duration-300 hover:text-white",
+                      "group text-ink-200 font-display text-body relative inline-flex h-10 items-center px-3.5 font-medium transition-colors duration-300 hover:text-white",
                       active && "text-white",
                     )}
                   >

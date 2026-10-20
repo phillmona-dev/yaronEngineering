@@ -221,7 +221,7 @@ export function ArticlesTable() {
                               {a.title || "Untitled"}
                             </Link>
                             {a.featured && (
-                              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#f5c518]/15 px-1.5 py-0.5 font-mono text-[0.55rem] tracking-[0.1em] text-gold-700 uppercase ring-1 ring-[#f5c518]/30 ring-inset">
+                              <span className="text-gold-700 inline-flex shrink-0 items-center gap-1 rounded-full bg-[#f5c518]/15 px-1.5 py-0.5 font-mono text-[0.55rem] tracking-[0.1em] uppercase ring-1 ring-[#f5c518]/30 ring-inset">
                                 <Star className="size-2.5 fill-current" aria-hidden /> Featured
                               </span>
                             )}
@@ -292,7 +292,7 @@ export function ArticlesTable() {
                             onClick={() => setConfirm({ a, action: "publish" })}
                             aria-label="Publish"
                             title="Publish"
-                            className="rounded-lg p-1.5 text-brand-600 hover:bg-brand-500/10"
+                            className="text-brand-600 hover:bg-brand-500/10 rounded-lg p-1.5"
                           >
                             <Send className="size-3.5" />
                           </button>
@@ -314,7 +314,7 @@ export function ArticlesTable() {
                             onClick={() => setConfirm({ a, action: "archive" })}
                             aria-label="Archive"
                             title="Archive"
-                            className="text-ink-500 rounded-lg p-1.5 hover:bg-gold-500/15 hover:text-gold-700"
+                            className="text-ink-500 hover:bg-gold-500/15 hover:text-gold-700 rounded-lg p-1.5"
                           >
                             <Archive className="size-3.5" />
                           </button>

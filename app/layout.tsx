@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Geist_Mono } from "next/font/google";
+import { Sora, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MotionProvider } from "@/components/animations/MotionProvider";
 import { JsonLd } from "@/components/layout/JsonLd";
@@ -8,10 +8,20 @@ import { SITE_URL } from "@/lib/utils/site";
 import { company } from "@/lib/data/company";
 import AiChat from "@/components/ai/AiChat";
 
-const manrope = Manrope({
+/* Display + label face: geometric, confident, distinctly "tech". */
+const sora = Sora({
   subsets: ["latin"],
-  variable: "--font-manrope",
+  variable: "--font-sora",
   display: "swap",
+  weight: ["500", "600", "700"],
+});
+
+/* Body + UI face: open, friendly and highly legible at small sizes. */
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -47,14 +57,18 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0e2250",
+  themeColor: "#1540a6",
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${geistMono.variable}`} data-theme="light">
+    <html
+      lang="en"
+      className={`${sora.variable} ${jakarta.variable} ${geistMono.variable}`}
+      data-theme="light"
+    >
       <body>
         <MotionProvider>{children}</MotionProvider>
         <AiChat />

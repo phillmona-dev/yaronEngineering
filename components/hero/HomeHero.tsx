@@ -7,17 +7,11 @@ import { Button } from "@/components/ui/Button";
 import { TextReveal } from "@/components/animations/TextReveal";
 import { MagneticButton } from "@/components/animations/MagneticButton";
 import { NetworkLines } from "./NetworkLines";
-import { HeroVideo } from "./HeroVideo";
+import { HeroOrbits } from "./HeroOrbits";
 import { HeroPanel } from "./HeroPanel";
-import { company } from "@/lib/data/company";
-import { customers } from "@/lib/data/customers";
+import { useSiteContent } from "@/lib/content/context";
+import { GoldHighlight } from "@/lib/content/highlight";
 import { EASE_OUT_EXPO } from "@/lib/utils/motion";
-
-const DATA_POINTS = [
-  { label: "HQ", value: "Addis Ababa · 9.02°N 38.83°E" },
-  { label: "Est.", value: "2018" },
-  { label: "Focus", value: "ICT Infrastructure · Cybersecurity" },
-];
 
 const fade = (delay: number) => ({
   initial: { opacity: 0, y: 18 },
@@ -26,12 +20,12 @@ const fade = (delay: number) => ({
 });
 
 export function HomeHero() {
+  const { home, customers } = useSiteContent();
+  const hero = home.hero;
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
   const imgY = useTransform(scrollY, [0, 900], [0, 120]);
-  const panelY = useTransform(scrollY, [0, 900], [0, -60]);
-  const contentOpacity = useTransform(scrollY, [0, 500], [1, 0]);
-  const contentY = useTransform(scrollY, [0, 500], [0, 60]);
+  const panelY = useTransform(scrollY, [0, 900], [0, -40]);
 
   return (
     <section
@@ -39,110 +33,97 @@ export function HomeHero() {
       className="bg-ink-950 text-foreground relative isolate overflow-hidden"
       aria-labelledby="hero-title"
     >
-      {/* Visual layer */}
+      {/* Visual layer — pure brand colour, no photography */}
       <m.div className="absolute inset-0 -z-10" style={reduce ? undefined : { y: imgY }}>
-        <m.div
-          className="absolute inset-0"
-          initial={{ scale: reduce ? 1 : 1.08 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 2.4, ease: EASE_OUT_EXPO }}
-        >
-          <HeroVideo
-            mp4="/videos/hero-datacenter.mp4"
-            webm="/videos/hero-datacenter.webm"
-            poster="/images/photos/hero-video-poster.jpg"
-          />
-        </m.div>
-        {/* Blue duotone wash so the footage reads as brand, not stock */}
-        <div aria-hidden className="bg-brand-700/40 absolute inset-0 mix-blend-multiply" />
+        <div aria-hidden className="hero-mesh absolute inset-0" />
+        {/* Drifting light-blue and gold blooms */}
         <div
           aria-hidden
-          className="from-ink-950 via-ink-950/75 to-ink-950/35 absolute inset-0 bg-gradient-to-t"
-        />
-        <div
-          aria-hidden
-          className="from-ink-950/85 via-ink-950/30 absolute inset-0 bg-gradient-to-r to-transparent"
-        />
-        <div
-          aria-hidden
-          className="absolute top-[30%] -left-[10%] h-[60vh] w-[60vw] rounded-full opacity-60 blur-3xl"
+          className="hero-blob top-[-10%] right-[-5%] h-[55vw] max-h-[720px] w-[55vw] max-w-[720px] opacity-70"
           style={{
-            background: "radial-gradient(closest-side, rgba(63,130,220,0.4), transparent 70%)",
+            background: "radial-gradient(closest-side, rgba(108,166,238,0.55), transparent 70%)",
           }}
         />
-        <NetworkLines className="absolute inset-0 h-full w-full opacity-[0.55] mix-blend-screen" />
-        <div aria-hidden className="grid-lines absolute inset-0 text-white opacity-50" />
+        <div
+          aria-hidden
+          className="hero-blob bottom-[-20%] left-[-10%] h-[40vw] max-h-[520px] w-[40vw] max-w-[520px] opacity-60 [animation-delay:-7s]"
+          style={{
+            background: "radial-gradient(closest-side, rgba(245,197,24,0.28), transparent 70%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="hero-blob top-[35%] left-[30%] h-[36vw] max-h-[480px] w-[36vw] max-w-[480px] opacity-50 [animation-delay:-11s]"
+          style={{
+            background: "radial-gradient(closest-side, rgba(63,130,220,0.6), transparent 70%)",
+          }}
+        />
+        {/* Orbit ornament behind the capability panel */}
+        <HeroOrbits className="absolute top-1/2 right-[-14%] hidden w-[58vw] max-w-[980px] -translate-y-[46%] opacity-80 lg:block" />
+        <NetworkLines className="absolute inset-0 h-full w-full opacity-[0.45] mix-blend-screen" />
+        <div aria-hidden className="grid-lines absolute inset-0 text-white opacity-40" />
         {/* Gold diagonal hairline — the logo's circuit trace, abstracted */}
         <div
           aria-hidden
-          className="from-gold-500/0 via-gold-500/45 to-gold-500/0 absolute top-0 right-[38%] hidden h-[140%] w-px origin-top rotate-[22deg] bg-gradient-to-b lg:block"
+          className="from-gold-500/0 via-gold-500/50 to-gold-500/0 absolute top-0 right-[38%] hidden h-[140%] w-px origin-top rotate-[22deg] bg-gradient-to-b lg:block"
         />
       </m.div>
 
       {/* Content */}
-      <m.div
-        className="container-x relative grid min-h-[100svh] grid-cols-1 items-end gap-x-10 gap-y-14 pt-36 pb-14 lg:grid-cols-12 lg:items-center lg:pt-32 lg:pb-16"
-        style={reduce ? undefined : { opacity: contentOpacity, y: contentY }}
-      >
+      <m.div className="container-x relative grid grid-cols-1 items-center gap-x-10 gap-y-12 pt-32 pb-14 lg:grid-cols-12 lg:pt-40 lg:pb-16">
         {/* Copy */}
         <div className="lg:col-span-7">
           <m.p
             {...fade(0.25)}
-            className="border-gold-500/40 bg-gold-500/10 text-gold-300 inline-flex items-center gap-2.5 rounded-full border px-3.5 py-1.5 font-mono text-[0.68rem] tracking-[0.14em] uppercase"
+            className="border-gold-500/40 bg-gold-500/10 text-gold-300 font-label inline-flex items-center gap-2.5 rounded-full border px-3.5 py-1.5 text-[0.7rem] font-semibold tracking-[0.14em] uppercase"
           >
             <span className="relative flex size-1.5">
               <span className="animate-pulse-soft bg-gold-400 absolute inset-0 rounded-full" />
               <span className="bg-gold-500 relative size-1.5 rounded-full" />
             </span>
-            ICT Infrastructure &amp; Cybersecurity Systems Integrator
+            {hero.badge}
           </m.p>
 
           <TextReveal
             as="h1"
             delay={0.4}
-            className="mt-8 text-[clamp(2.75rem,1.2rem+4.4vw,5.25rem)] leading-[0.98] font-semibold tracking-[-0.035em] text-white"
-            lines={[
-              <span key="l1">Engineering the</span>,
-              <span key="l2">infrastructure</span>,
-              <span key="l3">
-                behind a <span className="text-gold-400">secure</span>
-              </span>,
-              <span key="l4">digital future.</span>,
-            ]}
+            className="text-h1 mt-7 font-bold text-white"
+            lines={hero.titleLines.map((line, i) => (
+              <span key={i}>
+                <GoldHighlight text={line} highlight={hero.highlight} />
+              </span>
+            ))}
           />
           <div id="hero-title" className="sr-only">
-            Engineering the infrastructure behind a secure digital future
+            {hero.titleLines.join(" ")}
           </div>
 
-          <m.p {...fade(0.9)} className="text-lead text-ink-200 mt-8 max-w-[50ch]">
-            {company.shortName} delivers ICT infrastructure, cybersecurity, cloud, data center and
-            enterprise technology solutions for organizations that cannot afford to compromise.
+          <m.p {...fade(0.9)} className="text-lead text-ink-200 mt-6 max-w-[50ch]">
+            {hero.lead}
           </m.p>
 
           <m.div
             {...fade(1.05)}
-            className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
           >
             <MagneticButton>
-              <Button href="/solutions" size="lg">
-                Explore Our Solutions
+              <Button href={hero.primaryCta.href} size="lg">
+                {hero.primaryCta.label}
               </Button>
             </MagneticButton>
-            <Button href="/contact" size="lg" variant="secondary" arrow="up">
-              Talk to Our Experts
+            <Button href={hero.secondaryCta.href} size="lg" variant="secondary" arrow="up">
+              {hero.secondaryCta.label}
             </Button>
           </m.div>
 
           {/* Trust row */}
-          <m.div {...fade(1.3)} className="mt-12 border-t border-white/10 pt-6">
-            <p className="text-ink-400 font-mono text-[0.66rem] tracking-[0.16em] uppercase">
+          <m.div {...fade(1.3)} className="mt-10 border-t border-white/10 pt-5">
+            <p className="text-ink-400 font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
               Trusted by
             </p>
             <ul className="mt-4 flex flex-wrap items-center gap-3">
-              {customers
-                .filter((c): c is typeof c & { logo: string; url: string } =>
-                  Boolean(c.logo && c.url),
-                )
+              {customers.items
+                .filter((c) => Boolean(c.logo && c.url))
                 .slice(0, 5)
                 .map((c) => (
                   <li key={c.id}>
@@ -185,10 +166,10 @@ export function HomeHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.5 }}
-          className="text-ink-400 flex flex-wrap items-center gap-x-10 gap-y-3 border-t border-white/10 pt-6 font-mono text-[0.7rem] tracking-[0.14em] uppercase lg:col-span-12"
+          className="text-ink-400 font-label flex flex-wrap items-center gap-x-10 gap-y-3 border-t border-white/10 pt-6 text-[0.7rem] font-semibold tracking-[0.14em] uppercase lg:col-span-12"
         >
           <dl className="flex flex-wrap gap-x-10 gap-y-3">
-            {DATA_POINTS.map((d) => (
+            {hero.dataPoints.map((d) => (
               <div key={d.label} className="flex gap-3">
                 <dt className="text-ink-400">{d.label}</dt>
                 <dd className="text-ink-300">{d.value}</dd>

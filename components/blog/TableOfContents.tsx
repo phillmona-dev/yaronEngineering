@@ -41,7 +41,7 @@ export function TableOfContents({
             href={`#${item.id}`}
             onClick={() => setOpen(false)}
             className={cn(
-              "block border-l py-1.5 text-[0.8125rem] leading-snug transition-colors duration-200",
+              "text-body block border-l py-1.5 transition-colors duration-200",
               item.level === 3 ? "pl-7" : "pl-4",
               active === item.id
                 ? "border-brand text-foreground"
@@ -63,7 +63,7 @@ export function TableOfContents({
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
-          className="text-muted-foreground flex w-full items-center justify-between px-4 py-3 font-mono text-[0.68rem] tracking-[0.14em] uppercase"
+          className="text-muted-foreground font-label flex w-full items-center justify-between px-4 py-3 text-[0.7rem] font-semibold tracking-[0.14em] uppercase"
         >
           On this page
           <ChevronDown
@@ -78,7 +78,7 @@ export function TableOfContents({
 
   return (
     <nav aria-label="On this page">
-      <p className="text-muted-foreground mb-4 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
+      <p className="text-muted-foreground font-label mb-4 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
         On this page
       </p>
       {list}

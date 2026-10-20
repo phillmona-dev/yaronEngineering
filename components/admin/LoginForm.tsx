@@ -42,7 +42,7 @@ export function LoginForm() {
       {justReset && (
         <p
           role="status"
-          className="flex items-start gap-2 rounded-md border border-brand-500/30 bg-brand-500/10 px-3 py-2 text-sm text-brand-700"
+          className="border-brand-500/30 bg-brand-500/10 text-brand-700 flex items-start gap-2 rounded-md border px-3 py-2 text-sm"
         >
           <CheckCircle2 className="mt-0.5 size-4 shrink-0" aria-hidden />
           Your password has been updated. Sign in with the new one.

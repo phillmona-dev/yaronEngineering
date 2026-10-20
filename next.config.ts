@@ -3,9 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // The dev overlay bubble sits bottom-left, exactly where the WhatsApp button lives.
+  devIndicators: false,
   images: {
-    formats: ["image/webp"],            // drop AVIF – encoding is CPU-heavy on first request
-    qualities: [70, 75],               // slightly lower quality = significantly smaller files
+    formats: ["image/webp"], // drop AVIF – encoding is CPU-heavy on first request
+    qualities: [70, 75], // slightly lower quality = significantly smaller files
     minimumCacheTTL: 60 * 60 * 24 * 30, // cache optimised images for 30 days
     deviceSizes: [360, 640, 768, 1024, 1280, 1440, 1920],
     // Uploaded media is served by the Spring Boot API (local dev + configured public host).

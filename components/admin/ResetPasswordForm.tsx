@@ -19,7 +19,7 @@ export function ResetPasswordForm() {
   if (!token) {
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex items-start gap-3 rounded-md border border-gold-500/40 bg-gold-500/15 px-3 py-3 text-sm text-gold-700">
+        <div className="border-gold-500/40 bg-gold-500/15 text-gold-700 flex items-start gap-3 rounded-md border px-3 py-3 text-sm">
           <AlertTriangle className="mt-0.5 size-4 shrink-0" aria-hidden />
           <p>This reset link is incomplete. Open the link from your email, or request a new one.</p>
         </div>

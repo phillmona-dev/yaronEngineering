@@ -34,12 +34,12 @@ export function ForgotPasswordForm() {
   if (sent) {
     return (
       <div className="flex flex-col gap-4" role="status">
-        <div className="flex items-start gap-3 rounded-md border border-brand-500/30 bg-brand-500/10 px-3 py-3 text-sm text-brand-700">
+        <div className="border-brand-500/30 bg-brand-500/10 text-brand-700 flex items-start gap-3 rounded-md border px-3 py-3 text-sm">
           <MailCheck className="mt-0.5 size-4 shrink-0" aria-hidden />
           <div>
             <p className="font-medium">Check your inbox</p>
             <p className="mt-0.5">{sent}</p>
-            <p className="mt-1 text-xs text-brand-700/80">
+            <p className="text-brand-700/80 mt-1 text-xs">
               The link is valid for 30 minutes. Only the most recent link works.
             </p>
           </div>

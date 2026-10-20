@@ -2,3 +2,5 @@
 node_modules
 public
 package-lock.json
+# prettier-plugin-tailwindcss strips the leading spaces inside this file's class template strings
+components/ai/AiChat.tsx

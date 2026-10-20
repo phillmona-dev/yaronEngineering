@@ -20,7 +20,7 @@ export function CategoryNav({
             href="/blog"
             aria-current={!active ? "page" : undefined}
             className={cn(
-              "inline-flex h-9 items-center rounded-sm border px-3.5 text-sm whitespace-nowrap transition-colors",
+              "text-body inline-flex h-9 items-center rounded-sm border px-3.5 whitespace-nowrap transition-colors",
               !active
                 ? "border-foreground bg-foreground text-background"
                 : "border-border text-muted-foreground hover:border-border-strong hover:text-foreground",
@@ -35,7 +35,7 @@ export function CategoryNav({
               href={`/blog/category/${c.slug}`}
               aria-current={active === c.slug ? "page" : undefined}
               className={cn(
-                "inline-flex h-9 items-center gap-2 rounded-sm border px-3.5 text-sm whitespace-nowrap transition-colors",
+                "text-body inline-flex h-9 items-center gap-2 rounded-sm border px-3.5 whitespace-nowrap transition-colors",
                 active === c.slug
                   ? "border-foreground bg-foreground text-background"
                   : "border-border text-muted-foreground hover:border-border-strong hover:text-foreground",
@@ -43,7 +43,9 @@ export function CategoryNav({
             >
               {c.name}
               {typeof c.articleCount === "number" && c.articleCount > 0 && (
-                <span className="font-mono text-[0.62rem] opacity-70">{c.articleCount}</span>
+                <span className="font-label text-[0.7rem] font-semibold opacity-70">
+                  {c.articleCount}
+                </span>
               )}
             </Link>
           </li>

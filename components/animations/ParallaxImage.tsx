@@ -13,6 +13,8 @@ type Props = Omit<ImageProps, "fill"> & {
   absolute?: boolean;
   overlay?: boolean;
   zoomOnHover?: boolean;
+  /** Blue duotone treatment for photos inside dark sections (see globals.css). */
+  duotone?: boolean;
 };
 
 /** Image with subtle scroll parallax and optional clip reveal. Always wrapped in an aspect/size container. */
@@ -23,6 +25,7 @@ export function ParallaxImage({
   className,
   overlay,
   zoomOnHover,
+  duotone,
   alt,
   priority,
   ...img
@@ -52,11 +55,18 @@ export function ParallaxImage({
           className={cn(
             "ease-out-expo object-cover transition-transform duration-700",
             zoomOnHover && "group-hover/media:scale-[1.03]",
+            duotone && "duotone-media",
             className,
           )}
           {...img}
         />
       </m.div>
+      {duotone && (
+        <>
+          <div aria-hidden className="duotone-shadows pointer-events-none absolute inset-0" />
+          <div aria-hidden className="duotone-lights pointer-events-none absolute inset-0" />
+        </>
+      )}
       {overlay && <div aria-hidden className="image-overlay absolute inset-0" />}
     </div>
   );

@@ -19,9 +19,9 @@ const SUBJECTS = [
 ];
 
 const field =
-  "w-full rounded-sm border border-border-strong bg-transparent px-4 py-3 text-[0.9375rem] text-foreground placeholder:text-muted-foreground/70 transition-colors duration-300 focus:border-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-hover/40 aria-[invalid=true]:border-red-500";
+  "w-full rounded-sm border border-border-strong bg-transparent px-4 py-3 text-body text-foreground placeholder:text-muted-foreground/70 transition-colors duration-300 focus:border-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-hover/40 aria-[invalid=true]:border-red-500";
 const label =
-  "mb-2 block font-mono text-[0.68rem] uppercase tracking-[0.14em] text-muted-foreground";
+  "mb-2 block font-label font-semibold text-[0.7rem] uppercase tracking-[0.14em] text-muted-foreground";
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -77,7 +77,7 @@ export function ContactForm() {
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="text-brand-text text-sm font-medium underline-offset-4 hover:underline"
+          className="text-brand-text text-body font-medium underline-offset-4 hover:underline"
         >
           Send another message
         </button>
@@ -124,7 +124,7 @@ export function ContactForm() {
             placeholder="Full name"
           />
           {errors.name && (
-            <p id="name-err" className="mt-2 text-sm text-red-500">
+            <p id="name-err" className="text-body mt-2 text-red-500">
               {errors.name}
             </p>
           )}
@@ -145,7 +145,7 @@ export function ContactForm() {
             placeholder="name@organization.com"
           />
           {errors.email && (
-            <p id="email-err" className="mt-2 text-sm text-red-500">
+            <p id="email-err" className="text-body mt-2 text-red-500">
               {errors.email}
             </p>
           )}
@@ -192,7 +192,7 @@ export function ContactForm() {
             ))}
           </select>
           {errors.subject && (
-            <p id="subject-err" className="mt-2 text-sm text-red-500">
+            <p id="subject-err" className="text-body mt-2 text-red-500">
               {errors.subject}
             </p>
           )}
@@ -214,7 +214,7 @@ export function ContactForm() {
           placeholder="What are you building, protecting or transforming?"
         />
         {errors.message && (
-          <p id="message-err" className="mt-2 text-sm text-red-500">
+          <p id="message-err" className="text-body mt-2 text-red-500">
             {errors.message}
           </p>
         )}
@@ -223,7 +223,7 @@ export function ContactForm() {
       {status === "error" && (
         <p
           role="alert"
-          className="rounded-sm border border-red-500/40 bg-red-500/5 px-4 py-3 text-sm text-red-500"
+          className="text-body rounded-sm border border-red-500/40 bg-red-500/5 px-4 py-3 text-red-500"
         >
           {message}
         </p>
@@ -244,7 +244,7 @@ export function ContactForm() {
             "Send message"
           )}
         </Button>
-        <p className="text-muted-foreground text-sm">We respond within one business day.</p>
+        <p className="text-muted-foreground text-body">We respond within one business day.</p>
       </div>
     </form>
   );

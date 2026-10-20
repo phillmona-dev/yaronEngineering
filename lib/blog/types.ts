@@ -208,3 +208,11 @@ export type ContactSummary = {
   replied: number;
   archived: number;
 };
+
+/** One customised website section as stored by the backend (`/api/v1/site-content`). */
+export type SiteContentDoc = {
+  section: string;
+  data: Record<string, unknown>;
+  updatedAt: string;
+  updatedBy?: string | null;
+};

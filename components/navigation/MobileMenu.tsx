@@ -7,20 +7,22 @@ import { Button } from "@/components/ui/Button";
 import { AnimatePresence, m } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
-import { primaryNav } from "@/lib/data/navigation";
-import { company } from "@/lib/data/company";
+import { useSiteContent } from "@/lib/content/context";
 import { EASE_OUT_EXPO } from "@/lib/utils/motion";
 
 type Props = { open: boolean; onClose: () => void };
 
-const links = [
-  ...primaryNav,
-  { label: "Partners", href: "/partners" },
-  { label: "Careers", href: "/careers" },
-];
-
 export function MobileMenu({ open, onClose }: Props) {
+  const { navigation, company } = useSiteContent();
   const pathname = usePathname();
+  // Primary nav plus the two secondary pages, without duplicating anything already listed.
+  const links = [
+    ...navigation.primary,
+    ...[
+      { label: "Partners", href: "/partners" },
+      { label: "Careers", href: "/careers" },
+    ].filter((extra) => !navigation.primary.some((n) => n.href === extra.href)),
+  ];
 
   useEffect(() => {
     if (!open) return;
@@ -78,12 +80,12 @@ export function MobileMenu({ open, onClose }: Props) {
                       onClick={onClose}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex items-baseline justify-between py-4 text-[2rem] font-semibold tracking-[-0.025em] sm:text-[2.5rem]",
+                        "font-display flex items-baseline justify-between py-4 text-[2rem] font-bold tracking-[-0.02em] sm:text-[2.5rem]",
                         active ? "text-brand-300" : "text-white",
                       )}
                     >
                       <span className="flex items-baseline gap-4">
-                        <span className="text-ink-400 font-mono text-[0.7rem] tracking-[0.14em]">
+                        <span className="text-ink-400 font-label text-[0.7rem] font-semibold tracking-[0.14em]">
                           0{i + 1}
                         </span>
                         {item.label}
@@ -100,16 +102,10 @@ export function MobileMenu({ open, onClose }: Props) {
               transition={{ delay: 0.5, duration: 0.6, ease: EASE_OUT_EXPO }}
               className="mt-8 flex flex-col gap-4"
             >
-              <Button
-                href="/contact"
-                size="lg"
-                arrow={false}
-                onClick={onClose}
-                className="w-full"
-              >
+              <Button href="/contact" size="lg" arrow={false} onClick={onClose} className="w-full">
                 Contact Us
               </Button>
-              <div className="text-ink-400 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.72rem] tracking-[0.14em] uppercase">
+              <div className="text-ink-400 font-label flex flex-wrap gap-x-6 gap-y-2 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                 <span>
                   {company.headquarters.city}, {company.headquarters.country}
                 </span>

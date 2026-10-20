@@ -19,15 +19,15 @@ export function EmptyState({
         className,
       )}
     >
-      <p className="text-muted-foreground font-mono text-[0.68rem] tracking-[0.16em] uppercase">
+      <p className="text-muted-foreground font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
         Nothing here yet
       </p>
       <p className="text-h4 mt-3 font-semibold">{title}</p>
-      <p className="text-muted-foreground mx-auto mt-2 max-w-[48ch] text-sm">{text}</p>
+      <p className="text-muted-foreground text-body mx-auto mt-2 max-w-[48ch]">{text}</p>
       {action && (
         <Link
           href={action.href}
-          className="border-border-strong hover:border-foreground mt-6 inline-flex h-10 items-center rounded-sm border px-4 text-sm font-medium"
+          className="border-border-strong hover:border-foreground text-body mt-6 inline-flex h-10 items-center rounded-sm border px-4 font-medium"
         >
           {action.label}
         </Link>
@@ -42,11 +42,11 @@ export function UnavailableState({ className }: { className?: string }) {
       className={cn("border-border bg-surface rounded-md border px-6 py-14 text-center", className)}
       role="status"
     >
-      <p className="text-muted-foreground font-mono text-[0.68rem] tracking-[0.16em] uppercase">
+      <p className="text-muted-foreground font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
         Temporarily unavailable
       </p>
       <p className="text-h4 mt-3 font-semibold">The Knowledge Hub is taking a moment.</p>
-      <p className="text-muted-foreground mx-auto mt-2 max-w-[48ch] text-sm">
+      <p className="text-muted-foreground text-body mx-auto mt-2 max-w-[48ch]">
         Our publishing service is not reachable right now. Please refresh in a minute.
       </p>
     </div>

@@ -9,7 +9,7 @@ import type { ArticleStatus } from "@/lib/blog/types";
 /* ---------- Primitives for the admin (dense, neutral, no imagery) ---------- */
 
 export const inputCls =
-  "w-full rounded-lg border border-white/80 bg-white/70 px-3 py-2 text-sm text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(14,34,80,0.04)] backdrop-blur placeholder:text-ink-400 transition-[background,border-color,box-shadow] focus:border-brand-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-500/15 disabled:bg-ink-50/60 aria-[invalid=true]:border-red-500";
+  "w-full rounded-lg border border-white/80 bg-white/70 px-3 py-2 text-sm text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(21,64,166,0.04)] backdrop-blur placeholder:text-ink-400 transition-[background,border-color,box-shadow] focus:border-brand-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand-500/15 disabled:bg-ink-50/60 aria-[invalid=true]:border-red-500";
 export const labelCls = "mb-1.5 block text-xs font-medium text-ink-500";
 
 export function Field({
@@ -61,7 +61,7 @@ export function AdminButton({
     primary:
       "border-transparent bg-gradient-to-br from-[#3f82dc] to-[#6ca6ee] text-white shadow-[0_10px_24px_-10px_rgba(63,130,220,0.8)] hover:from-[#3270c8] hover:to-[#3f82dc] hover:shadow-[0_14px_28px_-10px_rgba(63,130,220,0.9)]",
     secondary:
-      "border-white/80 bg-white/70 text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(14,34,80,0.05)] backdrop-blur hover:bg-white",
+      "border-white/80 bg-white/70 text-ink-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(21,64,166,0.05)] backdrop-blur hover:bg-white",
     ghost: "border-transparent bg-transparent text-ink-500 hover:bg-white/70 hover:text-ink-900",
     danger: "border-red-200/80 bg-white/70 text-red-600 backdrop-blur hover:bg-red-50",
   }[variant];

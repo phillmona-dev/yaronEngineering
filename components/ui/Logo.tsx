@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils/cn";
+import { useSiteContent } from "@/lib/content/context";
 
 /**
  * Brand lock-up: the official shield mark (PNG supplied by the company) + a typographic wordmark.
@@ -22,16 +25,17 @@ export function LogoMark({ className, size = 36 }: { className?: string; size?: 
 }
 
 export function Logo({ className, compact = false }: { className?: string; compact?: boolean }) {
+  const { company } = useSiteContent();
   return (
     <Link href="/" className={cn("group inline-flex items-center gap-3 rounded-sm", className)}>
       <LogoMark size={compact ? 32 : 38} />
       <span className="flex flex-col leading-none">
-        <span className="text-[1.05rem] font-semibold tracking-[-0.02em] whitespace-nowrap">
-          Yaron Engineering
+        <span className="font-display text-[1.05rem] font-bold tracking-[-0.01em] whitespace-nowrap">
+          {company.shortName}
         </span>
         {!compact && (
-          <span className="text-muted-foreground mt-1 hidden font-mono text-[0.6rem] tracking-[0.18em] whitespace-nowrap uppercase sm:block">
-            ICT Infrastructure · Cybersecurity
+          <span className="text-muted-foreground font-label mt-1 hidden text-[0.7rem] font-semibold tracking-[0.14em] whitespace-nowrap uppercase sm:block">
+            {company.tagline.replace(/ (&|and) /g, " · ").replace(/ Systems Integrator$/i, "")}
           </span>
         )}
       </span>

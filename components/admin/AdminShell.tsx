@@ -20,6 +20,7 @@ import {
   Inbox as InboxIcon,
   Bell,
   BellOff,
+  Globe,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { admin } from "@/lib/admin/client";
@@ -30,6 +31,7 @@ import { InboxProvider, useInbox } from "./InboxContext";
 
 const nav = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { href: "/admin/content", label: "Website content", icon: Globe, adminOnly: true },
   { href: "/admin/articles", label: "Articles", icon: FileText },
   { href: "/admin/messages", label: "Messages", icon: InboxIcon, badge: true },
   { href: "/admin/categories", label: "Categories", icon: FolderTree },

@@ -1,5 +1,5 @@
+import type { Metadata } from "next";
 import { HomeHero } from "@/components/hero/HomeHero";
-import { Credibility } from "@/components/sections/Credibility";
 import { AboutIntro } from "@/components/sections/AboutIntro";
 import { ServicesShowcase } from "@/components/sections/ServicesShowcase";
 import { SolutionsProcess } from "@/components/sections/SolutionsProcess";
@@ -11,30 +11,32 @@ import { PartnersSection } from "@/components/sections/PartnersSection";
 import { WhyYaron } from "@/components/sections/WhyYaron";
 import { Commitment } from "@/components/sections/Commitment";
 import { FinalCTA } from "@/components/sections/FinalCTA";
-import { AdminLinkButton } from "@/components/ui/AdminLinkButton";
+import { getSiteContent } from "@/lib/content/server";
+import { pageMetadata } from "@/lib/utils/seo";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { home } = await getSiteContent();
+  return {
+    ...pageMetadata({ description: home.meta.metaDescription, path: "/" }),
+    title: { absolute: home.meta.metaTitle },
+  };
+}
 
 export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <Credibility />
       <AboutIntro />
       <ServicesShowcase />
       <SolutionsProcess showPillars={false} />
       <IndustriesGrid />
       <ProjectsShowcase limit={4} />
-      <CustomersSection
-        eyebrow="National & Enterprise Partners"
-        title="Institutions that trust Yaron Engineering."
-        lead="Mission-critical data center, cybersecurity, and cloud programmes delivered across Ethiopia."
-        limit={6}
-      />
+      <CustomersSection limit={6} />
       <ExpertiseSection />
       <PartnersSection />
       <WhyYaron />
       <Commitment />
       <FinalCTA />
-      <AdminLinkButton />
     </>
   );
 }

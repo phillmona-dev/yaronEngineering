@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { Partner } from "@/lib/data/partners";
+import type { PartnerContent as Partner } from "@/lib/content/types";
 
 /**
  * Partner slot: renders the official logo when supplied, otherwise a restrained typographic
@@ -35,7 +35,7 @@ export function PartnerSlot({ partner }: { partner: Partner }) {
           <span className="text-ink-400 group-hover:text-brand-text text-center text-[1.05rem] font-semibold tracking-[-0.02em] transition-colors duration-300 sm:text-[1.2rem]">
             {partner.name}
           </span>
-          <span className="text-ink-300 font-mono text-[0.62rem] tracking-[0.12em] uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <span className="text-ink-300 font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             {partner.category}
           </span>
         </>

@@ -31,7 +31,7 @@ export function BlogMasthead({
       <div className="container-x relative">
         <Reveal>
           <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="text-ink-400 flex flex-wrap items-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
+            <ol className="text-ink-400 font-label flex flex-wrap items-center gap-2 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
               <li>
                 <Link href="/" className="hover:text-white">
                   Home

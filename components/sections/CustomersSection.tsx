@@ -5,12 +5,12 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { StaggerGroup, StaggerItem } from "@/components/animations/Stagger";
 import { TiltCard } from "@/components/animations/TiltCard";
-import { customers } from "@/lib/data/customers";
+import { getSiteContent } from "@/lib/content/server";
 
-export function CustomersSection({
-  eyebrow = "National & Enterprise Partners",
-  title = "Trusted by leading Ethiopian institutions.",
-  lead = "Selected mission-critical programmes delivered across banking, public administration, national logistics and higher education.",
+export async function CustomersSection({
+  eyebrow,
+  title,
+  lead,
   className,
   limit,
 }: {
@@ -21,6 +21,12 @@ export function CustomersSection({
   /** Show only the first N clients with an official logo and website (used on the home page). */
   limit?: number;
 }) {
+  const { customers: customersContent, home } = await getSiteContent();
+  const customers = customersContent.items;
+  const copy = home.sections.customers;
+  eyebrow ??= copy.eyebrow;
+  title ??= copy.title;
+  lead ??= copy.lead;
   const list = limit ? customers.filter((c) => c.logo && c.url).slice(0, limit) : customers;
   return (
     <Section theme="light" aria-labelledby="customers-section-title" className={className}>
@@ -69,29 +75,29 @@ export function CustomersSection({
                     )}
                   </div>
 
-                  <h3 className="text-foreground group-hover:text-brand-text text-center text-lg font-bold transition-colors">
+                  <h3 className="text-foreground group-hover:text-brand-text text-h4 text-center font-bold transition-colors">
                     {c.name}
                   </h3>
 
                   {c.amharicName && (
-                    <p className="text-muted-foreground text-center text-xs font-normal">
+                    <p className="text-muted-foreground text-body text-center font-normal">
                       {c.amharicName}
                     </p>
                   )}
 
                   <div className="mt-3 flex justify-center">
-                    <span className="bg-brand-500/10 text-brand-text group-hover:bg-gold-500/20 rounded-full px-2.5 py-0.5 font-mono text-[0.68rem] tracking-wider uppercase transition-colors duration-300">
+                    <span className="bg-brand-500/10 text-brand-text group-hover:bg-gold-500/20 font-label rounded-full px-2.5 py-0.5 text-[0.7rem] font-semibold tracking-wider uppercase transition-colors duration-300">
                       {c.category}
                     </span>
                   </div>
 
-                  <p className="text-muted-foreground mt-4 text-center text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-body mt-4 text-center">
                     {c.description}
                   </p>
                 </div>
 
                 <div className="border-border/60 mt-6 border-t pt-4 text-center">
-                  <span className="text-brand-text group-hover:text-brand-700 inline-flex items-center gap-1 text-xs font-semibold tracking-wide transition-colors">
+                  <span className="text-brand-text group-hover:text-brand-700 text-body inline-flex items-center gap-1 font-semibold tracking-wide transition-colors">
                     {external ? "Visit official website" : "View our projects"}
                     {external ? (
                       <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />

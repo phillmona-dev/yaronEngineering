@@ -63,7 +63,7 @@ export function ShareRail({
     >
       <span
         className={cn(
-          "text-muted-foreground font-mono text-[0.66rem] tracking-[0.14em] uppercase",
+          "text-muted-foreground font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase",
           orientation === "vertical" ? "mb-1" : "mr-1",
         )}
       >

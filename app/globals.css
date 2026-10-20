@@ -4,26 +4,27 @@
 
 @theme {
   /* ---------- Palette ---------- */
-  /* Navy neutrals — derived from the logo blue, lifted to real blue (not blue-black) */
-  --color-ink-950: #0d2d6e;
-  --color-ink-900: #123580;
-  --color-ink-850: #173f92;
-  --color-ink-800: #1e4aa0;
-  --color-ink-700: #2855ae;
-  --color-ink-600: #3362b8;
-  --color-ink-500: #4a72c0;
-  --color-ink-400: #6488cc;
-  --color-ink-300: #9fb8e0;
-  --color-ink-200: #c9daef;
-  --color-ink-100: #e4ecf8;
-  --color-ink-50: #f2f6fc;
+  /* Brand blue scale — the logo's royal blue. Dark sections sit on ink-950, which is a
+     saturated royal blue (not navy / blue-black) so the brand reads as blue everywhere. */
+  --color-ink-950: #1540a6;
+  --color-ink-900: #1b49b4;
+  --color-ink-850: #2152bf;
+  --color-ink-800: #2a5ec9;
+  --color-ink-700: #3369d1;
+  --color-ink-600: #3f76d6;
+  --color-ink-500: #6a97e0;
+  --color-ink-400: #9dbdee;
+  --color-ink-300: #bcd2f3;
+  --color-ink-200: #d6e4f9;
+  --color-ink-100: #e9f1fc;
+  --color-ink-50: #f3f7fd;
 
   /* Primary — logo light blue */
   --color-brand-300: #a6ccf7;
   --color-brand-400: #6ca6ee;
   --color-brand-500: #3f82dc;
-  --color-brand-600: #3270c8;
-  --color-brand-700: #2658a6;
+  --color-brand-600: #2f6fcf;
+  --color-brand-700: #2560c4;
 
   /* Secondary — logo gold */
   --color-gold-300: #ffe98a;
@@ -32,35 +33,39 @@
   --color-gold-600: #d9a90c;
   --color-gold-700: #b08808;
 
-  /* ---------- Type ---------- */
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  /* ---------- Type ----------
+     Two families, two jobs. Sora (geometric, confident) carries every headline, number,
+     navigation item and label; Plus Jakarta Sans carries body copy and UI text. */
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-label: var(--font-sora), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   --text-display: clamp(2.75rem, 1.4rem + 5.2vw, 6rem);
-  --text-display--line-height: 0.98;
-  --text-display--letter-spacing: -0.035em;
-  --text-h1: clamp(2.5rem, 1.5rem + 3.8vw, 4.5rem);
-  --text-h1--line-height: 1.02;
-  --text-h1--letter-spacing: -0.03em;
-  --text-h2: clamp(2rem, 1.2rem + 2.6vw, 3.5rem);
-  --text-h2--line-height: 1.05;
-  --text-h2--letter-spacing: -0.025em;
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: clamp(2.375rem, 1.5rem + 3vw, 4rem);
+  --text-h1--line-height: 1.04;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h2: clamp(1.875rem, 1.2rem + 2vw, 3rem);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.02em;
   --text-h3: clamp(1.5rem, 1.2rem + 0.9vw, 2rem);
-  --text-h3--line-height: 1.15;
-  --text-h3--letter-spacing: -0.02em;
+  --text-h3--line-height: 1.18;
+  --text-h3--letter-spacing: -0.015em;
   --text-h4: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
   --text-h4--line-height: 1.3;
   --text-h4--letter-spacing: -0.01em;
   --text-lead: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
   --text-lead--line-height: 1.5;
-  --text-body: clamp(1rem, 0.96rem + 0.15vw, 1.0625rem);
-  --text-body--line-height: 1.65;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
   --text-stat: clamp(4rem, 2.4rem + 5.5vw, 7.5rem);
-  --text-stat--line-height: 0.9;
-  --text-stat--letter-spacing: -0.04em;
-  --text-eyebrow: 0.72rem;
+  --text-stat--line-height: 1;
+  --text-stat--letter-spacing: -0.03em;
+  --text-eyebrow: 0.7rem;
   --text-eyebrow--line-height: 1;
-  --text-eyebrow--letter-spacing: 0.14em;
+  --text-eyebrow--letter-spacing: 0.16em;
 
   /* ---------- Shape & motion ---------- */
   --radius-sm: 6px;
@@ -70,7 +75,7 @@
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
 
-  --shadow-media: 0 1px 0 rgba(13, 45, 110, 0.04), 0 24px 48px -24px rgba(13, 45, 110, 0.28);
+  --shadow-media: 0 1px 0 rgba(21, 64, 166, 0.05), 0 24px 48px -24px rgba(21, 64, 166, 0.3);
 
   --animate-drift: drift 28s linear infinite;
   --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
@@ -140,54 +145,55 @@
 /* ---------- Theme tokens ---------- */
 :root,
 [data-theme="light"] {
-  --background: #ffffff;
-  --foreground: #143070;
-  --muted: #f2f6fc;
-  --muted-foreground: #4a66a8;
-  --border: #e4ebf8;
-  --border-strong: #c9d6ee;
-  --surface: #f2f6fc;
+  /* Light sections are a soft brand-blue tint, never flat white; cards sit white on top. */
+  --background: #eaf1fc;
+  --foreground: #143a8c;
+  --muted: #dde7f7;
+  --muted-foreground: #41619f;
+  --border: #cfddf3;
+  --border-strong: #b4c9ec;
+  --surface: #ffffff;
   --surface-elevated: #ffffff;
   --brand: #3f82dc;
-  --brand-hover: #3270c8;
+  --brand-hover: #2f6fcf;
   --brand-foreground: #ffffff;
-  --brand-text: #3270c8;
+  --brand-text: #2560c4;
   --accent: #f5c518;
   --accent-hover: #d9a90c;
-  --accent-foreground: #143070;
-  --accent-text: #b08808;
+  --accent-foreground: #143a8c;
+  --accent-text: #a07a06;
   color-scheme: light;
 }
 
 [data-theme="dark"] {
-  --background: #0d2d6e;
-  --foreground: #f2f6fc;
-  --muted: #123580;
-  --muted-foreground: #9fb8e0;
-  --border: #1e4aa0;
-  --border-strong: #2855ae;
-  --surface: #123580;
-  --surface-elevated: #1e4aa0;
+  --background: #1540a6;
+  --foreground: #f3f7fd;
+  --muted: #1b49b4;
+  --muted-foreground: #bcd2f3;
+  --border: #2f63cc;
+  --border-strong: #4a7bd8;
+  --surface: #1b49b4;
+  --surface-elevated: #2152bf;
   --brand: #3f82dc;
   --brand-hover: #6ca6ee;
   --brand-foreground: #ffffff;
   --brand-text: #a6ccf7;
   --accent: #f5c518;
   --accent-hover: #fbd84a;
-  --accent-foreground: #0d2d6e;
+  --accent-foreground: #1540a6;
   --accent-text: #fbd84a;
   color-scheme: dark;
 }
 
 [data-theme="dark"][data-tone="soft"] {
-  --background: #123580;
-  --surface: #173f92;
+  --background: #1b49b4;
+  --surface: #2152bf;
 }
 
 [data-theme="light"][data-tone="soft"] {
-  --background: #f2f6fc;
+  --background: #e0eafa;
   --surface: #ffffff;
-  --border: #d9e3f4;
+  --border: #c6d6f0;
 }
 
 /* ---------- Base ---------- */
@@ -207,7 +213,6 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-feature-settings: "ss01", "cv11";
     overflow-x: clip;
   }
   ::selection {
@@ -222,6 +227,8 @@
   h2,
   h3,
   h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
     text-wrap: balance;
   }
   p {
@@ -255,10 +262,20 @@
 }
 /* A faint lip so a light sheet reads as sitting on top of the dark section */
 [data-theme="dark"] + [data-theme="light"] {
-  box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.6);
+  box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.75);
+}
+/* Light sections carry a soft light-blue wash in one corner so they never read as flat white */
+@layer components {
+  section[data-theme="light"],
+  footer[data-theme="light"],
+  div[data-theme="light"].section-y {
+    background-image:
+      radial-gradient(70% 60% at 100% 0%, rgba(166, 204, 247, 0.4), transparent 65%),
+      radial-gradient(50% 50% at 0% 100%, rgba(255, 255, 255, 0.8), transparent 60%);
+  }
 }
 [data-theme="light"] + [data-theme="dark"] {
-  box-shadow: 0 -24px 48px -32px rgba(14, 34, 80, 0.45);
+  box-shadow: 0 -24px 48px -32px rgba(21, 64, 166, 0.45);
 }
 
 /* ---------- Utilities ---------- */
@@ -267,11 +284,16 @@
 }
 
 @utility section-y {
-  @apply py-24 md:py-32 xl:py-40;
+  @apply py-20 md:py-24 xl:py-28;
 }
 
 @utility eyebrow {
-  @apply text-eyebrow text-muted-foreground font-mono tracking-[0.14em] uppercase;
+  @apply text-eyebrow text-muted-foreground font-label font-semibold tracking-[0.16em] uppercase;
+}
+
+/* Small technical labels (index numbers, meta rows, breadcrumbs). One face, one weight. */
+@utility label {
+  @apply font-label font-semibold tracking-[0.14em] uppercase;
 }
 
 @utility grid-lines {
@@ -301,10 +323,62 @@
 @utility image-overlay {
   background: linear-gradient(
     to top,
-    #0d2d6e 0%,
-    rgba(13, 45, 110, 0.72) 38%,
-    rgba(13, 45, 110, 0.18) 100%
+    #1540a6 0%,
+    rgba(21, 64, 166, 0.7) 38%,
+    rgba(21, 64, 166, 0.15) 100%
   );
+}
+
+/* ---------- Blue duotone imagery ----------
+   Photos inside dark sections are desaturated and re-coloured so their shadows lift to
+   the brand's royal blue and their highlights fall to the logo's light blue. This is what
+   stops dark stock photography dragging the whole page towards blue-black. Apply
+   `duotone-media` to the image/video element and place `duotone-shadows` + `duotone-lights`
+   layers above it. */
+@utility duotone-media {
+  filter: grayscale(1) contrast(1.05);
+}
+@utility duotone-shadows {
+  background: #1540a6;
+  mix-blend-mode: lighten;
+}
+@utility duotone-lights {
+  background: #9cc6f5;
+  mix-blend-mode: multiply;
+}
+
+/* ---------- Brand hero backdrop ----------
+   The hero is pure brand colour: a diagonal royal-to-light-blue gradient with a light-blue
+   bloom top-right and a faint gold bloom bottom-left. No photography. */
+@utility hero-mesh {
+  background:
+    radial-gradient(55% 55% at 88% 12%, rgba(108, 166, 238, 0.65), transparent 70%),
+    radial-gradient(40% 45% at 8% 95%, rgba(245, 197, 24, 0.2), transparent 70%),
+    radial-gradient(60% 50% at 50% 115%, rgba(13, 42, 120, 0.85), transparent 70%),
+    linear-gradient(135deg, #1540a6 0%, #1d4fba 48%, #2a62cc 100%);
+}
+
+/* Slowly drifting blurred blobs that give the hero depth and motion */
+@keyframes blob-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(48px, -36px, 0) scale(1.08);
+  }
+}
+@utility hero-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  pointer-events: none;
+  animation: blob-float 16s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-blob {
+    animation: none;
+  }
 }
 
 @utility text-balance {
@@ -332,6 +406,7 @@ html[data-cursor="custom"] .ai-fab,
 html[data-cursor="custom"] .ai-fab * {
   cursor: auto !important;
 }
+html[data-cursor="custom"] .wa-fab,
 html[data-cursor="custom"] .ai-fab,
 html[data-cursor="custom"] .ai-header-close,
 html[data-cursor="custom"] .ai-send-btn,
@@ -342,6 +417,27 @@ html[data-cursor="custom"] .ai-input,
 html[data-cursor="custom"] .ai-msg-bubble,
 html[data-cursor="custom"] .ai-msg-bubble p {
   cursor: text !important;
+}
+
+/* WhatsApp floating button: the same soft pulse ring as the AI assistant */
+@keyframes wa-ring-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.wa-fab-ring {
+  animation: wa-ring-pulse 2.4s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-fab-ring {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 /* Partner marquee: translate by exactly one track width (two identical tracks). */
@@ -360,15 +456,10 @@ html[data-cursor="custom"] .ai-msg-bubble p {
 
 /* ---------- Editorial article prose ---------- */
 .prose-article {
-  font-size: 1.0625rem;
-  line-height: 1.8;
+  font-size: 1rem;
+  line-height: 1.75;
   color: var(--foreground);
   max-width: 740px;
-}
-@media (min-width: 768px) {
-  .prose-article {
-    font-size: 1.1875rem;
-  }
 }
 .prose-article > * + * {
   margin-top: 1.4em;
@@ -489,14 +580,14 @@ html[data-cursor="custom"] .ai-msg-bubble p {
   border-radius: 4px;
 }
 .prose-article pre {
-  background: #143070;
+  background: #143a8c;
   color: #e4ebf8;
   border-radius: var(--radius-md);
   padding: 1.25rem 1.5rem;
   overflow-x: auto;
   font-size: 0.85rem;
   line-height: 1.65;
-  border: 1px solid #2a4f9e;
+  border: 1px solid #2a5ec9;
 }
 .prose-article pre code {
   background: transparent;
@@ -632,8 +723,8 @@ html[data-cursor="custom"] .ai-msg-bubble p {
     border: 1px solid rgba(255, 255, 255, 0.78);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.95),
-      0 0 0 1px rgba(14, 34, 80, 0.04),
-      0 24px 60px -28px rgba(14, 34, 80, 0.28);
+      0 0 0 1px rgba(21, 64, 166, 0.04),
+      0 24px 60px -28px rgba(21, 64, 166, 0.28);
     -webkit-backdrop-filter: blur(20px) saturate(170%);
     backdrop-filter: blur(20px) saturate(170%);
   }
@@ -641,11 +732,11 @@ html[data-cursor="custom"] .ai-msg-bubble p {
     background: rgba(255, 255, 255, 0.72);
   }
   .glass-dark {
-    background: linear-gradient(135deg, rgba(13, 45, 110, 0.94), rgba(23, 63, 146, 0.88));
+    background: linear-gradient(135deg, rgba(21, 64, 166, 0.94), rgba(33, 82, 191, 0.88));
     border-color: rgba(255, 255, 255, 0.12);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      0 30px 70px -30px rgba(13, 45, 110, 0.7);
+      0 30px 70px -30px rgba(21, 64, 166, 0.7);
   }
   /* Square grid behind the admin pages (no colour wash) */
   .admin-grid {
@@ -654,8 +745,8 @@ html[data-cursor="custom"] .ai-msg-bubble p {
     z-index: 0;
     pointer-events: none;
     background-image:
-      linear-gradient(rgba(13, 45, 110, 0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(13, 45, 110, 0.055) 1px, transparent 1px);
+      linear-gradient(rgba(21, 64, 166, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(21, 64, 166, 0.055) 1px, transparent 1px);
     background-size: 36px 36px;
     mask-image: radial-gradient(ellipse at 40% 0%, #000 30%, rgba(0, 0, 0, 0.35) 100%);
     -webkit-mask-image: radial-gradient(ellipse at 40% 0%, #000 30%, rgba(0, 0, 0, 0.35) 100%);
@@ -668,7 +759,7 @@ html[data-cursor="custom"] .ai-msg-bubble p {
   .glass-sidebar {
     background: rgba(255, 255, 255, 0.72);
     border-right: 1px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 0 0 1px rgba(14, 34, 80, 0.04);
+    box-shadow: 0 0 0 1px rgba(21, 64, 166, 0.04);
     -webkit-backdrop-filter: blur(24px) saturate(170%);
     backdrop-filter: blur(24px) saturate(170%);
   }
@@ -699,9 +790,9 @@ html[data-cursor="custom"] .ai-msg-bubble p {
   .dash-shimmer {
     background: linear-gradient(
       100deg,
-      rgba(14, 34, 80, 0.05) 30%,
+      rgba(21, 64, 166, 0.05) 30%,
       rgba(255, 255, 255, 0.7) 50%,
-      rgba(14, 34, 80, 0.05) 70%
+      rgba(21, 64, 166, 0.05) 70%
     );
     background-size: 200% 100%;
     animation: dash-shimmer 1.6s linear infinite;
@@ -811,7 +902,7 @@ html[data-cursor="custom"] .ai-msg-bubble p {
   .client-card:hover .client-logo img,
   .client-card:focus-visible .client-logo img {
     transform: translateY(-3px) scale(1.08);
-    filter: drop-shadow(0 8px 14px rgba(14, 34, 80, 0.18));
+    filter: drop-shadow(0 8px 14px rgba(21, 64, 166, 0.18));
   }
 
   /* Small hero "Trusted by" chips. */

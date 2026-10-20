@@ -42,8 +42,16 @@ export async function POST(req: Request) {
     source: "website",
   };
 
-  if (!data.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || !data.subject || data.message.length < 20) {
-    return NextResponse.json({ ok: false, message: "Please complete all required fields." }, { status: 422 });
+  if (
+    !data.name ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) ||
+    !data.subject ||
+    data.message.length < 20
+  ) {
+    return NextResponse.json(
+      { ok: false, message: "Please complete all required fields." },
+      { status: 422 },
+    );
   }
 
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "";
@@ -51,15 +59,27 @@ export async function POST(req: Request) {
   try {
     const res = await fetch(`${API_URL}/api/v1/public/contact`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-Forwarded-For": ip, "User-Agent": req.headers.get("user-agent") ?? "" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-Forwarded-For": ip,
+        "User-Agent": req.headers.get("user-agent") ?? "",
+      },
       body: JSON.stringify(data),
       cache: "no-store",
     });
     if (res.status === 429) {
-      return NextResponse.json({ ok: false, message: "Too many messages from this connection. Please try again later." }, { status: 429 });
+      return NextResponse.json(
+        { ok: false, message: "Too many messages from this connection. Please try again later." },
+        { status: 429 },
+      );
     }
     stored = res.ok;
-    if (!res.ok) console.error("[contact] inbox rejected submission", res.status, await res.text().catch(() => ""));
+    if (!res.ok)
+      console.error(
+        "[contact] inbox rejected submission",
+        res.status,
+        await res.text().catch(() => ""),
+      );
   } catch (err) {
     console.error("[contact] inbox unreachable", err);
   }
@@ -82,13 +102,17 @@ export async function POST(req: Request) {
   if (!stored && !forwarded) {
     console.info("[contact] submission could not be delivered; logged only", data);
     return NextResponse.json(
-      { ok: false, message: "We could not deliver your message right now. Please email us directly." },
+      {
+        ok: false,
+        message: "We could not deliver your message right now. Please email us directly.",
+      },
       { status: 502 },
     );
   }
 
   return NextResponse.json({
     ok: true,
-    message: "Thank you — your message has been received. Our team will respond within one business day.",
+    message:
+      "Thank you — your message has been received. Our team will respond within one business day.",
   });
 }

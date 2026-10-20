@@ -18,6 +18,7 @@ import {
   RefreshCw,
   Send,
   Sparkles,
+  Globe,
 } from "lucide-react";
 import { admin } from "@/lib/admin/client";
 import type { ArticleStatus, ContactStatus, DashboardStats, User } from "@/lib/blog/types";
@@ -93,7 +94,7 @@ const accents: Record<Accent, { chip: string; glow: string; text: string; bar: s
     bar: "from-[#3f82dc] to-[#a6ccf7]",
   },
   emerald: {
-    chip: "from-[#d9a90c] to-[#fbd84a] text-[#143070]",
+    chip: "from-[#d9a90c] to-[#fbd84a] text-[#143a8c]",
     glow: "shadow-[0_12px_30px_-10px_rgba(245,197,24,0.6)]",
     text: "text-gold-700",
     bar: "from-gold-600 to-gold-400",
@@ -105,7 +106,7 @@ const accents: Record<Accent, { chip: string; glow: string; text: string; bar: s
     bar: "from-[#3f82dc] to-[#a6ccf7]",
   },
   violet: {
-    chip: "from-[#d9a90c] to-[#fbd84a] text-[#143070]",
+    chip: "from-[#d9a90c] to-[#fbd84a] text-[#143a8c]",
     glow: "shadow-[0_12px_30px_-10px_rgba(245,197,24,0.6)]",
     text: "text-gold-700",
     bar: "from-gold-600 to-gold-400",
@@ -117,7 +118,7 @@ const accents: Record<Accent, { chip: string; glow: string; text: string; bar: s
     bar: "from-[#3f82dc] to-[#a6ccf7]",
   },
   orange: {
-    chip: "from-[#d9a90c] to-[#fbd84a] text-[#143070]",
+    chip: "from-[#d9a90c] to-[#fbd84a] text-[#143a8c]",
     glow: "shadow-[0_12px_30px_-10px_rgba(245,197,24,0.6)]",
     text: "text-gold-700",
     bar: "from-gold-600 to-gold-400",
@@ -174,7 +175,7 @@ function Kpi({
     </>
   );
   const cls =
-    "glass group block p-5 transition-[transform,box-shadow] duration-500 ease-out-expo hover:-translate-y-1 hover:shadow-[0_30px_60px_-28px_rgba(14,34,80,0.4)]";
+    "glass group block p-5 transition-[transform,box-shadow] duration-500 ease-out-expo hover:-translate-y-1 hover:shadow-[0_30px_60px_-28px_rgba(21,64,166,0.4)]";
   return href ? (
     <m.div variants={item}>
       <Link href={href} className={cls}>
@@ -318,7 +319,7 @@ function ViewsChart({ data }: { data: { date: string; views: number }[] }) {
               x2={W - padR}
               y1={y(g)}
               y2={y(g)}
-              stroke="rgba(14,34,80,0.08)"
+              stroke="rgba(21,64,166,0.08)"
               strokeDasharray={g === 0 ? undefined : "3 5"}
             />
             <text
@@ -419,7 +420,14 @@ function Donut({
     <div className="flex items-center gap-6">
       <div className="relative size-36 shrink-0">
         <svg viewBox="0 0 140 140" className="size-36 -rotate-90">
-          <circle cx="70" cy="70" r={r} fill="none" stroke="rgba(14,34,80,0.07)" strokeWidth="14" />
+          <circle
+            cx="70"
+            cy="70"
+            r={r}
+            fill="none"
+            stroke="rgba(21,64,166,0.07)"
+            strokeWidth="14"
+          />
           {parts.map((p) => {
             const len = total === 0 ? 0 : (p.value / total) * c;
             const el = (
@@ -656,6 +664,14 @@ export function Dashboard() {
               >
                 <Inbox className="size-4" aria-hidden /> Inbox
               </Link>
+              {user?.role === "ADMIN" && (
+                <Link
+                  href="/admin/content"
+                  className="inline-flex h-10 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 text-sm font-medium text-white backdrop-blur transition-colors hover:bg-white/20"
+                >
+                  <Globe className="size-4" aria-hidden /> Website content
+                </Link>
+              )}
               <Link
                 href="/blog"
                 target="_blank"
@@ -811,7 +827,7 @@ export function Dashboard() {
                         className={cn(
                           "grid size-7 shrink-0 place-items-center rounded-lg font-mono text-[0.68rem] font-semibold",
                           i === 0
-                            ? "bg-gradient-to-br from-[#d9a90c] to-[#fbd84a] text-[#143070] shadow-[0_8px_20px_-8px_rgba(245,197,24,0.9)]"
+                            ? "bg-gradient-to-br from-[#d9a90c] to-[#fbd84a] text-[#143a8c] shadow-[0_8px_20px_-8px_rgba(245,197,24,0.9)]"
                             : "bg-ink-900/6 text-ink-500",
                         )}
                       >

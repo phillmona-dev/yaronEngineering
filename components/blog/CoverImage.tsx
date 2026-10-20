@@ -25,7 +25,7 @@ export function CoverImage({
     return (
       <div className={cn("bg-ink-900 relative overflow-hidden", className)} aria-hidden>
         <div className="grid-lines absolute inset-0 text-white opacity-60" />
-        <div className="text-ink-400 absolute top-5 left-5 font-mono text-[0.66rem] tracking-[0.16em] uppercase">
+        <div className="text-ink-400 font-label absolute top-5 left-5 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
           {fallbackLabel}
         </div>
         <div className="bg-brand-400 absolute bottom-5 left-5 h-px w-10" />

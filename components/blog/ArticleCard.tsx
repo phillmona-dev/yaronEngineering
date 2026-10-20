@@ -30,10 +30,8 @@ export function ArticleCard({ article }: { article: ArticleSummary }) {
               {article.title}
             </Link>
           </h3>
-          <p className="text-muted-foreground mt-2 line-clamp-3 text-sm leading-relaxed">
-            {article.excerpt}
-          </p>
-          <div className="mt-auto flex items-center justify-between pt-5 text-sm">
+          <p className="text-muted-foreground text-body mt-2 line-clamp-3">{article.excerpt}</p>
+          <div className="text-body mt-auto flex items-center justify-between pt-5">
             <span className="text-muted-foreground">{article.author?.name}</span>
             <ArrowUpRight
               className="text-muted-foreground group-hover:text-brand-text size-4 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

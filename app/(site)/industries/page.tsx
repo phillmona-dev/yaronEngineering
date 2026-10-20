@@ -7,32 +7,29 @@ import { ParallaxImage } from "@/components/animations/ParallaxImage";
 import { Button } from "@/components/ui/Button";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { JsonLd } from "@/components/layout/JsonLd";
-import { industries } from "@/lib/data/industries";
 import { breadcrumbSchema, pageMetadata } from "@/lib/utils/seo";
+import { getSiteContent } from "@/lib/content/server";
+import { pageHeroProps } from "@/lib/content/highlight";
 import { cn } from "@/lib/utils/cn";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Industries",
-  description:
-    "Yaron Engineering serves government, banking and financial services, insurance, healthcare, NGOs, enterprise, education and critical infrastructure across Ethiopia and East Africa.",
-  path: "/industries",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const { pages } = await getSiteContent();
+  return pageMetadata({
+    title: pages.industries.metaTitle,
+    description: pages.industries.metaDescription,
+    path: "/industries",
+  });
+}
 
-export default function IndustriesPage() {
+export default async function IndustriesPage() {
+  const { industries: industriesContent, pages } = await getSiteContent();
+  const industries = industriesContent.items;
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Industries", path: "/industries" }])} />
       <PageHero
-        eyebrow="Industries"
+        {...pageHeroProps(pages.industries)}
         crumbs={[{ label: "Industries", href: "/industries" }]}
-        title={[
-          <span key="a">Serving the institutions</span>,
-          <span key="b">
-            that <span className="text-gold-400">cannot pause.</span>
-          </span>,
-        ]}
-        lead="Eight sectors where reliability, security and compliance are obligations — and where Yaron Engineering has the depth to deliver."
-        image={{ src: "/images/photos/financial-district.jpg", alt: "Financial district towers" }}
       />
 
       <Section theme="light" aria-label="Industry details" className="pt-16 md:pt-20 xl:pt-24">
@@ -59,7 +56,7 @@ export default function IndustriesPage() {
                 </div>
                 <div className={cn("lg:col-span-5", reverse ? "lg:order-1" : "lg:col-start-8")}>
                   <Reveal>
-                    <p className="text-muted-foreground font-mono text-[0.7rem] tracking-[0.14em]">
+                    <p className="text-muted-foreground font-label text-[0.7rem] font-semibold tracking-[0.14em]">
                       {String(i + 1).padStart(2, "0")} /{" "}
                       {String(industries.length).padStart(2, "0")}
                     </p>
@@ -68,7 +65,7 @@ export default function IndustriesPage() {
                     <h2 className="text-h2 mt-4 font-semibold">{ind.title}</h2>
                   </Reveal>
                   <Reveal delay={0.12}>
-                    <p className="text-lead mt-4">{ind.summary}</p>
+                    <p className="text-body mt-4">{ind.summary}</p>
                   </Reveal>
                   <Reveal delay={0.18}>
                     <p className="text-body text-muted-foreground mt-4 max-w-[54ch]">

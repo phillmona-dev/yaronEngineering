@@ -13,7 +13,7 @@ export function Pagination({
 }) {
   if (totalPages <= 1) return null;
   const btn =
-    "inline-flex h-10 items-center gap-2 rounded-sm border border-border px-4 text-sm font-medium transition-colors hover:border-foreground";
+    "inline-flex h-10 items-center gap-2 rounded-sm border border-border px-4 text-body font-medium transition-colors hover:border-foreground";
   return (
     <nav
       aria-label="Pagination"
@@ -26,7 +26,7 @@ export function Pagination({
       ) : (
         <span />
       )}
-      <span className="text-muted-foreground font-mono text-[0.7rem] tracking-[0.14em] uppercase">
+      <span className="text-muted-foreground font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
         Page {page + 1} of {totalPages}
       </span>
       {page + 1 < totalPages ? (

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/animations/Reveal";
@@ -6,6 +5,7 @@ import { TextReveal } from "@/components/animations/TextReveal";
 import { GridLines } from "@/components/ui/Backdrop";
 import { BackButton } from "@/components/ui/BackButton";
 import { cn } from "@/lib/utils/cn";
+import { HeroOrbits } from "./HeroOrbits";
 
 type Crumb = { label: string; href: string };
 
@@ -13,44 +13,44 @@ type Props = {
   eyebrow: string;
   title: React.ReactNode[];
   lead?: React.ReactNode;
-  image?: { src: string; alt: string; position?: string };
   crumbs?: Crumb[];
   children?: React.ReactNode;
   compact?: boolean;
 };
 
-/** Inner-page hero: dark, image-backed, with line-by-line title reveal and breadcrumb. */
-export function PageHero({ eyebrow, title, lead, image, crumbs, children, compact }: Props) {
+/** Inner-page hero: brand-blue gradient composition (no photography) with line-by-line title reveal. */
+export function PageHero({ eyebrow, title, lead, crumbs, children, compact }: Props) {
   return (
     <section
       data-theme="dark"
       className={cn(
         "bg-ink-950 text-foreground relative isolate overflow-hidden",
-        compact ? "pt-36 pb-16 lg:pt-44 lg:pb-20" : "pt-40 pb-20 lg:pt-56 lg:pb-28",
+        compact ? "pt-32 pb-12 lg:pt-36 lg:pb-14" : "pt-32 pb-14 lg:pt-40 lg:pb-20",
       )}
     >
-      {image && (
-        <div className="absolute inset-0 -z-10">
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-50"
-            style={{ objectPosition: image.position ?? "center" }}
-          />
-          <div
-            aria-hidden
-            className="from-ink-950 via-ink-950/80 to-ink-950/50 absolute inset-0 bg-gradient-to-t"
-          />
-          <div
-            aria-hidden
-            className="from-ink-950/80 via-ink-950/30 absolute inset-0 bg-gradient-to-r to-transparent"
-          />
-        </div>
-      )}
-      <GridLines className="text-white opacity-50" />
+      <div className="absolute inset-0 -z-10">
+        <div aria-hidden className="hero-mesh absolute inset-0" />
+        <div
+          aria-hidden
+          className="hero-blob top-[-30%] right-[5%] h-[40vw] max-h-[560px] w-[40vw] max-w-[560px] opacity-70"
+          style={{
+            background: "radial-gradient(closest-side, rgba(108,166,238,0.55), transparent 70%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="hero-blob bottom-[-40%] left-[-8%] h-[30vw] max-h-[420px] w-[30vw] max-w-[420px] opacity-60 [animation-delay:-8s]"
+          style={{
+            background: "radial-gradient(closest-side, rgba(245,197,24,0.25), transparent 70%)",
+          }}
+        />
+        <HeroOrbits className="absolute top-1/2 right-[-18%] hidden w-[46vw] max-w-[760px] -translate-y-1/2 opacity-70 lg:block" />
+        <div
+          aria-hidden
+          className="from-gold-500/0 via-gold-500/45 to-gold-500/0 absolute top-0 right-[30%] hidden h-[160%] w-px origin-top rotate-[22deg] bg-gradient-to-b lg:block"
+        />
+      </div>
+      <GridLines className="text-white opacity-40" />
       <div className="container-x relative">
         {/* ── Back button ─────────────────────────────────────────────────── */}
         <Reveal>
@@ -60,7 +60,7 @@ export function PageHero({ eyebrow, title, lead, image, crumbs, children, compac
         {crumbs && (
           <Reveal>
             <nav aria-label="Breadcrumb" className="mb-8">
-              <ol className="text-ink-400 flex flex-wrap items-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
+              <ol className="text-ink-400 font-label flex flex-wrap items-center gap-2 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                 <li>
                   <Link href="/" className="hover:text-white">
                     Home
@@ -90,7 +90,7 @@ export function PageHero({ eyebrow, title, lead, image, crumbs, children, compac
         <TextReveal
           as="h1"
           delay={0.2}
-          className="text-h1 mt-7 max-w-[16ch] font-semibold text-white"
+          className="text-h1 mt-7 max-w-[16ch] font-bold text-white"
           lines={title}
         />
         {lead && (

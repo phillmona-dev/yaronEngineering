@@ -36,7 +36,7 @@ export function AuthorAvatar({
   return (
     <span
       className={cn(
-        "bg-ink-900 text-ink-200 flex items-center justify-center rounded-full font-mono text-[0.72rem] tracking-[0.1em]",
+        "bg-ink-900 text-ink-200 font-label flex items-center justify-center rounded-full text-[0.7rem] font-semibold tracking-[0.14em]",
         className,
       )}
       style={{ width: size, height: size }}
@@ -57,7 +57,7 @@ export function AuthorCard({ author, compact = false }: { author: Author; compac
     >
       <AuthorAvatar author={author} size={compact ? 48 : 64} className="shrink-0" />
       <div className="min-w-0">
-        <p className="text-muted-foreground font-mono text-[0.66rem] tracking-[0.14em] uppercase">
+        <p className="text-muted-foreground font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
           Written by
         </p>
         <p className="text-h4 mt-1 font-semibold">
@@ -65,13 +65,11 @@ export function AuthorCard({ author, compact = false }: { author: Author; compac
             {author.name}
           </Link>
         </p>
-        {author.position && <p className="text-muted-foreground text-sm">{author.position}</p>}
+        {author.position && <p className="text-muted-foreground text-body">{author.position}</p>}
         {!compact && author.bio && (
-          <p className="text-muted-foreground mt-3 max-w-[60ch] text-sm leading-relaxed">
-            {author.bio}
-          </p>
+          <p className="text-muted-foreground text-body mt-3 max-w-[60ch]">{author.bio}</p>
         )}
-        <div className="mt-4 flex flex-wrap items-center gap-5 text-sm">
+        <div className="text-body mt-4 flex flex-wrap items-center gap-5">
           <Link
             href={`/blog/author/${author.slug}`}
             className="group text-brand-text inline-flex items-center gap-1.5 font-medium"

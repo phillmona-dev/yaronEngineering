@@ -6,9 +6,12 @@ import { StaggerGroup, StaggerItem } from "@/components/animations/Stagger";
 import { ClipReveal } from "@/components/animations/ClipReveal";
 import { ParallaxImage } from "@/components/animations/ParallaxImage";
 import { GridLines } from "@/components/ui/Backdrop";
-import { leadershipRoles } from "@/lib/data/company";
+import { getSiteContent } from "@/lib/content/server";
 
-export function ExpertiseSection() {
+export async function ExpertiseSection() {
+  const { about } = await getSiteContent();
+  const leadershipRoles = about.leadershipRoles;
+  const copy = about.expertise;
   return (
     <Section theme="dark" className="overflow-clip" aria-labelledby="expertise-title">
       <GridLines className="text-white opacity-40" />
@@ -16,11 +19,11 @@ export function ExpertiseSection() {
         <div className="grid grid-cols-1 gap-x-8 gap-y-14 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Reveal>
-              <Eyebrow>Experience &amp; expertise</Eyebrow>
+              <Eyebrow>{copy.eyebrow}</Eyebrow>
             </Reveal>
             <Reveal delay={0.08}>
-              <p className="text-stat mt-8 font-medium text-white">
-                <Counter value={20} suffix="+" />
+              <p className="text-stat font-display mt-8 font-bold text-white">
+                <Counter value={copy.years} suffix="+" />
               </p>
             </Reveal>
             <Reveal delay={0.14}>
@@ -28,15 +31,11 @@ export function ExpertiseSection() {
                 id="expertise-title"
                 className="text-h2 mt-4 max-w-[20ch] font-semibold text-white"
               >
-                Years of engineering leadership behind every design review.
+                {copy.heading}
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
-              <p className="text-lead text-ink-300 mt-6 max-w-[56ch]">
-                The founding team brings more than 20 years of combined leadership experience,
-                including contributions to Ethiopia&apos;s flagship digital transformation
-                initiatives and ICT modernization programmes.
-              </p>
+              <p className="text-body text-ink-300 mt-6 max-w-[56ch]">{copy.lead}</p>
             </Reveal>
 
             <StaggerGroup
@@ -48,9 +47,9 @@ export function ExpertiseSection() {
                 <StaggerItem
                   as="li"
                   key={role}
-                  className="border-border text-ink-100 flex items-start gap-4 border-b py-4 pr-6 text-[0.9375rem]"
+                  className="border-border text-ink-100 text-body flex items-start gap-4 border-b py-4 pr-6"
                 >
-                  <span className="text-gold-400 pt-0.5 font-mono text-[0.66rem] tracking-[0.14em]">
+                  <span className="text-gold-400 font-label pt-0.5 text-[0.7rem] font-semibold tracking-[0.14em]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {role}
@@ -67,14 +66,11 @@ export function ExpertiseSection() {
                 sizes="(min-width: 1024px) 33vw, 100vw"
                 containerClassName="h-full w-full"
                 strength={0.07}
-                className="saturate-[0.8]"
+                duotone
               />
             </ClipReveal>
             <Reveal delay={0.2} className="border-brand mt-6 border-l pl-5">
-              <p className="text-ink-300 text-sm leading-relaxed">
-                Leadership profiles and portraits will be published here once official team
-                photography is supplied. We do not use stock or generated people.
-              </p>
+              <p className="text-ink-300 text-body">{copy.note}</p>
             </Reveal>
           </div>
         </div>

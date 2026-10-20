@@ -4,9 +4,13 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/animations/Reveal";
 import { ClipReveal } from "@/components/animations/ClipReveal";
 import { ParallaxImage } from "@/components/animations/ParallaxImage";
-import { company, sectors } from "@/lib/data/company";
+import { getSiteContent } from "@/lib/content/server";
+import { Highlight } from "@/lib/content/highlight";
 
-export function AboutIntro() {
+export async function AboutIntro() {
+  const { home, about } = await getSiteContent();
+  const intro = home.sections.about;
+  const sectors = about.sectors;
   return (
     <Section theme="light" aria-labelledby="about-title">
       <div className="container-x">
@@ -14,12 +18,11 @@ export function AboutIntro() {
           {/* Statement */}
           <div className="lg:col-span-5">
             <Reveal>
-              <Eyebrow>About Yaron Engineering</Eyebrow>
+              <Eyebrow>{intro.eyebrow}</Eyebrow>
             </Reveal>
             <Reveal delay={0.08}>
               <h2 id="about-title" className="text-h2 mt-6 font-semibold">
-                Built in Addis Ababa to engineer the systems East Africa{" "}
-                <span className="text-brand-text">depends on.</span>
+                <Highlight text={intro.title} highlight={intro.highlight} />
               </h2>
             </Reveal>
             <Reveal delay={0.16} className="mt-10 hidden lg:block">
@@ -48,9 +51,9 @@ export function AboutIntro() {
             </ClipReveal>
 
             <div className="text-body text-muted-foreground mt-10 flex flex-col gap-6">
-              {company.story.map((p, i) => (
+              {about.story.map((p, i) => (
                 <Reveal key={i} delay={0.05 * i}>
-                  <p className={i === 0 ? "text-lead text-foreground" : undefined}>{p}</p>
+                  <p className={i === 0 ? "text-body text-foreground" : undefined}>{p}</p>
                 </Reveal>
               ))}
             </div>
@@ -62,14 +65,14 @@ export function AboutIntro() {
               {sectors.map((s) => (
                 <div key={s} className="flex flex-col gap-2">
                   <span aria-hidden className="bg-gold-500 h-px w-5" />
-                  <span className="text-sm font-medium">{s}</span>
+                  <span className="text-body font-medium">{s}</span>
                 </div>
               ))}
             </Reveal>
 
             <Reveal delay={0.15} className="mt-10">
               <Button href="/about" variant="ghost">
-                Our story and vision
+                {intro.ctaLabel}
               </Button>
             </Reveal>
           </div>

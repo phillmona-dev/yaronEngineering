@@ -83,6 +83,10 @@ Content never lives in JSX: edit `lib/data/*.ts` to change copy, services, indus
 
 ## Updating content & assets
 
+**Day to day, the owner edits the website from the CMS:** sign in at `/admin` and open **Website content**. Every part of the public site — company and contact details, the home page, page headers, services, solutions, industries, projects, clients, partners, careers, menus and footer — is a section with a plain form, help text under each field, picture pickers tied to the media library, and a "Restore built-in" button. Saving updates the live site immediately (the admin proxy purges the Next.js cache). Admins only.
+
+Under the hood: `lib/content/types.ts` is the shape, `lib/content/defaults.ts` the built-in content (assembled from `lib/data/*`), `lib/content/schema.ts` the editor's field definitions, and `backend/…/sitecontent` stores one JSON document per section (API in `API_DOCUMENTATION.md` §8). The table below is where the *built-in* content lives for developers.
+
 | What                                          | Where                                                                                                                       |
 | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | Company facts, contact details, vision, story | `lib/data/company.ts`                                                                                                       |

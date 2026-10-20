@@ -142,7 +142,7 @@ export function MediaGrid({
           {page.content.map((m) => (
             <li
               key={m.id}
-              className="group glass glass-strong ease-out-expo relative overflow-hidden rounded-xl transition-[transform,box-shadow] duration-500 hover:-translate-y-1 hover:shadow-[0_26px_50px_-24px_rgba(14,34,80,0.4)]"
+              className="group glass glass-strong ease-out-expo relative overflow-hidden rounded-xl transition-[transform,box-shadow] duration-500 hover:-translate-y-1 hover:shadow-[0_26px_50px_-24px_rgba(21,64,166,0.4)]"
             >
               <button
                 type="button"

@@ -31,10 +31,10 @@ export function BackButton({ className }: BackButtonProps) {
       className={cn(
         "group inline-flex items-center gap-2",
         "rounded-full border border-white/20 bg-white/10 backdrop-blur-sm",
-        "px-4 py-2 text-[0.75rem] font-semibold tracking-[0.08em] uppercase",
+        "px-4 py-2 text-[0.7rem] font-semibold tracking-[0.08em] uppercase",
         "text-white/80 hover:text-white",
-        "hover:bg-white/20 hover:border-white/40",
-        "transition-all duration-200 cursor-pointer",
+        "hover:border-white/40 hover:bg-white/20",
+        "cursor-pointer transition-all duration-200",
         className,
       )}
     >

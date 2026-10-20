@@ -65,7 +65,7 @@ export default async function BlogPage({
             <TextReveal
               as="h1"
               delay={0.15}
-              className="text-display mt-6 max-w-[16ch] font-semibold text-white"
+              className="text-h1 mt-6 max-w-[16ch] font-bold text-white"
               lines={[
                 <span key="a">Engineering insights</span>,
                 <span key="b">
@@ -82,7 +82,7 @@ export default async function BlogPage({
           </div>
           <Reveal delay={0.45} className="lg:col-span-4">
             <SearchForm size="md" />
-            <p className="text-ink-400 mt-3 font-mono text-[0.66rem] tracking-[0.14em] uppercase">
+            <p className="text-ink-400 font-label mt-3 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
               Search articles, topics and technologies
             </p>
           </Reveal>
@@ -117,7 +117,7 @@ export default async function BlogPage({
                 </div>
                 <Link
                   href="/blog/search"
-                  className="text-brand-text hidden items-center gap-2 text-sm font-medium md:inline-flex"
+                  className="text-brand-text text-body hidden items-center gap-2 font-medium md:inline-flex"
                 >
                   Browse all topics <ArrowRight className="size-4" aria-hidden />
                 </Link>

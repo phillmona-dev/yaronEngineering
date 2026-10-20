@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
-import type { Project } from "@/lib/data/projects";
+import type { ProjectContent } from "@/lib/content/types";
 import { ParallaxImage } from "@/components/animations/ParallaxImage";
 import { ClipReveal } from "@/components/animations/ClipReveal";
 
@@ -11,7 +11,7 @@ export function ProjectCard({
   index,
   reverse = false,
 }: {
-  project: Project & Required<Pick<Project, "featured">>;
+  project: ProjectContent;
   index: number;
   reverse?: boolean;
 }) {
@@ -20,8 +20,8 @@ export function ProjectCard({
       <div className={cn("lg:col-span-6", reverse && "lg:order-2")}>
         <ClipReveal className="aspect-[16/10] overflow-hidden rounded-md">
           <ParallaxImage
-            src={project.featured.image.src}
-            alt={project.featured.image.alt}
+            src={project.image.src}
+            alt={project.image.alt}
             sizes="(min-width: 1024px) 50vw, 100vw"
             containerClassName="h-full w-full"
             strength={0.05}
@@ -33,7 +33,7 @@ export function ProjectCard({
       <div
         className={cn("lg:col-span-5", reverse ? "lg:order-1 lg:col-start-1" : "lg:col-start-8")}
       >
-        <p className="text-muted-foreground flex items-center gap-4 font-mono text-[0.7rem] tracking-[0.14em] uppercase">
+        <p className="text-muted-foreground font-label flex items-center gap-4 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
           <span>Project {String(index + 1).padStart(2, "0")}</span>
           <span aria-hidden className="bg-border-strong h-px w-6" />
           <span>{project.sector}</span>
@@ -52,32 +52,32 @@ export function ProjectCard({
             </div>
           )}
         </div>
-        <p className="text-foreground mt-3 text-[0.9375rem] font-medium">{project.client}</p>
+        <p className="text-foreground text-body mt-3 font-medium">{project.client}</p>
         <p className="text-body text-muted-foreground mt-4 max-w-[52ch]">{project.summary}</p>
         {project.highlights.length > 0 && (
           <ul className="mt-5 flex flex-col gap-1.5">
             {project.highlights.map((h) => (
-              <li key={h} className="flex items-center gap-3 text-[0.875rem]">
+              <li key={h} className="text-body flex items-center gap-3">
                 <span aria-hidden className="bg-brand size-1.5 shrink-0 rounded-full" />
                 {h}
               </li>
             ))}
           </ul>
         )}
-        <dl className="border-border mt-7 grid grid-cols-2 gap-x-6 gap-y-4 border-t pt-6 text-sm">
+        <dl className="border-border text-body mt-7 grid grid-cols-2 gap-x-6 gap-y-4 border-t pt-6">
           <div>
             <dt className="eyebrow mb-2">Location</dt>
             <dd>{project.location}</dd>
           </div>
           <div>
             <dt className="eyebrow mb-2">Period</dt>
-            <dd>{project.year ?? "—"}</dd>
+            <dd>{project.year || "—"}</dd>
           </div>
           <div className="col-span-2">
             <dt className="eyebrow mb-2">Technology</dt>
             <dd className="flex flex-wrap gap-2">
               {project.technologies.map((t) => (
-                <span key={t} className="bg-muted rounded-sm px-2 py-1 text-[0.8125rem]">
+                <span key={t} className="bg-muted text-body rounded-sm px-2 py-1">
                   {t}
                 </span>
               ))}
@@ -86,7 +86,7 @@ export function ProjectCard({
         </dl>
         <Link
           href="/projects"
-          className="group text-brand-text mt-7 inline-flex items-center gap-2 text-sm font-medium"
+          className="group text-brand-text text-body mt-7 inline-flex items-center gap-2 font-medium"
         >
           View project index
           <ArrowUpRight

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
-import type { Partner } from "@/lib/data/partners";
+import type { PartnerContent as Partner } from "@/lib/content/types";
 
 type Props = { partners: Partner[]; speed?: number; className?: string };
 

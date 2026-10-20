@@ -7,37 +7,35 @@ import { Reveal } from "@/components/animations/Reveal";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { WhatsAppIcon } from "@/components/blog/SocialIcons";
 import { JsonLd } from "@/components/layout/JsonLd";
-import { company } from "@/lib/data/company";
 import { breadcrumbSchema, pageMetadata } from "@/lib/utils/seo";
+import { getSiteContent } from "@/lib/content/server";
+import { pageHeroProps } from "@/lib/content/highlight";
+import { phoneToE164, whatsappHref } from "@/lib/content/highlight";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Contact",
-  description:
-    "Talk to Yaron Engineering PLC in Addis Ababa about ICT infrastructure, data center, cybersecurity, cloud and enterprise technology projects.",
-  path: "/contact",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const { pages } = await getSiteContent();
+  return pageMetadata({
+    title: pages.contact.metaTitle,
+    description: pages.contact.metaDescription,
+    path: "/contact",
+  });
+}
 
-const mapQuery = encodeURIComponent(`${company.name}, ${company.headquarters.full}`);
-const whatsappHref = `https://wa.me/${company.contact.whatsappE164}?text=${encodeURIComponent(
-  `Hello ${company.name}, I would like to discuss a project.`,
-)}`;
-
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { company, pages } = await getSiteContent();
+  const copy = pages.contact;
+  const hq = company.headquarters;
+  const mapQuery = encodeURIComponent(
+    `${company.name}, ${hq.streetAddress}, ${hq.city}, ${hq.country}`,
+  );
+  const waHref = whatsappHref(company.contact.whatsappE164, company.contact.whatsappGreeting);
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Contact", path: "/contact" }])} />
       <PageHero
         compact
-        eyebrow="Contact"
+        {...pageHeroProps(copy)}
         crumbs={[{ label: "Contact", href: "/contact" }]}
-        title={[
-          <span key="a">Let&apos;s talk about</span>,
-          <span key="b">
-            what you&apos;re <span className="text-gold-400">building.</span>
-          </span>,
-        ]}
-        lead="Tell us what you are building, protecting or transforming. An engineer — not a sales script — will respond."
-        image={{ src: "/images/photos/towers-glass.jpg", alt: "Glass towers from below" }}
       />
 
       <Section theme="light" aria-label="Contact details and form">
@@ -59,7 +57,7 @@ export default function ContactPage() {
                   />
                   <div>
                     <p className="eyebrow mb-2">Address</p>
-                    <p className="text-[0.9375rem] leading-relaxed">
+                    <p className="text-body">
                       {company.headquarters.streetAddress}
                       <br />
                       {company.headquarters.city}, {company.headquarters.country}
@@ -72,13 +70,13 @@ export default function ContactPage() {
                     <p className="eyebrow mb-2">Email</p>
                     <a
                       href={`mailto:${company.contact.email}`}
-                      className="hover:text-brand-text block text-[0.9375rem]"
+                      className="hover:text-brand-text text-body block"
                     >
                       {company.contact.email}
                     </a>
                     <a
                       href={`mailto:${company.contact.salesEmail}`}
-                      className="text-muted-foreground hover:text-brand-text block text-[0.9375rem]"
+                      className="text-muted-foreground hover:text-brand-text text-body block"
                     >
                       {company.contact.salesEmail}
                     </a>
@@ -92,11 +90,11 @@ export default function ContactPage() {
                   />
                   <div>
                     <p className="eyebrow mb-2">Phone</p>
-                    {company.contact.phones.map((p, i) => (
+                    {company.contact.phones.map((p) => (
                       <a
                         key={p}
-                        href={`tel:${company.contact.phonesE164[i]}`}
-                        className="hover:text-brand-text block text-[0.9375rem]"
+                        href={`tel:${phoneToE164(p)}`}
+                        className="hover:text-brand-text text-body block"
                       >
                         {p}
                       </a>
@@ -107,23 +105,21 @@ export default function ContactPage() {
             </Reveal>
             <Reveal delay={0.16} className="mt-8">
               <a
-                href={whatsappHref}
+                href={waHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ease-out-expo focus-visible:ring-gold-400 focus-visible:ring-offset-background inline-flex h-11 items-center gap-2.5 rounded-full bg-[#25D366] px-6 text-[0.9375rem] font-semibold text-white transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgba(37,211,102,0.6)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.97]"
+                className="ease-out-expo focus-visible:ring-gold-400 focus-visible:ring-offset-background text-body inline-flex h-11 items-center gap-2.5 rounded-full bg-[#25D366] px-6 font-semibold text-white transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgba(37,211,102,0.6)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.97]"
               >
                 <WhatsAppIcon className="size-[18px] shrink-0" />
-                Chat on WhatsApp
+                {copy.whatsappLabel}
               </a>
-              <p className="text-muted-foreground mt-3 text-sm">
-                {company.contact.whatsapp} · replies during office hours
+              <p className="text-muted-foreground text-body mt-3">
+                {company.contact.whatsapp} · {copy.whatsappNote}
               </p>
             </Reveal>
             <Reveal delay={0.2} className="border-border mt-10 border-t pt-6">
               <p className="eyebrow mb-2">Office hours</p>
-              <p className="text-muted-foreground text-sm">
-                Monday – Friday, East Africa Time (UTC+3)
-              </p>
+              <p className="text-muted-foreground text-body">{company.contact.officeHours}</p>
             </Reveal>
           </div>
 

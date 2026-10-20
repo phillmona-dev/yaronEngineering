@@ -59,7 +59,7 @@ export function NewsletterCTA({
           {status === "done" ? (
             <p
               role="status"
-              className="border-border text-ink-100 flex items-center gap-3 rounded-sm border p-4 text-sm"
+              className="border-border text-ink-100 text-body flex items-center gap-3 rounded-sm border p-4"
             >
               <span className="bg-brand flex size-7 items-center justify-center rounded-full text-white">
                 <Check className="size-4" aria-hidden />
@@ -70,7 +70,7 @@ export function NewsletterCTA({
             <form onSubmit={onSubmit} noValidate className="flex flex-col gap-3">
               <label
                 htmlFor="newsletter-email"
-                className="text-ink-400 font-mono text-[0.66rem] tracking-[0.14em] uppercase"
+                className="text-ink-400 font-label text-[0.7rem] font-semibold tracking-[0.14em] uppercase"
               >
                 Work email
               </label>
@@ -84,28 +84,23 @@ export function NewsletterCTA({
                   placeholder="name@organization.com"
                   aria-invalid={Boolean(error)}
                   aria-describedby={error ? "newsletter-err" : undefined}
-                  className="border-border-strong placeholder:text-ink-400 focus:border-brand-400 h-12 flex-1 rounded-sm border bg-transparent px-4 text-[0.9375rem] text-white focus:outline-none"
+                  className="border-border-strong placeholder:text-ink-400 focus:border-brand-400 text-body h-12 flex-1 rounded-sm border bg-transparent px-4 text-white focus:outline-none"
                 />
-                <Button
-                  type="submit"
-                  size="md"
-                  arrow="right"
-                  disabled={status === "submitting"}
-                >
+                <Button type="submit" size="md" arrow="right" disabled={status === "submitting"}>
                   {status === "submitting" ? "Subscribing..." : "Subscribe"}
                 </Button>
               </div>
               {error && (
-                <p id="newsletter-err" className="text-sm text-red-400">
+                <p id="newsletter-err" className="text-body text-red-400">
                   {error}
                 </p>
               )}
               {status === "error" && (
-                <p role="alert" className="text-sm text-red-400">
+                <p role="alert" className="text-body text-red-400">
                   We couldn&apos;t subscribe you right now. Please try again later.
                 </p>
               )}
-              <p className="text-ink-400 text-xs">No spam. Unsubscribe at any time.</p>
+              <p className="text-ink-400 text-body">No spam. Unsubscribe at any time.</p>
             </form>
           )}
         </div>

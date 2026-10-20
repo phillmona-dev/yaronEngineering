@@ -23,18 +23,17 @@ type ButtonProps = CommonProps & { href?: undefined } & Omit<
   >;
 
 const base =
-  "group/btn relative inline-flex items-center justify-center gap-2.5 rounded-full font-semibold tracking-[-0.005em] transition-[box-shadow,transform,background] duration-300 ease-out-expo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50";
+  "group/btn relative inline-flex items-center justify-center gap-2.5 rounded-full font-display font-semibold tracking-[0.01em] transition-[box-shadow,transform,background] duration-300 ease-out-expo focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50";
 
 const sizes: Record<Size, string> = {
-  md: "h-11 px-6 text-[0.9375rem]",
-  lg: "h-13 px-8 text-base",
+  md: "h-11 px-6 text-body",
+  lg: "h-13 px-8 text-body",
 };
 
 const variants: Record<Variant, string> = {
-  primary:
-    "overflow-hidden active:scale-[0.97] hover:scale-[1.03] hover:-translate-y-0.5",
+  primary: "overflow-hidden active:scale-[0.97] hover:scale-[1.03] hover:-translate-y-0.5",
   secondary:
-    "border border-border-strong bg-transparent text-foreground hover:border-gold-500 hover:bg-gold-500/[0.06]",
+    "border border-border-strong bg-transparent text-foreground hover:border-gold-500 hover:bg-gold-500/[0.08]",
   ghost: "bg-transparent text-foreground hover:text-brand-text px-2",
   inverse: "bg-foreground text-background hover:bg-brand hover:text-brand-foreground",
 };
@@ -65,28 +64,28 @@ function PrimaryInner({
 }) {
   return (
     <>
-      {/* Brand-blue base */}
+      {/* Logo-gold base: the one colour that pops on both the royal-blue and white surfaces */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-[inherit]"
         style={{
-          background: "linear-gradient(145deg, #6ca6ee 0%, #3f82dc 55%, #3270c8 100%)",
-          border: "1.5px solid rgba(245,197,24,0.35)",
+          background: "linear-gradient(145deg, #ffe066 0%, #f5c518 55%, #e9b50f 100%)",
+          border: "1.5px solid rgba(255,255,255,0.35)",
         }}
       />
 
-      {/* Gold edge glow */}
+      {/* Soft glow */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-[inherit]"
         style={{
           boxShadow:
-            "0 1px 0 0 rgba(255,255,255,0.25) inset, 0 6px 24px -6px rgba(63,130,220,0.55), 0 0 0 3px rgba(245,197,24,0.16)",
+            "0 1px 0 0 rgba(255,255,255,0.45) inset, 0 8px 24px -6px rgba(245,197,24,0.55), 0 0 0 3px rgba(245,197,24,0.18)",
           animation: "btn-glow-pulse 2.4s ease-in-out infinite",
         }}
       />
 
-      {/* Gold shimmer sweep */}
+      {/* Light shimmer sweep */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]"
@@ -97,7 +96,7 @@ function PrimaryInner({
             inset: 0,
             width: "45%",
             background:
-              "linear-gradient(90deg, transparent 0%, rgba(255,233,138,0.28) 50%, transparent 100%)",
+              "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%)",
             animation: "btn-shimmer 2.8s ease-in-out infinite",
           }}
         />
@@ -109,17 +108,16 @@ function PrimaryInner({
         className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100"
         style={{
           boxShadow:
-            "inset 0 1px 0 rgba(255,255,255,0.35), 0 12px 36px -10px rgba(63,130,220,0.7), 0 0 0 3px rgba(245,197,24,0.3)",
-          background: "rgba(95,152,232,0.35)",
+            "inset 0 1px 0 rgba(255,255,255,0.5), 0 12px 36px -10px rgba(245,197,24,0.75), 0 0 0 3px rgba(245,197,24,0.3)",
+          background: "rgba(255,236,150,0.35)",
         }}
       />
 
-      {/* White text + arrow — sit above all layers */}
+      {/* Deep-blue text + arrow — sit above all layers (5.6:1 on gold) */}
       <span
         className="relative z-10 flex items-center gap-2.5"
         style={{
-          color: "#ffffff",
-          textShadow: "0 1px 0 rgba(14,34,80,0.25)",
+          color: "#143a8c",
         }}
       >
         <span>{children}</span>

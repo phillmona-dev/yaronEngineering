@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { ADMIN_COOKIE, API_URL } from "@/lib/blog/server";
+import { SITE_CONTENT_TAG } from "@/lib/content/server";
 
 /**
  * Authenticated proxy: /api/admin/<path> → <API_URL>/api/v1/<path> with the JWT from the
@@ -38,6 +40,11 @@ async function proxy(req: Request, { params }: { params: Promise<{ path: string[
       { code: "UPSTREAM_UNAVAILABLE", message: "The publishing service is unreachable." },
       { status: 502 },
     );
+  }
+  // Website content edits must show up immediately: purge the whole public site cache.
+  if (path[0] === "site-content" && !["GET", "HEAD"].includes(req.method) && upstream.ok) {
+    revalidateTag(SITE_CONTENT_TAG);
+    revalidatePath("/", "layout");
   }
   const resHeaders = new Headers();
   const uct = upstream.headers.get("content-type");

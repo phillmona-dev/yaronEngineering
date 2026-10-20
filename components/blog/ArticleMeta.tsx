@@ -16,7 +16,7 @@ export function ArticleMeta({
   return (
     <p
       className={cn(
-        "text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.68rem] tracking-[0.14em] uppercase",
+        "text-muted-foreground font-label flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.7rem] font-semibold tracking-[0.14em] uppercase",
         className,
       )}
     >
@@ -43,7 +43,7 @@ export function ArticleMeta({
 export function Byline({ article, className }: { article: ArticleSummary; className?: string }) {
   if (!article.author) return null;
   return (
-    <p className={cn("text-sm", className)}>
+    <p className={cn("text-body", className)}>
       <span className="text-muted-foreground">By </span>
       <Link
         href={`/blog/author/${article.author.slug}`}

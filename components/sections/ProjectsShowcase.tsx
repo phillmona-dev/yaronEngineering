@@ -1,28 +1,31 @@
 import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ProjectCard } from "@/components/cards/ProjectCard";
-import { featuredProjects } from "@/lib/data/projects";
+import { getSiteContent } from "@/lib/content/server";
+import { Highlight } from "@/lib/content/highlight";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/animations/Reveal";
 
-export function ProjectsShowcase({ limit = 4 }: { limit?: number }) {
+export async function ProjectsShowcase({ limit = 4 }: { limit?: number }) {
+  const { projects, home } = await getSiteContent();
+  const featuredProjects = projects.items.filter((p) => p.featured && p.image.src);
+  const intro = home.sections.projects;
   return (
     <Section theme="light" aria-labelledby="projects-title">
       <div className="container-x">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeader
-            eyebrow="Experience"
+            eyebrow={intro.eyebrow}
             title={
               <span id="projects-title">
-                More than 30 high-impact projects.{" "}
-                <span className="text-brand-text">Delivered.</span>
+                <Highlight text={intro.title} highlight={intro.highlight} />
               </span>
             }
-            lead="A selection of the programmes we have designed, implemented and supervised for the judiciary, banks, public institutions, universities, hospitality and enterprises."
+            lead={intro.lead}
           />
           <Reveal delay={0.2} className="shrink-0">
             <Button href="/projects" variant="secondary">
-              All projects
+              {intro.ctaLabel}
             </Button>
           </Reveal>
         </div>

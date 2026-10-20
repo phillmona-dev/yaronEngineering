@@ -12,18 +12,23 @@ import { ClipReveal } from "@/components/animations/ClipReveal";
 import { ParallaxImage } from "@/components/animations/ParallaxImage";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { JsonLd } from "@/components/layout/JsonLd";
-import { getService, services } from "@/lib/data/services";
+import { DEFAULT_CONTENT } from "@/lib/content/defaults";
+import { getSiteContent } from "@/lib/content/server";
+import { serviceIcon } from "@/lib/content/icons";
 import { breadcrumbSchema, pageMetadata, serviceSchema } from "@/lib/utils/seo";
 
 type Params = { slug: string };
 
+/** Built-in services are prerendered; a service added in the admin panel renders on demand. */
 export function generateStaticParams(): Params[] {
-  return services.map((s) => ({ slug: s.slug }));
+  return DEFAULT_CONTENT.services.items.map((s) => ({ slug: s.slug }));
 }
+export const dynamicParams = true;
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
-  const service = getService(slug);
+  const { services } = await getSiteContent();
+  const service = services.items.find((s) => s.slug === slug);
   if (!service) return {};
   return pageMetadata({
     title: service.title,
@@ -34,8 +39,11 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 
 export default async function ServicePage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const service = getService(slug);
+  const { services: servicesContent } = await getSiteContent();
+  const services = servicesContent.items;
+  const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
+  const Icon = serviceIcon(service.icon);
 
   const idx = services.findIndex((s) => s.slug === slug);
   const next = services[(idx + 1) % services.length];
@@ -60,7 +68,6 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         ]}
         title={[<span key="a">{first}</span>, <span key="b">{restTitle.join(" ")}</span>]}
         lead={service.summary}
-        image={{ src: service.image.src, alt: service.image.alt }}
       />
 
       <Section theme="light" aria-labelledby="overview-title">
@@ -76,13 +83,13 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
               </h2>
             </Reveal>
             <Reveal delay={0.16} className="mt-10">
-              <service.icon className="text-brand size-8" strokeWidth={1.25} aria-hidden />
+              <Icon className="text-brand size-8" strokeWidth={1.25} aria-hidden />
             </Reveal>
           </div>
           <div className="flex flex-col gap-6 lg:col-span-7 lg:col-start-6">
             {service.description.map((p, i) => (
               <Reveal key={i} delay={0.05 * i}>
-                <p className={i === 0 ? "text-lead" : "text-body text-muted-foreground"}>{p}</p>
+                <p className={i === 0 ? "text-body" : "text-body text-muted-foreground"}>{p}</p>
               </Reveal>
             ))}
           </div>
@@ -100,7 +107,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
                   key={c}
                   className="border-border flex items-center gap-5 border-b py-5"
                 >
-                  <span className="text-muted-foreground font-mono text-[0.7rem] tracking-[0.14em]">
+                  <span className="text-muted-foreground font-label text-[0.7rem] font-semibold tracking-[0.14em]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="text-h4 font-semibold">{c}</span>
@@ -117,7 +124,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
                 <StaggerItem
                   as="li"
                   key={o}
-                  className="border-border bg-surface flex items-start gap-3 rounded-md border p-5 text-[0.9375rem]"
+                  className="border-border bg-surface text-body flex items-start gap-3 rounded-md border p-5"
                 >
                   <span aria-hidden className="bg-brand mt-2 size-1.5 shrink-0 rounded-full" />
                   {o}
@@ -138,6 +145,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
                 sizes="(min-width: 1024px) 66vw, 100vw"
                 containerClassName="h-full w-full"
                 strength={0.06}
+                duotone
               />
             </ClipReveal>
           </div>
@@ -149,7 +157,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
                 className="group border-border text-h4 mt-4 flex items-center justify-between gap-4 border-t pt-5 font-semibold text-white"
               >
                 <span>
-                  <span className="text-ink-400 mr-3 font-mono text-[0.7rem] tracking-[0.14em]">
+                  <span className="text-ink-400 font-label mr-3 text-[0.7rem] font-semibold tracking-[0.14em]">
                     {next.index}
                   </span>
                   {next.title}

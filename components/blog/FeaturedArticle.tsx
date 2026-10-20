@@ -37,7 +37,7 @@ export function FeaturedArticle({
       </Link>
       <div className="flex flex-col justify-center lg:col-span-5">
         <Reveal>
-          <p className="text-brand-text flex items-center gap-3 font-mono text-[0.68rem] tracking-[0.16em] uppercase">
+          <p className="text-brand-text font-label flex items-center gap-3 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
             <span aria-hidden className="bg-gold-500 h-px w-6" />
             {eyebrow}
           </p>
@@ -56,7 +56,7 @@ export function FeaturedArticle({
           </h2>
         </Reveal>
         <Reveal delay={0.18}>
-          <p className="text-lead text-muted-foreground mt-5 max-w-[48ch]">{article.excerpt}</p>
+          <p className="text-body text-muted-foreground mt-5 max-w-[48ch]">{article.excerpt}</p>
         </Reveal>
         <Reveal
           delay={0.24}
@@ -65,7 +65,7 @@ export function FeaturedArticle({
           <Byline article={article} />
           <Link
             href={href}
-            className="text-foreground inline-flex items-center gap-2 text-sm font-medium"
+            className="text-foreground text-body inline-flex items-center gap-2 font-medium"
           >
             Read article
             <ArrowRight

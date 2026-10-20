@@ -116,7 +116,6 @@ export function AuthPageFrame({
 
       {/* ── Full-screen shell ────────────────────────────────────────────── */}
       <div className="relative flex min-h-screen items-center justify-center overflow-hidden p-6">
-
         {/* ── Animated background slideshow ── */}
         {SLIDES.map((src, i) => (
           <div
@@ -127,16 +126,15 @@ export function AuthPageFrame({
         ))}
 
         {/* Gradient overlay — keeps images visible while giving depth */}
-        <div className="absolute inset-0 bg-gradient-to-br from-ink-950/80 via-ink-900/70 to-brand-700/75" />
+        <div className="from-ink-950/80 via-ink-900/70 to-brand-700/75 absolute inset-0 bg-gradient-to-br" />
 
         {/* Ambient glow orbs */}
-        <div className="auth-orb-1 pointer-events-none absolute -left-24 top-1/4  h-[520px] w-[520px] rounded-full bg-brand-500/25  blur-3xl" />
-        <div className="auth-orb-2 pointer-events-none absolute -right-24 bottom-1/4 h-[420px] w-[420px] rounded-full bg-gold-500/20  blur-3xl" />
-        <div className="auth-orb-3 pointer-events-none absolute bottom-10 left-1/3  h-[300px] w-[300px] rounded-full bg-brand-300/15 blur-3xl" />
+        <div className="auth-orb-1 bg-brand-500/25 pointer-events-none absolute top-1/4 -left-24 h-[520px] w-[520px] rounded-full blur-3xl" />
+        <div className="auth-orb-2 bg-gold-500/20 pointer-events-none absolute -right-24 bottom-1/4 h-[420px] w-[420px] rounded-full blur-3xl" />
+        <div className="auth-orb-3 bg-brand-300/15 pointer-events-none absolute bottom-10 left-1/3 h-[300px] w-[300px] rounded-full blur-3xl" />
 
         {/* ── Content ───────────────────────────────────────────────────── */}
         <div className="relative z-10 w-full max-w-sm">
-
           {/* Logo + title */}
           <div className="mb-8 flex items-center gap-4">
             <div
@@ -149,7 +147,7 @@ export function AuthPageFrame({
               <p className="text-xl font-bold tracking-tight text-white drop-shadow-md">
                 Yaron CMS
               </p>
-              <p className="mt-0.5 font-mono text-[0.62rem] tracking-[0.18em] uppercase text-gold-300/80">
+              <p className="text-gold-300/80 mt-0.5 font-mono text-[0.62rem] tracking-[0.18em] uppercase">
                 Knowledge Hub · {kicker}
               </p>
             </div>
@@ -157,16 +155,14 @@ export function AuthPageFrame({
 
           {/* Glassmorphic card */}
           <div
-            className="auth-glass rounded-2xl border border-white/20 p-7 shadow-[0_30px_60px_rgba(14,34,80,.45),inset_0_1px_0_rgba(255,255,255,.18)]"
+            className="auth-glass rounded-2xl border border-white/20 p-7 shadow-[0_30px_60px_rgba(21,64,166,.45),inset_0_1px_0_rgba(255,255,255,.18)]"
             style={{ background: "rgba(255,255,255,0.09)", backdropFilter: "blur(28px)" }}
           >
             {children}
           </div>
 
           {/* Footer */}
-          <p className="mt-6 text-center text-xs tracking-wide text-white/30">
-            {footer}
-          </p>
+          <p className="mt-6 text-center text-xs tracking-wide text-white/30">{footer}</p>
         </div>
       </div>
     </>

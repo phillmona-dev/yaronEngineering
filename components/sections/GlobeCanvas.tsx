@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 /* ── Infrastructure nodes (lat/lon of key cities) ───────────────────────── */
 const NODES: { lat: number; lon: number; label: string }[] = [
-  { lat: 9.03, lon: 38.74, label: "Addis Ababa" },   // HQ
+  { lat: 9.03, lon: 38.74, label: "Addis Ababa" }, // HQ
   { lat: 1.28, lon: 103.85, label: "Singapore" },
   { lat: 51.5, lon: -0.12, label: "London" },
   { lat: 40.71, lon: -74.0, label: "New York" },
@@ -20,10 +20,21 @@ const NODES: { lat: number; lon: number; label: string }[] = [
 
 /* ── Edges to animate connections ───────────────────────────────────────── */
 const EDGES: [number, number][] = [
-  [0, 4], [0, 5], [0, 1], [0, 8],
-  [1, 7], [1, 9], [2, 3], [2, 8],
-  [3, 6], [4, 8], [4, 11], [5, 10],
-  [6, 3], [7, 9], [0, 3],
+  [0, 4],
+  [0, 5],
+  [0, 1],
+  [0, 8],
+  [1, 7],
+  [1, 9],
+  [2, 3],
+  [2, 8],
+  [3, 6],
+  [4, 8],
+  [4, 11],
+  [5, 10],
+  [6, 3],
+  [7, 9],
+  [0, 3],
 ];
 
 function latLonToXY(
@@ -93,7 +104,7 @@ export function GlobeCanvas() {
       const grad = ctx.createRadialGradient(cx - R * 0.25, cy - R * 0.2, R * 0.05, cx, cy, R);
       grad.addColorStop(0, "rgba(245,197,24,0.08)");
       grad.addColorStop(0.55, "rgba(63,130,220,0.14)");
-      grad.addColorStop(1, "rgba(14,34,80,0.0)");
+      grad.addColorStop(1, "rgba(21,64,166,0.0)");
       ctx.beginPath();
       ctx.arc(cx, cy, R, 0, Math.PI * 2);
       ctx.fillStyle = grad;
@@ -238,16 +249,18 @@ export function GlobeCanvas() {
 }
 
 /* helper: draw a segmented polyline, breaking at visibility seams */
-function drawLine(
-  ctx: CanvasRenderingContext2D,
-  pts: { x: number; y: number; vis: boolean }[],
-) {
+function drawLine(ctx: CanvasRenderingContext2D, pts: { x: number; y: number; vis: boolean }[]) {
   let pen = false;
   ctx.beginPath();
   for (const p of pts) {
-    if (!p.vis) { pen = false; continue; }
-    if (!pen) { ctx.moveTo(p.x, p.y); pen = true; }
-    else ctx.lineTo(p.x, p.y);
+    if (!p.vis) {
+      pen = false;
+      continue;
+    }
+    if (!pen) {
+      ctx.moveTo(p.x, p.y);
+      pen = true;
+    } else ctx.lineTo(p.x, p.y);
   }
   ctx.stroke();
 }

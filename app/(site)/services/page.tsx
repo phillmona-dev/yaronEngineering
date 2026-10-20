@@ -10,36 +10,29 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { SolutionsProcess } from "@/components/sections/SolutionsProcess";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { JsonLd } from "@/components/layout/JsonLd";
-import { services } from "@/lib/data/services";
-import { company } from "@/lib/data/company";
+import { serviceIcon } from "@/lib/content/icons";
+import { Highlight } from "@/lib/content/highlight";
 import { breadcrumbSchema, pageMetadata } from "@/lib/utils/seo";
+import { getSiteContent } from "@/lib/content/server";
+import { pageHeroProps } from "@/lib/content/highlight";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Services",
-  description:
-    "ICT infrastructure, data center design, ICT consultancy, cybersecurity, cloud, enterprise servers and storage, and physical security systems — delivered end to end by Yaron Engineering.",
-  path: "/services",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const { pages } = await getSiteContent();
+  return pageMetadata({
+    title: pages.services.metaTitle,
+    description: pages.services.metaDescription,
+    path: "/services",
+  });
+}
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const { services: servicesContent, about, pages } = await getSiteContent();
+  const services = servicesContent.items;
+  const copy = pages.services;
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Services", path: "/services" }])} />
-      <PageHero
-        eyebrow="Services"
-        crumbs={[{ label: "Services", href: "/services" }]}
-        title={[
-          <span key="a">From the physical layer</span>,
-          <span key="b">
-            to the <span className="text-gold-400">security</span> operations center.
-          </span>,
-        ]}
-        lead="Seven core competencies, delivered as consulting, system integration, training and supply — by one accountable engineering team."
-        image={{
-          src: "/images/photos/network-red.jpg",
-          alt: "Dense structured cabling in a network rack",
-        }}
-      />
+      <PageHero {...pageHeroProps(copy)} crumbs={[{ label: "Services", href: "/services" }]} />
 
       <Section theme="dark" aria-label="Service index">
         <div className="container-x">
@@ -49,59 +42,64 @@ export default function ServicesPage() {
             stagger={0.06}
             amount={0.05}
           >
-            {services.map((s) => (
-              <StaggerItem as="li" key={s.slug} className="bg-ink-950">
-                <Link
-                  href={`/services/${s.slug}`}
-                  className="group hover:bg-ink-900 focus-visible:bg-ink-900 relative flex h-full flex-col overflow-hidden transition-colors duration-300 outline-none"
-                >
-                  <div className="relative aspect-[16/8] overflow-hidden">
-                    <Image
-                      src={s.image.src}
-                      alt={s.image.alt}
-                      fill
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                      className="ease-out-expo object-cover saturate-[0.7] transition-transform duration-700 group-hover:scale-[1.03]"
-                    />
-                    <div aria-hidden className="image-overlay absolute inset-0" />
-                    <span className="text-ink-200 absolute top-6 left-6 font-mono text-[0.7rem] tracking-[0.14em]">
-                      {s.index}
-                    </span>
-                    <s.icon
-                      className="text-gold-400 absolute top-6 right-6 size-5"
-                      strokeWidth={1.25}
-                      aria-hidden
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-6 lg:p-8">
-                    <h2 className="text-h3 font-semibold text-white">{s.title}</h2>
-                    <p className="text-body text-ink-300 mt-3 max-w-[52ch]">{s.summary}</p>
-                    <ul className="mt-5 flex flex-wrap gap-2">
-                      {s.capabilities.map((c) => (
-                        <li
-                          key={c}
-                          className="border-border text-ink-300 rounded-sm border px-2 py-1 font-mono text-[0.66rem] tracking-[0.1em] uppercase"
-                        >
-                          {c}
-                        </li>
-                      ))}
-                    </ul>
-                    <span className="text-gold-400 mt-auto inline-flex items-center gap-2 pt-8 text-sm font-medium transition-colors group-hover:text-white">
-                      Explore {s.shortTitle}
-                      <ArrowUpRight
-                        className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                        strokeWidth={1.75}
+            {services.map((s) => {
+              const Icon = serviceIcon(s.icon);
+              return (
+                <StaggerItem as="li" key={s.slug} className="bg-ink-950">
+                  <Link
+                    href={`/services/${s.slug}`}
+                    className="group hover:bg-ink-900 focus-visible:bg-ink-900 relative flex h-full flex-col overflow-hidden transition-colors duration-300 outline-none"
+                  >
+                    <div className="relative aspect-[16/8] overflow-hidden">
+                      <Image
+                        src={s.image.src}
+                        alt={s.image.alt}
+                        fill
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                        className="ease-out-expo duotone-media object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                      />
+                      <div aria-hidden className="duotone-shadows absolute inset-0" />
+                      <div aria-hidden className="duotone-lights absolute inset-0" />
+                      <div aria-hidden className="image-overlay absolute inset-0" />
+                      <span className="text-ink-200 font-label absolute top-6 left-6 text-[0.7rem] font-semibold tracking-[0.14em]">
+                        {s.index}
+                      </span>
+                      <Icon
+                        className="text-gold-400 absolute top-6 right-6 size-5"
+                        strokeWidth={1.25}
                         aria-hidden
                       />
-                    </span>
-                  </div>
-                  <span
-                    aria-hidden
-                    className="bg-brand-400 ease-out-expo absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
-                  />
-                </Link>
-              </StaggerItem>
-            ))}
+                    </div>
+                    <div className="flex flex-1 flex-col p-6 lg:p-8">
+                      <h2 className="text-h3 font-semibold text-white">{s.title}</h2>
+                      <p className="text-body text-ink-300 mt-3 max-w-[52ch]">{s.summary}</p>
+                      <ul className="mt-5 flex flex-wrap gap-2">
+                        {s.capabilities.map((c) => (
+                          <li
+                            key={c}
+                            className="border-border text-ink-300 font-label rounded-sm border px-2 py-1 text-[0.7rem] font-semibold tracking-[0.14em] uppercase"
+                          >
+                            {c}
+                          </li>
+                        ))}
+                      </ul>
+                      <span className="text-gold-400 text-body mt-auto inline-flex items-center gap-2 pt-8 font-medium transition-colors group-hover:text-white">
+                        Explore {s.shortTitle}
+                        <ArrowUpRight
+                          className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                          strokeWidth={1.75}
+                          aria-hidden
+                        />
+                      </span>
+                    </div>
+                    <span
+                      aria-hidden
+                      className="bg-brand-400 ease-out-expo absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
+                    />
+                  </Link>
+                </StaggerItem>
+              );
+            })}
           </StaggerGroup>
         </div>
       </Section>
@@ -111,11 +109,11 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 lg:grid-cols-12">
             <div className="lg:col-span-6">
               <Reveal>
-                <Eyebrow>How we deliver</Eyebrow>
+                <Eyebrow>{copy.deliveryEyebrow}</Eyebrow>
               </Reveal>
               <Reveal delay={0.08}>
                 <h2 id="delivery-title" className="text-h2 mt-6 font-semibold">
-                  Consult, integrate, <span className="text-brand-text">supply.</span>
+                  <Highlight text={copy.deliveryTitle} highlight={copy.deliveryHighlight} />
                 </h2>
               </Reveal>
             </div>
@@ -126,22 +124,22 @@ export default function ServicesPage() {
             stagger={0.08}
             amount={0.1}
           >
-            {company.serviceLines.map((line, i) => (
+            {about.serviceLines.map((line, i) => (
               <StaggerItem
                 as="li"
                 key={line.title}
                 className="border-border bg-surface flex flex-col rounded-md border p-6 lg:p-8"
               >
-                <span className="text-muted-foreground font-mono text-[0.66rem] tracking-[0.14em]">
+                <span className="text-muted-foreground font-label text-[0.7rem] font-semibold tracking-[0.14em]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="text-h4 mt-4 font-semibold">{line.title}</h3>
-                <p className="text-muted-foreground mt-3 text-sm leading-relaxed">{line.text}</p>
+                <p className="text-muted-foreground text-body mt-3">{line.text}</p>
                 <ul className="border-border mt-6 border-t">
                   {line.items.map((item) => (
                     <li
                       key={item}
-                      className="border-border flex items-start gap-3 border-b py-3 text-[0.875rem]"
+                      className="border-border text-body flex items-start gap-3 border-b py-3"
                     >
                       <span aria-hidden className="bg-brand mt-2 size-1.5 shrink-0 rounded-full" />
                       {item}

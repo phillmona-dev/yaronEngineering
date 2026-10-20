@@ -16,7 +16,7 @@ export function ArticlePreview({ article }: { article: ArticleDetail }) {
         <h1 className="mt-6 max-w-[20ch] text-[clamp(2.25rem,1.4rem+3.2vw,3.75rem)] leading-[1.05] font-semibold tracking-[-0.03em]">
           {article.title || "Untitled article"}
         </h1>
-        <p className="text-lead text-muted-foreground mt-6 max-w-[62ch]">{article.excerpt}</p>
+        <p className="text-body text-muted-foreground mt-6 max-w-[62ch]">{article.excerpt}</p>
         <Byline article={article} className="border-border mt-6 border-t pt-6" />
         <div className="mt-10">
           <CoverImage

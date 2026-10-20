@@ -32,6 +32,10 @@ export async function POST(req: Request) {
     (body.paths ?? []).filter((p) => typeof p === "string" && p.startsWith("/")).slice(0, 50),
   );
 
+  if (tags.includes("site-content")) {
+    // Edited website copy touches every public page, not just the blog.
+    revalidatePath("/", "layout");
+  }
   for (const t of tags) {
     revalidateTag(t);
     const [kind, ...rest] = t.split(":");

@@ -1,9 +1,11 @@
 import { Counter } from "@/components/animations/Counter";
 import { StaggerGroup, StaggerItem } from "@/components/animations/Stagger";
-import { stats } from "@/lib/data/company";
+import { getSiteContent } from "@/lib/content/server";
 
 /** Large-typography credibility strip directly after the hero. */
-export function Credibility() {
+export async function Credibility() {
+  const { home } = await getSiteContent();
+  const stats = home.stats;
   return (
     <section
       data-theme="dark"
@@ -27,12 +29,12 @@ export function Credibility() {
                 i === 2 ? "lg:border-l lg:pl-10" : "",
               ].join(" ")}
             >
-              <p className="text-stat text-gold-400 font-medium">
-                <Counter value={s.value} suffix={s.suffix} plain={"plain" in s && s.plain} />
+              <p className="text-stat text-gold-400 font-display font-bold">
+                <Counter value={s.value} suffix={s.suffix} plain={s.plain} />
               </p>
               <div>
-                <p className="text-ink-100 text-[0.9375rem] font-medium">{s.label}</p>
-                <p className="text-ink-400 mt-1 font-mono text-[0.68rem] tracking-[0.12em] uppercase">
+                <p className="text-ink-100 text-body font-medium">{s.label}</p>
+                <p className="text-ink-400 font-label mt-1 text-[0.7rem] font-semibold tracking-[0.14em] uppercase">
                   {s.note}
                 </p>
               </div>

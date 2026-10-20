@@ -2,7 +2,8 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { PartnerMarquee } from "@/components/sections/PartnerMarquee";
 import { PartnerSlot } from "@/components/cards/PartnerSlot";
-import { partners } from "@/lib/data/partners";
+import { getSiteContent } from "@/lib/content/server";
+import { Highlight } from "@/lib/content/highlight";
 import { StaggerGroup, StaggerItem } from "@/components/animations/Stagger";
 import { Reveal } from "@/components/animations/Reveal";
 
@@ -10,19 +11,21 @@ import { Reveal } from "@/components/animations/Reveal";
  * Partners: an animated logo marquee on every placement, plus the full static grid on the
  * partners page (`grid`), where visitors expect to scan the complete list.
  */
-export function PartnersSection({ grid = false }: { grid?: boolean }) {
+export async function PartnersSection({ grid = false }: { grid?: boolean }) {
+  const { partners: partnersContent, home } = await getSiteContent();
+  const partners = partnersContent.items;
+  const intro = home.sections.partners;
   return (
     <Section theme="light" aria-labelledby="partners-title" className="overflow-clip">
       <div className="container-x">
         <SectionHeader
-          eyebrow="Global partners"
+          eyebrow={intro.eyebrow}
           title={
             <span id="partners-title">
-              Powered by global partnerships.{" "}
-              <span className="text-brand-text">Delivered locally.</span>
+              <Highlight text={intro.title} highlight={intro.highlight} />
             </span>
           }
-          lead="Powered by global partnerships, delivered locally. Direct partnerships with globally renowned vendors and regional distributors bring world-class technology to local organizations — and we deliver, support and integrate it across mission-critical environments."
+          lead={intro.lead}
         />
       </div>
 

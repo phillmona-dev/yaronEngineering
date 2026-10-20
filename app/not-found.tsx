@@ -15,10 +15,10 @@ export default function NotFound() {
           <GridLines className="text-white opacity-50" />
           <div className="container-x relative py-32">
             <p className="eyebrow text-ink-300">Error 404</p>
-            <h1 className="text-display mt-6 max-w-[14ch] font-semibold text-white">
+            <h1 className="text-h1 mt-6 max-w-[14ch] font-bold text-white">
               This route is not provisioned.
             </h1>
-            <p className="text-lead text-ink-300 mt-6 max-w-[48ch]">
+            <p className="text-body text-ink-300 mt-6 max-w-[48ch]">
               The page you requested does not exist or has moved.
             </p>
             <div className="mt-10 flex gap-4">

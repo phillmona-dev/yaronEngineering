@@ -1,11 +1,14 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ShieldCheck } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
-import { company } from "@/lib/data/company";
-import { footerNav, legalNav } from "@/lib/data/navigation";
 import { GridLines } from "@/components/ui/Backdrop";
+import { getSiteContent } from "@/lib/content/server";
+import { phoneToE164 } from "@/lib/content/highlight";
 
-export function Footer() {
+export async function Footer() {
+  const { company, navigation } = await getSiteContent();
+  const footerNav = navigation.footer;
+  const legalNav = navigation.legal;
   const year = new Date().getFullYear();
   return (
     <footer
@@ -17,27 +20,29 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-12 py-16 md:grid-cols-1 md:py-20 lg:grid-cols-12 lg:py-24">
           <div className="md:col-span-5 lg:col-span-5">
             <Logo />
-            <p className="text-muted-foreground mt-6 max-w-[40ch] text-[0.9375rem] leading-relaxed">
-              ICT infrastructure and cybersecurity consulting and system integration for government,
-              financial institutions, enterprises and NGOs across Ethiopia and East Africa.
+            <p className="text-muted-foreground text-body mt-6 max-w-[40ch]">
+              {navigation.footerBlurb}
             </p>
-            <div className="mt-8 flex flex-col gap-2 text-sm">
+            <div className="text-body mt-8 flex flex-col gap-2">
               <a
                 href={`mailto:${company.contact.email}`}
                 className="text-foreground hover:text-brand-text w-fit"
               >
                 {company.contact.email}
               </a>
-              {company.contact.phones.map((p, i) => (
+              {company.contact.phones.map((p) => (
                 <a
                   key={p}
-                  href={`tel:${company.contact.phonesE164[i]}`}
+                  href={`tel:${phoneToE164(p)}`}
                   className="text-foreground hover:text-brand-text w-fit"
                 >
                   {p}
                 </a>
               ))}
-              <p className="text-muted-foreground mt-2 max-w-[36ch]">{company.headquarters.full}</p>
+              <p className="text-muted-foreground mt-2 max-w-[36ch]">
+                {company.headquarters.streetAddress}, {company.headquarters.city},{" "}
+                {company.headquarters.country}
+              </p>
             </div>
           </div>
 
@@ -50,7 +55,7 @@ export function Footer() {
                     <li key={item.href}>
                       <Link
                         href={item.href}
-                        className="text-ink-200 text-[0.9375rem] transition-colors hover:text-white"
+                        className="text-ink-200 text-body transition-colors hover:text-white"
                       >
                         {item.label}
                       </Link>
@@ -60,12 +65,12 @@ export function Footer() {
               </div>
             ))}
             <div className="col-span-2 md:col-span-1">
-              <p className="eyebrow text-gold-400">Start a project</p>
+              <p className="eyebrow text-gold-400">{navigation.footerCtaHeading}</p>
               <Link
                 href="/contact"
-                className="group mt-5 inline-flex items-center gap-2 text-[0.9375rem] text-white"
+                className="group text-body mt-5 inline-flex items-center gap-2 text-white"
               >
-                Talk to our engineers
+                {navigation.footerCtaLabel}
                 <ArrowUpRight
                   className="text-gold-400 size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   strokeWidth={1.75}
@@ -78,7 +83,7 @@ export function Footer() {
                     <li key={s.href}>
                       <a
                         href={s.href}
-                        className="text-ink-300 text-sm hover:text-white"
+                        className="text-ink-300 text-body hover:text-white"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -92,7 +97,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-border text-ink-400 flex flex-col gap-4 border-t py-6 font-mono text-[0.7rem] tracking-[0.12em] uppercase md:flex-row md:items-center md:justify-between">
+        <div className="border-border text-ink-400 font-label flex flex-col gap-4 border-t py-6 text-[0.7rem] font-semibold tracking-[0.14em] uppercase md:flex-row md:items-center md:justify-between">
           <p>
             © {year} {company.name}. All rights reserved.
           </p>
@@ -103,9 +108,18 @@ export function Footer() {
               </Link>
             ))}
             <span className="hidden md:inline">
-              {company.headquarters.city} · {company.headquarters.geo.lat.toFixed(2)}°N{" "}
-              {company.headquarters.geo.lng.toFixed(2)}°E
+              {company.headquarters.city} · {company.headquarters.lat.toFixed(2)}°N{" "}
+              {company.headquarters.lng.toFixed(2)}°E
             </span>
+            {/* Staff entrance to the CMS — deliberately quiet, but always one click away */}
+            <Link
+              href="/admin"
+              className="hover:border-gold-400/60 inline-flex items-center gap-1.5 rounded-full border border-white/15 px-3 py-1.5 text-white transition-colors hover:text-white"
+              aria-label="Open the admin panel"
+            >
+              <ShieldCheck className="text-gold-400 size-3.5" strokeWidth={2} aria-hidden />
+              Admin Panel
+            </Link>
           </div>
         </div>
       </div>

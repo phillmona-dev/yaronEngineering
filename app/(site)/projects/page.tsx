@@ -6,41 +6,36 @@ import { Reveal } from "@/components/animations/Reveal";
 import { Credibility } from "@/components/sections/Credibility";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { JsonLd } from "@/components/layout/JsonLd";
-import { featuredProjects, projectCategories } from "@/lib/data/projects";
 import { ProjectIndex } from "@/components/sections/ProjectIndex";
 import { breadcrumbSchema, pageMetadata } from "@/lib/utils/seo";
+import { getSiteContent } from "@/lib/content/server";
+import { pageHeroProps } from "@/lib/content/highlight";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Projects",
-  description:
-    "ICT infrastructure, data center, cybersecurity, surveillance and cloud projects delivered by Yaron Engineering for the judiciary, banks, public institutions, universities, NGOs and enterprises in Ethiopia.",
-  path: "/projects",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const { pages } = await getSiteContent();
+  return pageMetadata({
+    title: pages.projects.metaTitle,
+    description: pages.projects.metaDescription,
+    path: "/projects",
+  });
+}
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const { projects, pages } = await getSiteContent();
+  const featuredProjects = projects.items.filter((p) => p.featured && p.image.src);
+  const projectCategories = pages.projects.categories;
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Projects", path: "/projects" }])} />
       <PageHero
-        eyebrow="Projects & experience"
+        {...pageHeroProps(pages.projects)}
         crumbs={[{ label: "Projects", href: "/projects" }]}
-        title={[
-          <span key="a">Infrastructure delivered</span>,
-          <span key="b">
-            for institutions that <span className="text-gold-400">matter.</span>
-          </span>,
-        ]}
-        lead="More than 30 high-impact projects for more than 40 clients across government institutions, enterprises, NGOs and financial organizations — consultancy, system integration, supply and cloud services."
-        image={{
-          src: "/images/photos/network-switch.jpg",
-          alt: "Enterprise network switch with patch cables",
-        }}
       >
         <Reveal delay={0.55} className="mt-10 flex flex-wrap gap-2">
           {projectCategories.map((c) => (
             <span
               key={c}
-              className="text-ink-200 rounded-sm border border-white/15 px-3 py-1.5 font-mono text-[0.66rem] tracking-[0.12em] uppercase"
+              className="text-ink-200 font-label rounded-sm border border-white/15 px-3 py-1.5 text-[0.7rem] font-semibold tracking-[0.14em] uppercase"
             >
               {c}
             </span>

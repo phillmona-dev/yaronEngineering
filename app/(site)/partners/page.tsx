@@ -6,35 +6,30 @@ import { WhyYaron } from "@/components/sections/WhyYaron";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { breadcrumbSchema, pageMetadata } from "@/lib/utils/seo";
+import { getSiteContent } from "@/lib/content/server";
+import { pageHeroProps } from "@/lib/content/highlight";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Partners",
-  description:
-    "Yaron Engineering works with leading technology vendors and major Ethiopian enterprises across banking, government, logistics and higher education.",
-  path: "/partners",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const { pages } = await getSiteContent();
+  return pageMetadata({
+    title: pages.partners.metaTitle,
+    description: pages.partners.metaDescription,
+    path: "/partners",
+  });
+}
 
-export default function PartnersPage() {
+export default async function PartnersPage() {
+  const { pages } = await getSiteContent();
+  const copy = pages.partners;
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Partners", path: "/partners" }])} />
-      <PageHero
-        eyebrow="Global & domestic partners"
-        crumbs={[{ label: "Partners", href: "/partners" }]}
-        title={[
-          <span key="a">Partnerships that extend</span>,
-          <span key="b">
-            our <span className="text-gold-400">capability.</span>
-          </span>,
-        ]}
-        lead="We design vendor-neutral and deliver with global technology leaders and leading Ethiopian enterprise institutions."
-        image={{ src: "/images/photos/circuit.jpg", alt: "Macro view of a circuit board" }}
-      />
+      <PageHero {...pageHeroProps(copy)} crumbs={[{ label: "Partners", href: "/partners" }]} />
       <PartnersSection grid />
       <CustomersSection
-        eyebrow="Domestic & Enterprise Partners"
-        title="Enterprise partners & clients in Ethiopia."
-        lead="Infrastructure, cybersecurity, surveillance and cloud systems delivered for the judiciary, government institutions, banks and microfinance, national enterprises, aviation, hospitality, NGOs and universities."
+        eyebrow={copy.customersEyebrow}
+        title={copy.customersTitle}
+        lead={copy.customersLead}
       />
       <WhyYaron />
       <FinalCTA />
